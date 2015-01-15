@@ -1,0 +1,34 @@
+{
+  "name": "mlcl_core",
+  "version": "0.0.5",
+  "description": "Core module for molecuel cms",
+  "keywords": [
+    "cms",
+    "module"
+  ],
+  "homepage": "http://molecuel.org",
+  "main": "molecuel.js",
+  "dependencies": {
+    "async": ">=0.0.1",
+    "body-parser": ">=0.0.1",
+    "serve-static": ">=0.0.1",
+    "methods": ">=0.0.1",
+    "handlebars": ">=0.0.1",
+    "morgan": ">=0.0.1",
+    "express-session": ">=0.0.1",
+    "cookie-parser": ">=0.0.1",
+    "underscore": ">=0.0.1",
+    "express-json": "1.0.0",
+    "multer": ">=0.0.1"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/molecuel/mlcl_core.git"
+  },
+  "author": "Dominic Böttger",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/molecuel/mlcl_core/issues"
+  }
+}
