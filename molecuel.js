@@ -34,6 +34,19 @@ Molecuel = function (mconfig) {
     instance.booting = {};
     instance.utils = new mlcl_utils();
 
+    instance.serverroles = {
+      worker: true,
+      server: true
+    }
+
+    if(process.env && parseInt(process.env.WORKER) === 0) {
+      instance.serverroles.worker = false;
+    }
+
+    if(process.env && parseInt(process.env.SERVER) === 0) {
+      instance.serverroles.server = false;
+    }
+
     self.on('mlcl::core::module:init:start', self.markModuleInitStart);
     self.on('mlcl::core::module:init:complete', self.markModuleInitComplete);
     self.emit('mlcl::core::module:init:start', self, 'mlcl');
@@ -161,6 +174,7 @@ Molecuel.prototype.initApplication = function(app) {
 
   self.app = app;
 
+  // @todo rewrite this to make it configureable
   var allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
