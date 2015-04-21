@@ -8,6 +8,7 @@ var util    = require('util');
 var methods = require('methods');
 var EventEmitter = require('events').EventEmitter;
 var mlcl_utils = require('./lib/utils');
+var mlcl_log = require('mlcl_log');
 var cookieParser = require('cookie-parser');
 var bodyparser = require('body-parser');
 var multer = require('multer');
@@ -30,8 +31,10 @@ Molecuel = function (mconfig) {
   if (!instance) { //Singleton
     instance = this;
     instance.config = mlclconfig;
-    instance.modules = { };
+    instance.modules = {};
     instance.booting = {};
+    mlcl_log(this);
+    instance.log.info('molecuel', 'instance created');
     instance.utils = new mlcl_utils();
 
     instance.serverroles = {
