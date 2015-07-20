@@ -1,6 +1,6 @@
 // Dependencies
 var path    = require('path');
-var _       = require('underscore');
+var _       = require('lodash');
 var url     = require('url');
 var fs      = require('fs');
 var async   = require('async');
@@ -11,7 +11,6 @@ var mlcl_utils = require('./lib/utils');
 var mlcl_log = require('mlcl_log');
 var cookieParser = require('cookie-parser');
 var bodyparser = require('body-parser');
-var multer = require('multer');
 
 // Paths
 var rootPath = path.resolve(process.cwd());
@@ -205,7 +204,6 @@ Molecuel.prototype.initApplication = function(app) {
   //var bodyparser = require('body-parser');
   app.use(bodyparser.json());
   app.use(bodyparser.urlencoded({extended: true}));
-  app.use(multer());
 
   app.use(cookieParser());
 

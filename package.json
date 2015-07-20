@@ -1,6 +1,6 @@
 {
   "name": "mlcl_core",
-  "version": "0.0.7",
+  "version": "0.1.0",
   "description": "Core module for molecuel cms",
   "keywords": [
     "cms",
@@ -11,15 +11,14 @@
   "dependencies": {
     "async": ">=0.0.1",
     "body-parser": ">=0.0.1",
-    "serve-static": ">=0.0.1",
-    "methods": ">=0.0.1",
-    "handlebars": ">=0.0.1",
-    "morgan": ">=0.0.1",
-    "express-session": ">=0.0.1",
     "cookie-parser": ">=0.0.1",
-    "underscore": ">=0.0.1",
     "express-json": "1.0.0",
-    "multer": ">=0.0.1"
+    "express-session": ">=0.0.1",
+    "handlebars": ">=0.0.1",
+    "lodash": "^3.10.0",
+    "methods": ">=0.0.1",
+    "morgan": ">=0.0.1",
+    "serve-static": ">=0.0.1"
   },
   "devDependencies": {},
   "repository": {
