@@ -208,8 +208,10 @@ Molecuel.prototype.initApplication = function(app) {
   app.use(cookieParser());
 
   //logger
-  var morgan = require('morgan');
-  app.use(morgan('dev')); 					// log every request to the console
+  if(mlclconfig.molecuel.log.pathdebug) {
+    var morgan = require('morgan');
+    app.use(morgan('dev'));
+  }
 
   var serveStatic = require('serve-static');
   this.serveStatic = serveStatic;
