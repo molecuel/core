@@ -184,7 +184,7 @@ Molecuel.prototype.initApplication = function(app) {
 
     // intercept OPTIONS method
     if ('OPTIONS' == req.method) {
-      res.send(200);
+      res.sendStatus(200);
     }
     else {
       next();
@@ -250,7 +250,7 @@ Molecuel.prototype.initApplication = function(app) {
                 var usermodule = self.modules.user.module;
                 usermodule.checkPermission(item, req, res, next);
               } else {
-                res.send(401);
+                res.sendStatus(401);
               }
             });
           }
@@ -308,7 +308,7 @@ Molecuel.prototype.initApplication = function(app) {
   }
 
   app.use(function(req, res, next){
-    res.send(404, 'Sorry cant find that!');
+    res.status(404).send('Sorry cant find that!');
   });
 }
 
@@ -317,7 +317,7 @@ function checkPermission(item, req, res, next) {
 
   } else {
     // ** send 401 directly - Should be a rendered page later
-    res.send(401);
+    res.sendStatus(401);
   }
 }
 
