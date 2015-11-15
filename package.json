@@ -22,7 +22,7 @@
     "methods": ">=0.0.1",
     "morgan": ">=0.0.1",
     "serve-static": ">=0.0.1",
-    "mlcl_log": ">=0.0.1"
+    "mlcl_log": ">=0.9.0"
   },
   "devDependencies": {},
   "repository": {
