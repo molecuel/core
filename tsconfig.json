@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "module": "commonjs",
+        "declaration": true
+    },
+    "filesGlob": [
+        "./**/*.ts",
+        "!./node_modules/**/*.ts"
+    ],
+    "files": [
+        "./index.d.ts",
+        "./index.ts",
+        "./lib/utils.d.ts",
+        "./lib/utils.ts",
+        "./typings/async/async.d.ts",
+        "./typings/body-parser/body-parser.d.ts",
+        "./typings/cookie-parser/cookie-parser.d.ts",
+        "./typings/express/express.d.ts",
+        "./typings/handlebars/handlebars.d.ts",
+        "./typings/lodash/lodash.d.ts",
+        "./typings/mime/mime.d.ts",
+        "./typings/node/node.d.ts",
+        "./typings/serve-static/serve-static.d.ts"
+    ]
+}

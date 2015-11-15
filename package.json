@@ -1,13 +1,16 @@
 {
   "name": "mlcl_core",
-  "version": "0.2.0",
+  "version": "0.9.0",
   "description": "Core module for molecuel cms",
   "keywords": [
     "cms",
     "module"
   ],
+  "engines": {
+    "node": ">=4.0.0"
+  },
   "homepage": "http://molecuel.org",
-  "main": "molecuel.js",
+  "main": "index.js",
   "dependencies": {
     "async": ">=0.0.1",
     "body-parser": ">=0.0.1",
@@ -18,7 +21,8 @@
     "lodash": "^3.10.0",
     "methods": ">=0.0.1",
     "morgan": ">=0.0.1",
-    "serve-static": ">=0.0.1"
+    "serve-static": ">=0.0.1",
+    "mlcl_log": ">=0.0.1"
   },
   "devDependencies": {},
   "repository": {
