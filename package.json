@@ -10,7 +10,7 @@
   "main": "molecuel.js",
   "dependencies": {
     "async": ">=0.0.1",
-    "body-parser": ">=0.0.1",
+    "body-parser": "1.12.2",
     "serve-static": ">=0.0.1",
     "methods": ">=0.0.1",
     "handlebars": ">=0.0.1",
