@@ -1,4 +1,5 @@
 /// <reference path='../node_modules/gulpclass/index.d.ts'/>
+/// <reference path="../typings/main.d.ts"/>
 import {Gulpclass, Task, SequenceTask} from 'gulpclass/Decorators';
 
 import * as gulp from 'gulp';
@@ -62,10 +63,11 @@ export class Gulpfile {
    * Typescript compile task
    */
   @Task('ts>>compile')
-  tscompile() {
-    let sourcepaths = ['typings/**/*.d.ts'];
+  tscompile(): any {
+    let sourcepaths = [];
     sourcepaths.push(this.config.paths.source);
-    var tsResult = this.tsProject.src()
+    var tsResult = gulp.src(sourcepaths)
+      .pipe(plumber())
       .pipe(ts(this.tsProject));
 
     return tsResult.js
@@ -78,7 +80,7 @@ export class Gulpfile {
   }
 
   @SequenceTask('watch') // this special annotation using "run-sequence" module to run returned tasks in sequence
-  watch() {
+  watch(): any {
     return gulp.watch(this.config.paths.source, ['build']);
   }
 

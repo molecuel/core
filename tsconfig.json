@@ -1,5 +1,6 @@
 {
   "compileOnSave": false,
+  "sortOutput": true,
   "compilerOptions": {
     "target": "es6",
     "module": "commonjs",
@@ -8,40 +9,17 @@
     "preserveConstEnums": true,
     "sourceMap": false
   },
-  "filesGlob": [
-    "typings/**/*.d.ts",
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "!node_modules/**"
-  ],
   "files": [
-    "typings/async/async.d.ts",
-    "typings/body-parser/body-parser.d.ts",
-    "typings/cookie-parser/cookie-parser.d.ts",
-    "typings/del/del.d.ts",
-    "typings/express/express.d.ts",
-    "typings/glob/glob.d.ts",
-    "typings/gulp-plumber/gulp-plumber.d.ts",
-    "typings/gulp-tslint/gulp-tslint.d.ts",
-    "typings/gulp-typescript/gulp-typescript.d.ts",
-    "typings/gulp/gulp.d.ts",
-    "typings/handlebars/handlebars.d.ts",
-    "typings/lodash/lodash.d.ts",
-    "typings/merge2/merge2.d.ts",
-    "typings/mime/mime.d.ts",
-    "typings/minimatch/minimatch.d.ts",
-    "typings/node/node.d.ts",
-    "typings/orchestrator/orchestrator.d.ts",
-    "typings/q/Q.d.ts",
-    "typings/serve-static/serve-static.d.ts",
-    "typings/vinyl/vinyl.d.ts",
-    "src/index.d.ts",
     "src/index.ts",
-    "src/lib/utils.d.ts",
-    "src/lib/utils.ts"
+    "tasks/gulpclass.ts"
+  ],
+  "exclude": [
+    "typings/browser.d.ts",
+    "typings/browser",
+    "node_modules"
   ],
   "atom": {
-    "rewriteTsconfig": true,
+    "rewriteTsconfig": false,
     "formatOnSave": true
   },
   "formatCodeOptions": {

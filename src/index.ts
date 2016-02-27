@@ -1,13 +1,5 @@
+/// <reference path="../typings/main.d.ts"/>
 'use strict';
-/// <reference path="./typings/node/node.d.ts"/>
-/// <reference path="./typings/lodash/lodash.d.ts"/>
-/// <reference path="./typings/async/async.d.ts"/>
-/// <reference path="./typings/cookie-parser/cookie-parser.d.ts"/>
-/// <reference path="./typings/body-parser/body-parser.d.ts"/>
-/// <reference path="./typings/express/express.d.ts"/>
-/// <reference path="./typings/serve-static/serve-static.d.ts"/>
-/// <reference path="./node_modules/mlcl_log/index.ts"/>
-
 import path = require('path');
 import _ = require('lodash');
 import url = require('url');
