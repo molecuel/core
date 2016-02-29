@@ -5,11 +5,11 @@ class mlcl_utils {
         this.molecuel = molecuel;
     }
     getVar(variable, req, res) {
-        var self = this;
+        let self = this;
         return self.resolve(variable, { req: req, res: res });
     }
     resolve(text, options) {
-        var template = handlebars.compile(text);
+        let template = handlebars.compile(text);
         return template(options);
     }
     ;

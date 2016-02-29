@@ -3,9 +3,7 @@
 import path = require('path');
 import _ = require('lodash');
 import url = require('url');
-import fs = require('fs');
 import async = require('async');
-import util = require('util');
 import events = require('events');
 import mlcl_utils = require('./lib/utils');
 import mlcl_log = require('mlcl_log');
@@ -35,7 +33,7 @@ class mlcl_core extends events.EventEmitter {
     if (mconfig) {
       mlcl_core.mlclconfig = mconfig;
     }
-    if (!mlcl_core.instance) { //Singleton
+    if (!mlcl_core.instance) { // Singleton
       mlcl_core.instance = this;
       mlcl_core.instance.config = mlcl_core.mlclconfig;
       mlcl_core.instance.modules = {};
@@ -47,7 +45,7 @@ class mlcl_core extends events.EventEmitter {
       mlcl_core.instance.serverroles = {
         worker: true,
         server: true
-      }
+      };
 
       if (process.env && parseInt(process.env.WORKER) === 0) {
         mlcl_core.instance.serverroles.worker = false;
@@ -67,12 +65,12 @@ class mlcl_core extends events.EventEmitter {
       });
 
       _.extend(mlcl_core.instance, {
-        name: "",
+        name: '',
 
         paths: function() {
           return {
             'root': mlcl_core.rootPath
-          }
+          };
         }
       });
       mlcl_core.instance.count = 0;
@@ -100,7 +98,7 @@ class mlcl_core extends events.EventEmitter {
   markModuleInitComplete(module, name) {
     delete this.booting[name];
     if (!Object.keys(this.booting).length) {
-      //now I am ready
+      // now I am ready
       this.emit('init', mlcl_core.instance);
     }
   }
@@ -112,10 +110,12 @@ class mlcl_core extends events.EventEmitter {
       if (mlcl_core.mlclconfig) {
         currconfig = mlcl_core.mlclconfig;
       } else {
-        throw new Error('no config found')
+        throw new Error('no config found');
       }
     };
-    if (!_.isObject(currconfig.modules)) throw new Error('no config object found');
+    if (!_.isObject(currconfig.modules)) {
+      throw new Error('no config object found');
+    }
     let arr = Object.keys(currconfig.modules);
 
     if (arr.length > 0) {
@@ -172,13 +172,13 @@ class mlcl_core extends events.EventEmitter {
     }
   }
   require(name) {
-    let m = this.getModule(name)
+    let m = this.getModule(name);
     if (m) {
       return m.module;
     }
   }
   parseRequest(req) {
-    let u = url.parse(req.protocol + "://" + req.headers.host + req.url);
+    let u = url.parse(req.protocol + '://' + req.headers.host + req.url);
     return u;
   }
 
@@ -192,7 +192,7 @@ class mlcl_core extends events.EventEmitter {
       res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
 
       // intercept OPTIONS method
-      if ('OPTIONS' == req.method) {
+      if ('OPTIONS' === req.method) {
         res.sendStatus(200);
       }
       else {
@@ -210,13 +210,13 @@ class mlcl_core extends events.EventEmitter {
     // body parser
     // https://groups.google.com/forum/#!msg/express-js/iP2VyhkypHo/5AXQiYN3RPcJ
     // http://expressjs.com/api.html#bodyParser
-    //let bodyparser = require('body-parser');
+    // let bodyparser = require('body-parser');
     app.use(bodyparser.json({ limit: '50mb' }));
     app.use(bodyparser.urlencoded({ extended: true }));
 
     app.use(cookieParser());
 
-    //logger
+    // logger
     if (mlcl_core.mlclconfig.molecuel.log.pathdebug) {
       let morgan = require('morgan');
       app.use(morgan('dev'));
@@ -234,7 +234,7 @@ class mlcl_core extends events.EventEmitter {
     // Initialize Modules before configurable routes registration
     _.each(this.modules, (module: any) => {
       let m: any = module.module;
-      if ('function' == typeof m.initApplication) {
+      if ('function' === typeof m.initApplication) {
         m.initApplication(app);
       }
     });
@@ -249,7 +249,7 @@ class mlcl_core extends events.EventEmitter {
         }
         // Configuration may contain direct callbacks for registration
         methods.forEach((method) => {
-          if (item[method] == true) {
+          if (item[method] === true) {
             // check if there is a permission defined for the item
             if (item.permission) {
               app[method](item.url, (req, res, next) => {
@@ -269,13 +269,15 @@ class mlcl_core extends events.EventEmitter {
           let callbacks = [];
           item.callbacks.forEach((cb) => {
             let m = this.require(cb.module);
-            if (!m) return;
+            if (!m) {
+              return;
+            }
             let fn = m[cb.function];
-            if ('function' == typeof fn) {
+            if ('function' === typeof fn) {
               callbacks.push(fn.bind(m));
             }
             methods.forEach((method) => {
-              if (item[method] == true) {
+              if (item[method] === true) {
                 app[method].apply(app, [item.url, (req, res, next) => {
                   this.dispatch(callbacks, req, res, next);
                 }]);
@@ -287,15 +289,17 @@ class mlcl_core extends events.EventEmitter {
         if (item.middleware) {
           if (item.module) {
             let m = this.require(item.module);
-            if (!m) return;
-            if ('function' == typeof m.middleware) {
+            if (!m) {
+              return;
+            }
+            if ('function' === typeof m.middleware) {
               m.middleware(item.config, app);
             }
           }
         }
         // Statics
         if (item.statics) {
-          let modulePath
+          let modulePath;
           if (item.module) {
             let m = this.getModule(item.module);
             if (m) {
@@ -340,17 +344,21 @@ class mlcl_core extends events.EventEmitter {
    */
   dispatch(callbacks, req, res, next) {
     let i = 0;
-    //handle route callbacks
+    // handle route callbacks
     function route(err) {
       let fn = callbacks[i++];
       try {
-        if ('route' == err) {
+        if ('route' === err) {
           next('route');
         } else if (err && fn) {
-          if (fn.length < 4) return route(err);
+          if (fn.length < 4) {
+            return route(err);
+          }
           fn(err, req, res, route);
         } else if (fn) {
-          if (fn.length < 4) return fn(req, res, route);
+          if (fn.length < 4) {
+            return fn(req, res, route);
+          }
           route(null);
         } else {
           next(err);

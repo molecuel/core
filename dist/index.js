@@ -42,7 +42,7 @@ class mlcl_core extends events.EventEmitter {
             this.on('mlcl::core::init:server', (molecuel, server) => {
             });
             _.extend(mlcl_core.instance, {
-                name: "",
+                name: '',
                 paths: function () {
                     return {
                         'root': mlcl_core.rootPath
@@ -87,8 +87,9 @@ class mlcl_core extends events.EventEmitter {
             }
         }
         ;
-        if (!_.isObject(currconfig.modules))
+        if (!_.isObject(currconfig.modules)) {
             throw new Error('no config object found');
+        }
         let arr = Object.keys(currconfig.modules);
         if (arr.length > 0) {
             async.each(arr, (key, cb) => {
@@ -139,7 +140,7 @@ class mlcl_core extends events.EventEmitter {
         }
     }
     parseRequest(req) {
-        let u = url.parse(req.protocol + "://" + req.headers.host + req.url);
+        let u = url.parse(req.protocol + '://' + req.headers.host + req.url);
         return u;
     }
     initApplication(app) {
@@ -148,7 +149,7 @@ class mlcl_core extends events.EventEmitter {
             res.header('Access-Control-Allow-Origin', '*');
             res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
             res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
-            if ('OPTIONS' == req.method) {
+            if ('OPTIONS' === req.method) {
                 res.sendStatus(200);
             }
             else {
@@ -170,7 +171,7 @@ class mlcl_core extends events.EventEmitter {
         app.use('/public', serveStatic(mlcl_core.rootPath + '/public'));
         _.each(this.modules, (module) => {
             let m = module.module;
-            if ('function' == typeof m.initApplication) {
+            if ('function' === typeof m.initApplication) {
                 m.initApplication(app);
             }
         });
@@ -180,7 +181,7 @@ class mlcl_core extends events.EventEmitter {
                     app.use(item.url, allowCrossDomain);
                 }
                 methods.forEach((method) => {
-                    if (item[method] == true) {
+                    if (item[method] === true) {
                         if (item.permission) {
                             app[method](item.url, (req, res, next) => {
                                 if (this.modules.user) {
@@ -198,14 +199,15 @@ class mlcl_core extends events.EventEmitter {
                     let callbacks = [];
                     item.callbacks.forEach((cb) => {
                         let m = this.require(cb.module);
-                        if (!m)
+                        if (!m) {
                             return;
+                        }
                         let fn = m[cb.function];
-                        if ('function' == typeof fn) {
+                        if ('function' === typeof fn) {
                             callbacks.push(fn.bind(m));
                         }
                         methods.forEach((method) => {
-                            if (item[method] == true) {
+                            if (item[method] === true) {
                                 app[method].apply(app, [item.url, (req, res, next) => {
                                         this.dispatch(callbacks, req, res, next);
                                     }]);
@@ -216,9 +218,10 @@ class mlcl_core extends events.EventEmitter {
                 if (item.middleware) {
                     if (item.module) {
                         let m = this.require(item.module);
-                        if (!m)
+                        if (!m) {
                             return;
-                        if ('function' == typeof m.middleware) {
+                        }
+                        if ('function' === typeof m.middleware) {
                             m.middleware(item.config, app);
                         }
                     }
@@ -260,17 +263,19 @@ class mlcl_core extends events.EventEmitter {
         function route(err) {
             let fn = callbacks[i++];
             try {
-                if ('route' == err) {
+                if ('route' === err) {
                     next('route');
                 }
                 else if (err && fn) {
-                    if (fn.length < 4)
+                    if (fn.length < 4) {
                         return route(err);
+                    }
                     fn(err, req, res, route);
                 }
                 else if (fn) {
-                    if (fn.length < 4)
+                    if (fn.length < 4) {
                         return fn(req, res, route);
+                    }
                     route(null);
                 }
                 else {

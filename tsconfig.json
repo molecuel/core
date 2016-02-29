@@ -1,6 +1,5 @@
 {
   "compileOnSave": false,
-  "sortOutput": true,
   "compilerOptions": {
     "target": "es6",
     "module": "commonjs",
@@ -11,7 +10,7 @@
   },
   "files": [
     "src/index.ts",
-    "tasks/gulpclass.ts"
+    "src/lib/utils.ts"
   ],
   "exclude": [
     "typings/browser.d.ts",

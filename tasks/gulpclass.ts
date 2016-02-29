@@ -9,6 +9,7 @@ import * as tslint from 'gulp-tslint';
 import * as del from 'del';
 import * as fs from 'fs';
 import * as merge from 'merge2';
+const tsconfig = require('gulp-tsconfig-files');
 
 @Gulpclass()
 export class Gulpfile {
@@ -68,6 +69,7 @@ export class Gulpfile {
     sourcepaths.push(this.config.paths.source);
     var tsResult = gulp.src(sourcepaths)
       .pipe(plumber())
+      .pipe(tsconfig())
       .pipe(ts(this.tsProject));
 
     return tsResult.js
