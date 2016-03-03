@@ -36,27 +36,9 @@ class mlcl_core extends events.EventEmitter {
             if (process.env && parseInt(process.env.SERVER) === 0) {
                 mlcl_core.instance.serverroles.server = false;
             }
-            let sio = require('socket.io')();
             this.on('mlcl::core::module:init:start', this.markModuleInitStart);
             this.on('mlcl::core::module:init:complete', this.markModuleInitComplete);
             this.emit('mlcl::core::module:init:start', this, 'mlcl');
-            this.on('mlcl::core::init:server', (molecuel, server) => {
-                let io = sio.attach(server);
-                io.use((socket, next) => {
-                    console.log('use');
-                    next();
-                });
-                io.on('connection', function (socket) {
-                    socket.on('authenticate', function () {
-                        socket.authenticated = true;
-                        socket.emit('authenticated');
-                    });
-                    socket.on('apitest', function () {
-                        console.log('authenticated');
-                        console.log(socket.authenticated);
-                    });
-                });
-            });
             _.extend(mlcl_core.instance, {
                 name: '',
                 paths: function () {
