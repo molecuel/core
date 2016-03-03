@@ -9,7 +9,6 @@ import * as tslint from 'gulp-tslint';
 import * as del from 'del';
 import * as fs from 'fs';
 import * as merge from 'merge2';
-const tsconfig = require('gulp-tsconfig-files');
 
 @Gulpclass()
 export class Gulpfile {
@@ -28,7 +27,7 @@ export class Gulpfile {
    *
    * It reads the data of the devconfig object in the package.json file
    */
-  @Task('config:readpkgjson')
+  @Task('config::readpkgjson')
   readpkgjson(): any {
     var configobject = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
     if (configobject && configobject.devconfig) {
@@ -39,7 +38,7 @@ export class Gulpfile {
   /**
    * Clean dist directory
    */
-  @Task('clean>>dist')
+  @Task('clean::dist')
   clean(cb: Function) {
     return del(['./dist/**'], cb);
   }
@@ -47,7 +46,7 @@ export class Gulpfile {
   /**
    * Typescript lint task
    */
-  @Task('ts>>lint')
+  @Task('ts::lint')
   tslint() {
     let lintoptions: any = {
       emitError: false,
@@ -63,22 +62,23 @@ export class Gulpfile {
   /**
    * Typescript compile task
    */
-  @Task('ts>>compile')
+  @Task('ts::compile')
   tscompile(): any {
-    let sourcepaths = [];
+    let sourcepaths = ['typings/main.d.ts'];
     sourcepaths.push(this.config.paths.source);
     var tsResult = gulp.src(sourcepaths)
       .pipe(plumber())
-      .pipe(tsconfig())
       .pipe(ts(this.tsProject));
 
-    return tsResult.js
-      .pipe(gulp.dest(this.config.paths.dist));
+    return merge([
+      tsResult.dts.pipe(gulp.dest('definitions')),
+      tsResult.js.pipe(gulp.dest(this.config.paths.dist))
+    ]);
   }
 
   @SequenceTask('build') // this special annotation using "run-sequence" module to run returned tasks in sequence
   build() {
-    return [['clean>>dist', 'ts>>lint'], 'ts>>compile'];
+    return [['clean::dist', 'ts::lint'], 'ts::compile'];
   }
 
   @SequenceTask('watch') // this special annotation using "run-sequence" module to run returned tasks in sequence

@@ -11,6 +11,7 @@
   },
   "homepage": "http://molecuel.org",
   "main": "dist/index.js",
+  "typings": "definitions/index.d.ts",
   "dependencies": {
     "async": ">=0.0.1",
     "body-parser": ">=0.0.1",

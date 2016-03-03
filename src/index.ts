@@ -1,4 +1,3 @@
-/// <reference path="../typings/main.d.ts"/>
 'use strict';
 import path = require('path');
 import _ = require('lodash');
@@ -10,7 +9,6 @@ import mlcl_log = require('mlcl_log');
 import cookieParser = require('cookie-parser');
 import bodyparser = require('body-parser');
 import serveStatic = require('serve-static');
-import http = require('http');
 
 let methods = require('methods');
 
@@ -25,7 +23,7 @@ class mlcl_core extends events.EventEmitter {
   protected serveStatic: any;
   public log: any;
   public serverroles: any;
-  public servers: Array<http.Server>;
+  public servers: Array<any>;
   constructor(mconfig: any) {
     super();
     this.servers = [];
@@ -56,12 +54,28 @@ class mlcl_core extends events.EventEmitter {
       }
 
 
+      let sio = require('socket.io')();
       this.on('mlcl::core::module:init:start', this.markModuleInitStart);
       this.on('mlcl::core::module:init:complete', this.markModuleInitComplete);
       this.emit('mlcl::core::module:init:start', this, 'mlcl');
 
       this.on('mlcl::core::init:server', (molecuel, server) => {
-
+        let io = sio.attach(server);
+        io.use((socket, next) => {
+          console.log('use');
+          // console.log(socket.request);
+          next();
+        });
+        io.on('connection', function(socket) {
+          socket.on('authenticate', function() {
+            socket.authenticated = true;
+            socket.emit('authenticated');
+          });
+          socket.on('apitest', function() {
+            console.log('authenticated');
+            console.log(socket.authenticated);
+          });
+        });
       });
 
       _.extend(mlcl_core.instance, {
