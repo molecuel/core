@@ -10,7 +10,8 @@
     "node": ">=4.0.0"
   },
   "homepage": "http://molecuel.org",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "typings": "definitions/index.d.ts",
   "dependencies": {
     "async": ">=0.0.1",
     "body-parser": ">=0.0.1",
@@ -18,13 +19,26 @@
     "express-json": "1.0.0",
     "express-session": ">=0.0.1",
     "handlebars": ">=0.0.1",
-    "lodash": "^3.10.0",
+    "lodash": "^4.5.1",
     "methods": ">=0.0.1",
+    "mlcl_log": ">=0.9.0",
     "morgan": ">=0.0.1",
-    "serve-static": ">=0.0.1",
-    "mlcl_log": ">=0.9.0"
+    "serve-static": ">=0.0.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "del": "^2.2.0",
+    "gulp": "^3.9.1",
+    "gulp-plumber": "^1.1.0",
+    "gulp-tsconfig-files": "^0.2.5",
+    "gulp-tslint": "^4.3.2",
+    "gulp-typescript": "^2.12.0",
+    "gulp-util": "^3.0.7",
+    "gulpclass": "0.0.8",
+    "merge2": "^1.0.1",
+    "tslint": "^3.5.0",
+    "tslint-stylish": "^2.1.0-beta",
+    "typescript": "^1.8.2"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/molecuel/mlcl_core.git"
@@ -33,5 +47,11 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/molecuel/mlcl_core/issues"
+  },
+  "devconfig": {
+    "paths": {
+      "source": "src/**/*.ts",
+      "dist": "dist/"
+    }
   }
 }
