@@ -313,7 +313,7 @@ class mlcl_core extends events.EventEmitter {
             }
             staticPath = staticPath || modulePath;
             if (staticPath && currstatic.path) {
-              let cacheAge = item.cacheAge || '1d';
+              let cacheAge = currstatic.cacheAge || '1d';
               app.use(item.url, serveStatic(path.join(staticPath, currstatic.path), {
                 maxAge: cacheAge
               }));
