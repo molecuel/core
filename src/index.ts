@@ -273,6 +273,12 @@ class mlcl_core extends events.EventEmitter {
             methods.forEach((method) => {
               if (item[method] === true) {
                 app[method].apply(app, [item.url, (req, res, next) => {
+                  if (item.cacheAge) {
+                    res.set('cache-control', 'public, max-age=' + item.cacheAge);
+                  }
+                  if (item.cacheControl) {
+                    res.set('cache-control', item.cacheControl);
+                  }
                   this.dispatch(callbacks, req, res, next);
                 }]);
               }
@@ -307,7 +313,10 @@ class mlcl_core extends events.EventEmitter {
             }
             staticPath = staticPath || modulePath;
             if (staticPath && currstatic.path) {
-              app.use(item.url, serveStatic(path.join(staticPath, currstatic.path)));
+              let cacheAge = item.cacheAge || '1d';
+              app.use(item.url, serveStatic(path.join(staticPath, currstatic.path), {
+                maxAge: cacheAge
+              }));
             }
           });
         }
