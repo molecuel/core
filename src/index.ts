@@ -179,21 +179,6 @@ class mlcl_core extends events.EventEmitter {
   initApplication(app) {
     this.app = app;
 
-    // @todo rewrite this to make it configureable
-    let allowCrossDomain = function(req, res, next) {
-      res.header('Access-Control-Allow-Origin', '*');
-      res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-      res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
-
-      // intercept OPTIONS method
-      if ('OPTIONS' === req.method) {
-        res.sendStatus(200);
-      }
-      else {
-        next();
-      }
-    };
-
     // Because you're the type of developer who cares about this sort of thing!
     app.enable('strict routing');
     /**
@@ -239,7 +224,23 @@ class mlcl_core extends events.EventEmitter {
       // iterate over the routes defined in config
       _.each(mlcl_core.mlclconfig.molecuel.routes, (item: any) => {
         if (item.crossdomain) {
-          app.use(item.url, allowCrossDomain);
+          app.use(item.url, function(req, res, next) {
+            if (item.crossdomain.domains && _.isArray(item.crossdomain.domains)) {
+              res.header('Access-Control-Allow-Origin', item.crossdomain.domains.toString());
+            } else {
+              res.header('Access-Control-Allow-Origin', '*');
+            }
+            res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+            res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+
+            // intercept OPTIONS method
+            if ('OPTIONS' === req.method) {
+              res.sendStatus(200);
+            }
+            else {
+              next();
+            }
+          });
         }
         // Configuration may contain direct callbacks for registration
         methods.forEach((method) => {

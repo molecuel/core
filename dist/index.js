@@ -143,17 +143,6 @@ class mlcl_core extends events.EventEmitter {
     }
     initApplication(app) {
         this.app = app;
-        let allowCrossDomain = function (req, res, next) {
-            res.header('Access-Control-Allow-Origin', '*');
-            res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-            res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
-            if ('OPTIONS' === req.method) {
-                res.sendStatus(200);
-            }
-            else {
-                next();
-            }
-        };
         app.enable('strict routing');
         this.emit('mlcl::core::middlewareRegister:pre', this, app);
         app.use(bodyparser.json({ limit: '50mb' }));
@@ -176,7 +165,22 @@ class mlcl_core extends events.EventEmitter {
         if (mlcl_core.mlclconfig.molecuel.routes) {
             _.each(mlcl_core.mlclconfig.molecuel.routes, (item) => {
                 if (item.crossdomain) {
-                    app.use(item.url, allowCrossDomain);
+                    app.use(item.url, function (req, res, next) {
+                        if (item.crossdomain.domains && _.isArray(item.crossdomain.domains)) {
+                            res.header('Access-Control-Allow-Origin', item.crossdomain.domains.toString());
+                        }
+                        else {
+                            res.header('Access-Control-Allow-Origin', '*');
+                        }
+                        res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+                        res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+                        if ('OPTIONS' === req.method) {
+                            res.sendStatus(200);
+                        }
+                        else {
+                            next();
+                        }
+                    });
                 }
                 methods.forEach((method) => {
                     if (item[method] === true) {
