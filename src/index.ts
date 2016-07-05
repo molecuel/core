@@ -9,6 +9,7 @@ import mlcl_log = require('mlcl_log');
 import cookieParser = require('cookie-parser');
 import bodyparser = require('body-parser');
 import serveStatic = require('serve-static');
+import express = require('express');
 
 let methods = require('methods');
 
@@ -19,7 +20,7 @@ class mlcl_core extends events.EventEmitter {
   protected modules: any;
   protected booting: Array<Boolean>;
   public config: any;
-  public app: Express.Application;
+  public app: express.Application;
   protected serveStatic: any;
   public log: any;
   public serverroles: any;

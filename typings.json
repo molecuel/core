@@ -1,30 +1,33 @@
 {
-  "name": "mlcl_websockets",
-  "devDependencies": {
+  "name": "mlcl_mailer",
+  "dependencies": {
     "gulp": "github:typed-typings/npm-gulp#504da08753acdfe9dd2c415ab8fe36151e9645c1"
   },
-  "devDependencies": {},
-  "ambientDevDependencies": {
+  "globalDevDependencies": {
     "Q": "github:DefinitelyTyped/DefinitelyTyped/q/Q.d.ts#4de74cb527395c13ba20b438c3a7a419ad931f1c",
-    "async": "github:DefinitelyTyped/DefinitelyTyped/async/async.d.ts#4de74cb527395c13ba20b438c3a7a419ad931f1c",
-    "body-parser": "github:DefinitelyTyped/DefinitelyTyped/body-parser/body-parser.d.ts#9a2c50ea846ee6ae36feaea0accc77ae7b08a748",
-    "cookie-parser": "github:DefinitelyTyped/DefinitelyTyped/cookie-parser/cookie-parser.d.ts#e2001653ffbd99c2fc80a272ca80d8c958136de4",
+    "async": "registry:dt/async#1.4.2+20160602152629",
+    "body-parser": "registry:dt/body-parser#0.0.0+20160619023215",
+    "cookie-parser": "registry:dt/cookie-parser#1.3.4+20160316155526",
     "del": "github:DefinitelyTyped/DefinitelyTyped/del/del.d.ts#9027703c0bd831319dcdf7f3169f7a468537f448",
-    "express": "github:DefinitelyTyped/DefinitelyTyped/express/express.d.ts#dd638012d63e069f2c99d06ef4dcc9616a943ee4",
+    "elasticsearch": "registry:dt/elasticsearch#0.0.0+20160624072900",
+    "express": "registry:dt/express#4.0.0+20160317120654",
+    "express-serve-static-core": "registry:dt/express-serve-static-core#0.0.0+20160701212727",
     "glob": "github:DefinitelyTyped/DefinitelyTyped/glob/glob.d.ts#a14d724826174d1669d4df04c80f4838b7e71fdf",
     "gulp-plumber": "github:DefinitelyTyped/DefinitelyTyped/gulp-plumber/gulp-plumber.d.ts#4e950fdf8cbd5a8b001be640046f98935c08ce61",
     "gulp-tslint": "github:DefinitelyTyped/DefinitelyTyped/gulp-tslint/gulp-tslint.d.ts#ba3d78e4b5965cedf44a52e9c36fb72932352c16",
     "gulp-typescript": "github:DefinitelyTyped/DefinitelyTyped/gulp-typescript/gulp-typescript.d.ts#960fd659b456e2fb5d23c52794ffdc56b09796cf",
-    "handlebars": "github:DefinitelyTyped/DefinitelyTyped/handlebars/handlebars.d.ts#29171e8fbfbda8346f482ed3c54fc4f6da599af1",
-    "lodash": "github:DefinitelyTyped/DefinitelyTyped/lodash/lodash.d.ts#f696b8c0c2d6e2a31c794a3752f68de85dce4c2b",
+    "lodash": "registry:dt/lodash#3.10.0+20160619033623",
     "merge2": "github:DefinitelyTyped/DefinitelyTyped/merge2/merge2.d.ts#1034cc35525f804a2e9102f85e6efe4e5af317ad",
-    "mime": "github:DefinitelyTyped/DefinitelyTyped/mime/mime.d.ts#cb5206a8ac1c9a3ddfd126f5ecea6729b2361452",
+    "mime": "registry:dt/mime#0.0.0+20160316155526",
     "minimatch": "github:DefinitelyTyped/DefinitelyTyped/minimatch/minimatch.d.ts#a3900b896f7b3361b79f9b503224777619907d53",
+    "mocha": "registry:dt/mocha#2.2.5+20160317120654",
+    "mongodb": "registry:dt/mongodb#2.1.0+20160602142941",
     "node": "github:DefinitelyTyped/DefinitelyTyped/node/node.d.ts#48c1e3c1d6baefa4f1a126f188c27c4fefd36bff",
     "orchestrator": "github:DefinitelyTyped/DefinitelyTyped/orchestrator/orchestrator.d.ts#422b006d39dd37fc667ce5464967ee3ff6135092",
-    "serve-static": "github:DefinitelyTyped/DefinitelyTyped/serve-static/serve-static.d.ts#0fa4e9e61385646ea6a4cba2aef357353d2ce77f",
-    "socket.io": "github:DefinitelyTyped/DefinitelyTyped/socket.io/socket.io.d.ts#abc2bcfb8524b1e027e6298d3348012b5b06eda5",
+    "serve-static": "registry:dt/serve-static#0.0.0+20160606155157",
+    "should": "registry:dt/should#8.1.1+20160316155526",
     "vinyl": "github:DefinitelyTyped/DefinitelyTyped/vinyl/vinyl.d.ts#4ead81cc68ab1a2cd824de4394e1bda72b1b9f92",
-    "winston": "github:DefinitelyTyped/DefinitelyTyped/winston/winston.d.ts#fd9f16f862587bde12e5254e4c1e3d21ae94f9d1"
+    "when": "registry:dt/when#2.4.0+20160317120654",
+    "winston": "registry:dt/winston#0.0.0+20160417152829"
   }
 }

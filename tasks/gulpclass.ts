@@ -9,6 +9,7 @@ import * as tslint from 'gulp-tslint';
 import * as del from 'del';
 import * as fs from 'fs';
 import * as merge from 'merge2';
+import * as sourcemaps from 'gulp-sourcemaps';
 
 @Gulpclass()
 export class Gulpfile {
@@ -64,26 +65,44 @@ export class Gulpfile {
    */
   @Task('ts::compile')
   tscompile(): any {
-    let sourcepaths = ['typings/main.d.ts'];
+    let sourcepaths = ['typings/index.d.ts', 'typings/main.d.ts', 'typings_override/index.d.ts'];
     sourcepaths.push(this.config.paths.source);
-    var tsResult = gulp.src(sourcepaths)
+    let tsResult = gulp.src(sourcepaths)
+      .pipe(sourcemaps.init())
+      .pipe(ts(this.tsProject));
+
+    return merge([
+      tsResult.dts.pipe(gulp.dest(this.config.paths.dist)),
+      tsResult.js
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest(this.config.paths.dist))
+    ]);
+  }
+
+  /**
+   * Typescript compile task
+   */
+  @Task('ts::test::compile')
+  tstestcompile(): any {
+    let sourcepaths = ['dist/index.d.ts', 'typings/index.d.ts', 'typings/main.d.ts', 'typings_override/index.d.ts'];
+    sourcepaths.push(this.config.paths.testsource);
+    let tsResult = gulp.src(sourcepaths)
       .pipe(plumber())
       .pipe(ts(this.tsProject));
 
     return merge([
-      tsResult.dts.pipe(gulp.dest('definitions')),
-      tsResult.js.pipe(gulp.dest(this.config.paths.dist))
+      tsResult.js.pipe(gulp.dest('test/'))
     ]);
   }
 
   @SequenceTask('build') // this special annotation using "run-sequence" module to run returned tasks in sequence
   build() {
-    return [['clean::dist', 'ts::lint'], 'ts::compile'];
+    return [['clean::dist', 'ts::lint'], 'ts::compile', 'ts::test::compile'];
   }
 
   @SequenceTask('watch') // this special annotation using "run-sequence" module to run returned tasks in sequence
   watch(): any {
-    return gulp.watch(this.config.paths.source, ['build']);
+    return gulp.watch([this.config.paths.source, this.config.paths.testsource], ['build']);
   }
 
   @SequenceTask('default')

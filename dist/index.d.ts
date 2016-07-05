@@ -1,5 +1,6 @@
 import url = require('url');
 import events = require('events');
+import express = require('express');
 declare class mlcl_core extends events.EventEmitter {
     static mlclconfig: any;
     static rootPath: any;
@@ -7,7 +8,7 @@ declare class mlcl_core extends events.EventEmitter {
     protected modules: any;
     protected booting: Array<Boolean>;
     config: any;
-    app: Express.Application;
+    app: express.Application;
     protected serveStatic: any;
     log: any;
     serverroles: any;
