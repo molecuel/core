@@ -191,7 +191,7 @@ class mlcl_core extends events.EventEmitter {
     // https://groups.google.com/forum/#!msg/express-js/iP2VyhkypHo/5AXQiYN3RPcJ
     // http://expressjs.com/api.html#bodyParser
     // let bodyparser = require('body-parser');
-    app.use(bodyparser.json({ limit: '50mb' }));
+    app.use(bodyparser.json({ limit: 524288000 }));
     app.use(bodyparser.urlencoded({ extended: true }));
 
     app.use(cookieParser());

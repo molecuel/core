@@ -145,7 +145,7 @@ class mlcl_core extends events.EventEmitter {
         this.app = app;
         app.enable('strict routing');
         this.emit('mlcl::core::middlewareRegister:pre', this, app);
-        app.use(bodyparser.json({ limit: '50mb' }));
+        app.use(bodyparser.json({ limit: 524288000 }));
         app.use(bodyparser.urlencoded({ extended: true }));
         app.use(cookieParser());
         if (mlcl_core.mlclconfig.molecuel.log.pathdebug) {
