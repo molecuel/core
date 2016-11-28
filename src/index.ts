@@ -187,6 +187,15 @@ class mlcl_core extends events.EventEmitter {
      */
     this.emit('mlcl::core::middlewareRegister:pre', this, app);
 
+    // quick workaround for AWS SNS OPTIONS
+    // @todo body parser for each route
+    app.use(function(req, res, next) {
+      if (req.headers['x-amz-sns-message-type']) {
+          req.headers['content-type'] = 'application/json;charset=UTF-8';
+      }
+      next();
+    });
+
     // body parser
     // https://groups.google.com/forum/#!msg/express-js/iP2VyhkypHo/5AXQiYN3RPcJ
     // http://expressjs.com/api.html#bodyParser

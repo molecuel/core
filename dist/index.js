@@ -145,6 +145,12 @@ class mlcl_core extends events.EventEmitter {
         this.app = app;
         app.enable('strict routing');
         this.emit('mlcl::core::middlewareRegister:pre', this, app);
+        app.use(function (req, res, next) {
+            if (req.headers['x-amz-sns-message-type']) {
+                req.headers['content-type'] = 'application/json;charset=UTF-8';
+            }
+            next();
+        });
         app.use(bodyparser.json({ limit: 524288000 }));
         app.use(bodyparser.urlencoded({ extended: true }));
         app.use(cookieParser());
