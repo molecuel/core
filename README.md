@@ -1,15 +1,59 @@
-# mlcl_core
+# Dependency injection for Typescript
 
-Molecuel base server module. This modules activates the basic express.js features to the molecuel CMS boilerplate.
+mlcl_di is a dependency injection module mainly created for the Molecuel application framework but can be used with any Node project. It's highly inspired by the Spring java framework. The development is focused on simple usage and good code readability.
 
-## Logging
+We also developed an option to define and reuse Singleton instances in your code. We are using the latest features from Typescript, ECMAScript and Reflect Metadata.
 
-To activate logging add
-molecuel.log.pathdebug = true;
-to your config.
+## Example
 
-## Events
+```js
+import {di, injectable, singleton, component} from 'mlcl_di';
 
-- mlcl::core::init:server:
-Will be emitted when a server listener instance has been created
-Arguments: (molecuel: Molecuel, server: Express.e)
+@injectable
+class InnerClass {
+  constructor() {
+
+  }
+}
+@injectable
+class SomeClass {
+  inside: InnerClass;
+  constructor(inj: InnerClass) {
+    this.inside = inj;
+  }
+  someMethod(){
+    console.log('did something.');
+  }
+}
+
+@singleton
+class MySingletonClass {
+  prop: any;
+  constructor(inj: SomeClass) {
+    this.prop = inj || false;
+  }
+}
+
+@component
+class MyComponent {
+  prop: any;
+  constructor(inj: SomeClass) {
+    this.prop = inj || false;
+  }
+}
+
+@component
+@singleton
+class MySingletonComponent {
+  prop: any;
+  constructor(inj: SomeClass) {
+    this.prop = inj || false;
+  }
+}
+// automatically initializes all components and it's dependencies
+di.bootstrap();
+```` 
+
+## API Documentation
+
+The current API Documentation can be found on <https://molecuel.github.io/mlcl_di/>

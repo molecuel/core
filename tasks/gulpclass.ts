@@ -10,6 +10,8 @@ import * as del from 'del';
 import * as fs from 'fs';
 import * as merge from 'merge2';
 import * as sourcemaps from 'gulp-sourcemaps';
+import * as typedoc from 'gulp-typedoc';
+import * as ghPages from 'gulp-gh-pages';
 
 @Gulpclass()
 export class Gulpfile {
@@ -45,6 +47,22 @@ export class Gulpfile {
   }
 
   /**
+   * Clean docs directory
+   */
+  @Task('clean::docs')
+  cleandocs(cb: Function) {
+    return del(['./docs/**'], cb);
+  }
+
+  /**
+   * Clean .publish directory
+   */
+  @Task('clean::.publish')
+  cleanpubl(cb: Function) {
+    return del(['./.publish/**'], cb);
+  }
+
+  /**
    * Typescript lint task
    */
   @Task('ts::lint')
@@ -69,7 +87,7 @@ export class Gulpfile {
     sourcepaths.push(this.config.paths.source);
     let tsResult = gulp.src(sourcepaths)
       .pipe(sourcemaps.init())
-      .pipe(ts(this.tsProject));
+      .pipe(this.tsProject()));
 
     return merge([
       tsResult.dts.pipe(gulp.dest(this.config.paths.dist)),
@@ -88,11 +106,42 @@ export class Gulpfile {
     sourcepaths.push(this.config.paths.testsource);
     let tsResult = gulp.src(sourcepaths)
       .pipe(plumber())
-      .pipe(ts(this.tsProject));
+      .pipe(this.tsProject());
 
     return merge([
       tsResult.js.pipe(gulp.dest('test/'))
     ]);
+  }
+
+  @Task('ghpages::deploy')
+  ghpagesdeploy() {
+    return gulp.src('./docs/**/*')
+      .pipe(ghPages());
+  }
+
+  @Task('docs')
+  docs() {
+    return gulp
+            .src(["./src/*.ts"])
+            .pipe(typedoc({
+            // TypeScript options (see typescript docs) 
+            target: "es6",
+            // includeDeclarations: true,
+ 
+            // Output options (see typedoc docs) 
+            out: "./docs",
+            mode: "file",
+            disableOutputCheck: false,
+ 
+            // TypeDoc options (see typedoc docs) 
+            name: "tsvalidate",
+            ignoreCompilerErrors: true
+        })); 
+  }
+
+  @SequenceTask('deploy') // this special annotation using "run-sequence" module to run returned tasks in sequence
+  deploy() {
+    return ['docs', 'ghpages::deploy', 'clean::docs', 'clean::.publish'];
   }
 
   @SequenceTask('build') // this special annotation using "run-sequence" module to run returned tasks in sequence

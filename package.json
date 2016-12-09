@@ -1,40 +1,43 @@
 {
   "name": "mlcl_core",
-  "version": "0.9.9",
-  "description": "Core module for molecuel cms",
-  "keywords": [
-    "cms",
-    "module"
-  ],
-  "engines": {
-    "node": ">=4.0.0"
-  },
-  "homepage": "http://molecuel.org",
+  "version": "2.0.0",
+  "description": "Core module for molecuel Application framework",
   "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
-  "dependencies": {
-    "async": ">=0.0.1",
-    "body-parser": ">=0.0.1",
-    "cookie-parser": ">=0.0.1",
-    "express": "^4.14.0",
-    "express-json": "1.0.0",
-    "express-session": ">=0.0.1",
-    "handlebars": ">=0.0.1",
-    "lodash": "^4.5.1",
-    "methods": ">=0.0.1",
-    "mlcl_log": ">=0.9.0",
-    "morgan": ">=0.0.1",
-    "serve-static": ">=0.0.1"
+  "scripts": {
+    "test": "mocha -R spec"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/molecuel/mlcl_core.git"
+  },
+  "keywords": [],
+  "author": "Dominic Böttger <Dominic.Boettger@inspirationlabs.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/molecuel/mlcl_core/issues"
+  },
+  "typings": "dist/index.d.ts",
+  "homepage": "https://github.com/molecuel/mlcl_core#readme",
   "devDependencies": {
+    "@types/gulp": "^3.8.32",
+    "@types/gulp-plumber": "^0.0.29",
+    "@types/gulp-tslint": "^3.6.30",
+    "@types/gulp-typescript": "^0.0.32",
+    "@types/lodash": "^4.14.42",
+    "@types/merge2": "^0.3.29",
+    "@types/mocha": "^2.2.33",
+    "@types/should": "^8.1.30",
+    "@types/when": "^2.4.28",
     "assert": ">=0.0.1",
     "del": "^2.2.0",
     "gulp": "^3.9.1",
+    "gulp-gh-pages": "^0.5.4",
     "gulp-plumber": "^1.1.0",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-tsconfig-files": "^0.2.5",
     "gulp-tslint": "^4.3.2",
-    "gulp-typescript": "^2.12.0",
+    "gulp-typedoc": "^2.0.1",
+    "gulp-typescript": "^3.1.3",
     "gulp-util": "^3.0.7",
     "gulpclass": "0.0.8",
     "merge2": "^1.0.1",
@@ -42,16 +45,14 @@
     "should": ">= 0.0.1",
     "tslint": "^3.5.0",
     "tslint-stylish": "^2.1.0-beta",
-    "typescript": "^1.8.2"
+    "typedoc": "^0.5.1",
+    "typescript": "^2.0.0"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/molecuel/mlcl_core.git"
-  },
-  "author": "Dominic Böttger",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/molecuel/mlcl_core/issues"
+  "dependencies": {
+    "@reactivex/rxjs": "^5.0.0-rc.5",
+    "lodash": "^4.13.1",
+    "mlcl_di": "^0.0.2",
+    "reflect-metadata": "^0.1.3"
   },
   "devconfig": {
     "paths": {

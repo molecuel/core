@@ -11,10 +11,6 @@
     "emitDecoratorMetadata": true
   },
   "files": [
-    "typings/index.d.ts",
-    "src/lib/util.ts",
-    "src/index.ts",
-    "src/config.ts"
   ],
   "exclude": [],
   "atom": {
