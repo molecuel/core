@@ -49,12 +49,9 @@ let MlclStream = class MlclStream {
         let observables = this.observerFactories.sort(function (a, b) {
             return a.priority - b.priority;
         });
-        console.log(inputObservable);
         for (let observ of observables) {
-            console.log(observ.factoryMethod);
             inputObservable.flatMap(observ.factoryMethod);
         }
-        console.log(inputObservable);
         return inputObservable;
     }
     addObserverFactory(observerFactory, priority = 50) {

@@ -79,12 +79,9 @@ export class MlclStream {
     let observables: Array<ObserverFactoryElement> = this.observerFactories.sort(function(a: ObserverFactoryElement, b: ObserverFactoryElement) {
       return a.priority - b.priority;
     });
-    console.log(inputObservable);
     for(let observ of observables) {
-      console.log(observ.factoryMethod);
       inputObservable.flatMap(observ.factoryMethod);
     }
-    console.log(inputObservable);
     return inputObservable;
   }
 
