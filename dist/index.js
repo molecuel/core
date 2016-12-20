@@ -13,6 +13,7 @@ const rxjs_1 = require("@reactivex/rxjs");
 const mlcl_di_1 = require("mlcl_di");
 let MlclCore = class MlclCore {
     constructor() {
+        this.streams = new Map();
         this.subjects = new Map();
     }
     createSubject(topic) {
@@ -25,12 +26,58 @@ let MlclCore = class MlclCore {
             return subject;
         }
     }
+    createStream(name) {
+        let currentStream = this.streams.get(name);
+        if (!currentStream) {
+            currentStream = new MlclStream(name);
+            this.streams.set(name, currentStream);
+        }
+        return currentStream;
+    }
 };
 MlclCore = __decorate([
     mlcl_di_1.singleton,
     __metadata("design:paramtypes", [])
 ], MlclCore);
 exports.MlclCore = MlclCore;
+let MlclStream = class MlclStream {
+    constructor(name) {
+        this.observerFactories = new Array();
+        this.name = name;
+    }
+    renderStream(inputObservable) {
+        let observables = this.observerFactories.sort(function (a, b) {
+            return a.priority - b.priority;
+        });
+        console.log(inputObservable);
+        for (let observ of observables) {
+            console.log(observ.factoryMethod);
+            inputObservable.flatMap(observ.factoryMethod);
+        }
+        console.log(inputObservable);
+        return inputObservable;
+    }
+    addObserverFactory(observerFactory, priority = 50) {
+        let factoryElement = new ObserverFactoryElement(priority, observerFactory);
+        this.observerFactories.push(factoryElement);
+    }
+};
+MlclStream = __decorate([
+    mlcl_di_1.injectable,
+    __metadata("design:paramtypes", [String])
+], MlclStream);
+exports.MlclStream = MlclStream;
+let ObserverFactoryElement = class ObserverFactoryElement {
+    constructor(priority = 50, factoryMethod) {
+        this.priority = priority;
+        this.factoryMethod = factoryMethod;
+    }
+};
+ObserverFactoryElement = __decorate([
+    mlcl_di_1.injectable,
+    __metadata("design:paramtypes", [Number, Function])
+], ObserverFactoryElement);
+exports.ObserverFactoryElement = ObserverFactoryElement;
 let MlclMessage = class MlclMessage {
 };
 MlclMessage = __decorate([
