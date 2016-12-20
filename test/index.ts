@@ -53,7 +53,6 @@ describe('mlcl_core', function() {
       });
 
       let obs2 = x => Observable.create(y => {
-        console.log('obs2');
         setTimeout(function() {
           if(!obs1Success) {
              obs2Success = true;

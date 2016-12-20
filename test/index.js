@@ -51,7 +51,6 @@ describe('mlcl_core', function () {
                 }, 100);
             });
             let obs2 = x => rxjs_1.Observable.create(y => {
-                console.log('obs2');
                 setTimeout(function () {
                     if (!obs1Success) {
                         obs2Success = true;
