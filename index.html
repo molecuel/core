@@ -64,59 +64,53 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<h1 id="dependency-injection-for-typescript">Dependency injection for Typescript</h1>
-				<p>mlcl_di is a dependency injection module mainly created for the Molecuel application framework but can be used with any Node project. It&#39;s highly inspired by the Spring java framework. The development is focused on simple usage and good code readability.</p>
-				<p>We also developed an option to define and reuse Singleton instances in your code. We are using the latest features from Typescript, ECMAScript and Reflect Metadata.</p>
-				<h2 id="example">Example</h2>
-				<pre><code class="lang-js"><span class="hljs-keyword">import</span> {di, injectable, singleton, component} <span class="hljs-keyword">from</span> <span class="hljs-string">'mlcl_di'</span>;
-
-@injectable
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">InnerClass</span> </span>{
-  <span class="hljs-keyword">constructor</span>() {
-
-  }
-}
-@injectable
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SomeClass</span> </span>{
-  inside: InnerClass;
-  <span class="hljs-keyword">constructor</span>(inj: InnerClass) {
-    <span class="hljs-keyword">this</span>.inside = inj;
-  }
-  someMethod(){
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'did something.'</span>);
-  }
-}
-
-@singleton
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MySingletonClass</span> </span>{
-  prop: any;
-  <span class="hljs-keyword">constructor</span>(inj: SomeClass) {
-    <span class="hljs-keyword">this</span>.prop = inj || <span class="hljs-literal">false</span>;
-  }
-}
-
-@component
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyComponent</span> </span>{
-  prop: any;
-  <span class="hljs-keyword">constructor</span>(inj: SomeClass) {
-    <span class="hljs-keyword">this</span>.prop = inj || <span class="hljs-literal">false</span>;
-  }
-}
-
-@component
-@singleton
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MySingletonComponent</span> </span>{
-  prop: any;
-  <span class="hljs-keyword">constructor</span>(inj: SomeClass) {
-    <span class="hljs-keyword">this</span>.prop = inj || <span class="hljs-literal">false</span>;
-  }
-}
-<span class="hljs-comment">// automatically initializes all components and it's dependencies</span>
-di.bootstrap();
-<span class="hljs-string">`</span>
-</code></pre>
+				<h1 id="core-module-for-molecuel-application-framework">Core module for molecuel application Framework</h1>
+				<p>mlcl_core is the core module for the molecuel application framework. It&#39;s initialization is based on the mlcl_di Typescript dependency injection module.</p>
+				<p>The version 2.x branch supports Subjects and streams based on rxjs. The core module is initialized as real Singleton based on the dependency injection module.</p>
+				<p>### </p>
+				<h3 id="stream-example">Stream example</h3>
+				<p>```ts
+					import {di} from &#39;mlcl_di&#39;;
+					import {Subject, Observable} from &#39;@reactivex/rxjs&#39;;
+					di.bootstrap();
+					core = di.getInstance(&#39;MlclCore&#39;)
+					let testStream = core.createStream(&#39;teststream&#39;);
+					let obs1 = x=&gt; Observable.create(y =&gt; {
+					setTimeout(function() {
+					if(obs2Success) {
+					obs1Success = true;
+					y.next(x);
+					} else {
+					y.error(new Error(&#39;Wrong priority&#39;));
+					}
+					y.complete();
+					}, 100);
+				});</p>
+				<p>let obs2 = x =&gt; Observable.create(y =&gt; {
+					setTimeout(function() {
+					if(!obs1Success) {
+					obs2Success = true;
+					x.firstname = &#39;Dominic2&#39;;
+					y.next(x);
+					} else {
+					y.error(new Error(&#39;Wrong priority&#39;));
+					}
+					y.complete();
+					}, 500);
+					});
+					testStream.addObserverFactory(obs1, 50);
+				testStream.addObserverFactory(obs2, 10);</p>
+				<p>let myobs = Observable.from([{firstname: &#39;Dominic&#39;}]);
+					myobs = testStream.renderStream(myobs);
+					myobs.subscribe(function(res) {
+					console.log(&#39;got result&#39;);
+					}, function(err) {
+					should.not.exist(err);
+					}, function() {
+					console.log(&#39;execution of all observables completed&#39;);
+				});</p>
 				<h2 id="api-documentation">API Documentation</h2>
-				<p>The current API Documentation can be found on <a href="https://molecuel.github.io/mlcl_di/">https://molecuel.github.io/mlcl_di/</a></p>
+				<p>The current API Documentation can be found on <a href="https://molecuel.github.io/mlcl_core/">https://molecuel.github.io/mlcl_core/</a></p>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
