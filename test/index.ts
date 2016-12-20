@@ -56,6 +56,7 @@ describe('mlcl_core', function() {
         setTimeout(function() {
           if(!obs1Success) {
              obs2Success = true;
+             x.firstname = 'Dominic2';
              y.next(x);
           } else {
             y.error(new Error('Wrong priority'));
@@ -70,7 +71,7 @@ describe('mlcl_core', function() {
       let myobs = Observable.from([{firstname: 'Dominic'}]);
       testStream.renderStream(myobs);
       myobs.subscribe(function(res) {
-        assert(res.firstname === 'Dominic');
+        assert(res.firstname === 'Dominic2');
       }, function(err) {
         should.not.exist(err);
       }, function() {
