@@ -66,49 +66,69 @@
 			<div class="tsd-panel tsd-typography">
 				<h1 id="core-module-for-molecuel-application-framework">Core module for molecuel application Framework</h1>
 				<p>mlcl_core is the core module for the molecuel application framework. It&#39;s initialization is based on the mlcl_di Typescript dependency injection module.</p>
-				<p>The version 2.x branch supports Subjects and streams based on rxjs. The core module is initialized as real Singleton based on the dependency injection module.</p>
-				<p>### </p>
+				<p>The version 2.x branch supports Subjects and streams based on rxjs.
+					Streams can be used as DataStreams. For example for save handlers and much more.
+				Subjects can be used as EventEmitters (but should not be used too much).</p>
+				<p>The core module is initialized as real Singleton based on the dependency injection module.</p>
+				<h3 id="subject-example">Subject example</h3>
+				<pre><code class="lang-js"><span class="hljs-keyword">import</span> {di} <span class="hljs-keyword">from</span> <span class="hljs-string">'mlcl_di'</span>;
+<span class="hljs-keyword">import</span> {Subject, Observable} <span class="hljs-keyword">from</span> <span class="hljs-string">'@reactivex/rxjs'</span>;
+<span class="hljs-keyword">import</span> {MlclCore, MlclMessage} <span class="hljs-keyword">from</span> <span class="hljs-string">'../dist'</span>;
+di.bootstrap(MlclCore);
+<span class="hljs-keyword">let</span> core = di.getInstance(<span class="hljs-string">'MlclCore'</span>)
+<span class="hljs-keyword">let</span> initSubject = core.createSubject(<span class="hljs-string">'init'</span>);
+initSubject.subscribe(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">msg: MlclMessage</span>) </span>{
+    <span class="hljs-built_in">console</span>.log(msg);
+});
+<span class="hljs-keyword">let</span> msg = <span class="hljs-keyword">new</span> MlclMessage();
+msg.topic= <span class="hljs-string">'test'</span>;
+msg.message = <span class="hljs-string">'hello world'</span>;
+initSubject.next(msg);
+</code></pre>
 				<h3 id="stream-example">Stream example</h3>
-				<p>```ts
-					import {di} from &#39;mlcl_di&#39;;
-					import {Subject, Observable} from &#39;@reactivex/rxjs&#39;;
-					di.bootstrap();
-					core = di.getInstance(&#39;MlclCore&#39;)
-					let testStream = core.createStream(&#39;teststream&#39;);
-					let obs1 = x=&gt; Observable.create(y =&gt; {
-					setTimeout(function() {
-					if(obs2Success) {
-					obs1Success = true;
-					y.next(x);
-					} else {
-					y.error(new Error(&#39;Wrong priority&#39;));
-					}
-					y.complete();
-					}, 100);
-				});</p>
-				<p>let obs2 = x =&gt; Observable.create(y =&gt; {
-					setTimeout(function() {
-					if(!obs1Success) {
-					obs2Success = true;
-					x.firstname = &#39;Dominic2&#39;;
-					y.next(x);
-					} else {
-					y.error(new Error(&#39;Wrong priority&#39;));
-					}
-					y.complete();
-					}, 500);
-					});
-					testStream.addObserverFactory(obs1, 50);
-				testStream.addObserverFactory(obs2, 10);</p>
-				<p>let myobs = Observable.from([{firstname: &#39;Dominic&#39;}]);
-					myobs = testStream.renderStream(myobs);
-					myobs.subscribe(function(res) {
-					console.log(&#39;got result&#39;);
-					}, function(err) {
-					should.not.exist(err);
-					}, function() {
-					console.log(&#39;execution of all observables completed&#39;);
-				});</p>
+				<pre><code class="lang-js"><span class="hljs-keyword">import</span> {di} <span class="hljs-keyword">from</span> <span class="hljs-string">'mlcl_di'</span>;
+<span class="hljs-keyword">import</span> {Subject, Observable} <span class="hljs-keyword">from</span> <span class="hljs-string">'@reactivex/rxjs'</span>;
+<span class="hljs-keyword">import</span> {MlclCore, MlclStream} <span class="hljs-keyword">from</span> <span class="hljs-string">'../dist'</span>;
+di.bootstrap(MlclCore);
+<span class="hljs-keyword">let</span> core = di.getInstance(<span class="hljs-string">'MlclCore'</span>)
+<span class="hljs-keyword">let</span> testStream = core.createStream(<span class="hljs-string">'teststream'</span>);
+<span class="hljs-keyword">let</span> obs1 = <span class="hljs-function"><span class="hljs-params">x</span>=&gt;</span> Observable.create(<span class="hljs-function"><span class="hljs-params">y</span> =&gt;</span> {
+  setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">if</span>(obs2Success) {
+      obs1Success = <span class="hljs-literal">true</span>;
+      y.next(x);
+    } <span class="hljs-keyword">else</span> {
+      y.error(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Wrong priority'</span>));
+    }
+    y.complete();
+  }, <span class="hljs-number">100</span>);
+});
+
+<span class="hljs-keyword">let</span> obs2 = <span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> Observable.create(<span class="hljs-function"><span class="hljs-params">y</span> =&gt;</span> {
+  setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">if</span>(!obs1Success) {
+      obs2Success = <span class="hljs-literal">true</span>;
+      x.firstname = <span class="hljs-string">'Dominic2'</span>;
+      y.next(x);
+    } <span class="hljs-keyword">else</span> {
+      y.error(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Wrong priority'</span>));
+    }
+    y.complete();
+  }, <span class="hljs-number">500</span>);
+});
+testStream.addObserverFactory(obs1, <span class="hljs-number">50</span>);
+testStream.addObserverFactory(obs2, <span class="hljs-number">10</span>);
+
+<span class="hljs-keyword">let</span> myobs = Observable.from([{<span class="hljs-attr">firstname</span>: <span class="hljs-string">'Dominic'</span>}]);
+myobs = testStream.renderStream(myobs);
+myobs.subscribe(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">res</span>) </span>{
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'got result'</span>);
+}, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err</span>) </span>{
+  should.not.exist(err);
+}, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'execution of all observables completed'</span>);
+});
+</code></pre>
 				<h2 id="api-documentation">API Documentation</h2>
 				<p>The current API Documentation can be found on <a href="https://molecuel.github.io/mlcl_core/">https://molecuel.github.io/mlcl_core/</a></p>
 			</div>
