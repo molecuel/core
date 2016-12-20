@@ -50,7 +50,7 @@ let MlclStream = class MlclStream {
             return a.priority - b.priority;
         });
         for (let observ of observables) {
-            inputObservable.flatMap(observ.factoryMethod);
+            inputObservable = inputObservable.flatMap(observ.factoryMethod);
         }
         return inputObservable;
     }

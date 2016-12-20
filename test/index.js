@@ -69,7 +69,7 @@ describe('mlcl_core', function () {
         });
         it('should stream the data through the registered observables by priority', function (done) {
             let myobs = rxjs_1.Observable.from([{ firstname: 'Dominic' }]);
-            testStream.renderStream(myobs);
+            myobs = testStream.renderStream(myobs);
             myobs.subscribe(function (res) {
                 assert(res.firstname === 'Dominic2');
             }, function (err) {
