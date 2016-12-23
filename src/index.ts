@@ -1,7 +1,7 @@
 'use strict';
 import 'reflect-metadata';
 import {Observable, Subject} from '@reactivex/rxjs';
-import {singleton, injectable} from 'mlcl_di';
+import {singleton, injectable} from '@molecuel/di';
 
 @singleton
 export class MlclCore {

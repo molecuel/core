@@ -51,7 +51,7 @@
   "dependencies": {
     "@reactivex/rxjs": "^5.0.0-rc.5",
     "lodash": "^4.13.1",
-    "mlcl_di": "^0.0.2",
+    "@molecuel/di": "^0.0.2",
     "reflect-metadata": "^0.1.3"
   },
   "devconfig": {

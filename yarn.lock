@@ -2,6 +2,13 @@
 # yarn lockfile v1
 
 
+"@molecuel/di@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@molecuel/di/-/di-0.0.2.tgz#734bdb24b85cbb035ba8d9aa0a02ccf7b4d8bbd8"
+  dependencies:
+    lodash "^4.13.1"
+    reflect-metadata "^0.1.3"
+
 "@reactivex/rxjs@^5.0.0-rc.5":
   version "5.0.0-rc.5"
   resolved "https://registry.yarnpkg.com/@reactivex/rxjs/-/rxjs-5.0.0-rc.5.tgz#7d04df1d60b04aebe9a38627de2616b4aed920b0"
@@ -1418,13 +1425,6 @@ mkdirp@0.5.1, mkdirp@^0.5.0:
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.5.1.tgz#30057438eac6cf7f8c4767f38648d6697d75c903"
   dependencies:
     minimist "0.0.8"
-
-mlcl_di@^0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/mlcl_di/-/mlcl_di-0.0.2.tgz#a74d1856b233c779649d82e290b19c597e38f7e1"
-  dependencies:
-    lodash "^4.13.1"
-    reflect-metadata "^0.1.3"
 
 mocha@*:
   version "3.2.0"

@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 require("reflect-metadata");
 const rxjs_1 = require("@reactivex/rxjs");
-const mlcl_di_1 = require("mlcl_di");
+const di_1 = require("@molecuel/di");
 let MlclCore = class MlclCore {
     constructor() {
         this.streams = new Map();
@@ -36,7 +36,7 @@ let MlclCore = class MlclCore {
     }
 };
 MlclCore = __decorate([
-    mlcl_di_1.singleton,
+    di_1.singleton,
     __metadata("design:paramtypes", [])
 ], MlclCore);
 exports.MlclCore = MlclCore;
@@ -60,7 +60,7 @@ let MlclStream = class MlclStream {
     }
 };
 MlclStream = __decorate([
-    mlcl_di_1.injectable,
+    di_1.injectable,
     __metadata("design:paramtypes", [String])
 ], MlclStream);
 exports.MlclStream = MlclStream;
@@ -71,14 +71,14 @@ let ObserverFactoryElement = class ObserverFactoryElement {
     }
 };
 ObserverFactoryElement = __decorate([
-    mlcl_di_1.injectable,
+    di_1.injectable,
     __metadata("design:paramtypes", [Number, Function])
 ], ObserverFactoryElement);
 exports.ObserverFactoryElement = ObserverFactoryElement;
 let MlclMessage = class MlclMessage {
 };
 MlclMessage = __decorate([
-    mlcl_di_1.injectable,
+    di_1.injectable,
     __metadata("design:paramtypes", [])
 ], MlclMessage);
 exports.MlclMessage = MlclMessage;

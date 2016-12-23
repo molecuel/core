@@ -2,7 +2,7 @@
 require("reflect-metadata");
 const should = require("should");
 const assert = require("assert");
-const mlcl_di_1 = require("mlcl_di");
+const di_1 = require("@molecuel/di");
 const rxjs_1 = require("@reactivex/rxjs");
 const dist_1 = require("../dist");
 should();
@@ -11,8 +11,8 @@ describe('mlcl_core', function () {
         let initSubject;
         let core;
         before(function () {
-            mlcl_di_1.di.bootstrap(dist_1.MlclCore);
-            core = mlcl_di_1.di.getInstance('MlclCore');
+            di_1.di.bootstrap(dist_1.MlclCore);
+            core = di_1.di.getInstance('MlclCore');
             initSubject = core.createSubject('init');
         });
         it('should get a message from the init subject', function (done) {
@@ -32,7 +32,7 @@ describe('mlcl_core', function () {
         let obs1Success;
         let obs2Success;
         before(function () {
-            core = mlcl_di_1.di.getInstance('MlclCore');
+            core = di_1.di.getInstance('MlclCore');
         });
         it('should create a new Stream', function () {
             testStream = core.createStream('teststream');
