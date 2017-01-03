@@ -72,6 +72,63 @@ myobs.subscribe(function(res) {
 });
 ```
 
+### Init system
+
+The init system is based on the stream example above but can be combined with a method decorator on a injectable class to set different init methods.
+
+For example database initialization can have a higher priority ( lower init value ) or port listen directives can have higher priorities.
+
+Code example how it works internall ( this can be used by every molecuel module and this is just example code).
+
+```js
+import {di} from 'mlcl_di';
+import {Subject, Observable} from '@reactivex/rxjs';
+import {MlclCore, MlclMessage} from '../dist';
+di.bootstrap(MlclCore);
+let core = di.getInstance('MlclCore')
+
+// this is normally part of a module and can be added via imports
+@injectable
+class MyInitTestClass {
+  // sets the init priority to 20
+  @init(20)
+  public myinit(x) {
+    return Observable.create(y => {
+      setTimeout(function() {
+        if(obs2Success) {
+          obs1Success = true;
+          y.next(x);
+        } else {
+          y.error(new Error('Wrong priority'));
+        }
+        y.complete();
+      }, 100);
+    });
+  }
+}
+// this is normally part of a module and can be added via imports
+@injectable
+class MyInitTestClass2 {
+  // sets the init priority to 10
+  @init(10)
+  public myini2t(x) {
+    return Observable.create(y => {
+      setTimeout(function() {
+        if(!obs1Success) {
+          obs2Success = true;
+          y.next(x);
+        } else {
+          y.error(new Error('Wrong priority'));
+        }
+        y.complete();
+      }, 100);
+    });
+  }
+}
+// this is the important part to run the complete init stream of the molecuel framework
+await core.init();
+```
+
 ## API Documentation
 
 The current API Documentation can be found on <https://molecuel.github.io/mlcl_core/>
