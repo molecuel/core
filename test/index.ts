@@ -3,29 +3,29 @@ import 'reflect-metadata';
 import should = require('should');
 import assert = require('assert');
 import * as _ from 'lodash';
-import {di} from '@molecuel/di';
+import {di, injectable} from '@molecuel/di';
 import {Subject, Observable} from '@reactivex/rxjs';
-import {MlclCore, MlclMessage, MlclStream} from '../dist';
+import {MlclCore, MlclMessage, MlclStream, init} from '../dist';
 should();
 
 describe('mlcl_core', function() {
   describe('Subject', function() {
-    let initSubject: Subject<MlclMessage>;
+    let testSubject: Subject<MlclMessage>;
     let core: MlclCore;
     before(function() {
       di.bootstrap(MlclCore);
       core = di.getInstance('MlclCore');
-      initSubject = core.createSubject('init');
+      testSubject = core.createSubject('test');
     });
-    it('should get a message from the init subject', function(done) {
-      initSubject.subscribe(function(msg: MlclMessage) {
+    it('should get a message from the test subject', function(done) {
+      testSubject.subscribe(function(msg: MlclMessage) {
         assert(msg instanceof MlclMessage);
         done();
       });
       let msg = new MlclMessage();
       msg.topic= 'test';
       msg.message = 'hello world';
-      initSubject.next(msg);
+      testSubject.next(msg);
     });
   });
   describe('Stream', function() {
@@ -79,6 +79,51 @@ describe('mlcl_core', function() {
         assert(obs2Success === true);
         done();
       });
+    });
+  });
+  describe('Init', function() {
+    let core: MlclCore;
+    let obs1Success: boolean;
+    let obs2Success: boolean;
+    before(function() {
+      core = di.getInstance('MlclCore');
+    });
+    it('should init', async function() {
+      @injectable
+      class MyInitTestClass {
+        @init(20)
+        public myinit(x) {
+          return Observable.create(y => {
+            setTimeout(function() {
+              if(obs2Success) {
+                obs1Success = true;
+                y.next(x);
+              } else {
+                y.error(new Error('Wrong priority'));
+              }
+              y.complete();
+            }, 100);
+          });
+        }
+      }
+      @injectable
+      class MyInitTestClass2 {
+        @init(10)
+        public myini2t(x) {
+          return Observable.create(y => {
+            setTimeout(function() {
+              if(!obs1Success) {
+                obs2Success = true;
+                y.next(x);
+              } else {
+                y.error(new Error('Wrong priority'));
+              }
+              y.complete();
+            }, 100);
+          });
+        }
+      }
+      await core.init();
     });
   });
 }); // test end

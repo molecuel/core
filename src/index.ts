@@ -1,7 +1,7 @@
 'use strict';
 import 'reflect-metadata';
 import {Observable, Subject} from '@reactivex/rxjs';
-import {singleton, injectable} from '@molecuel/di';
+import {di, singleton, injectable} from '@molecuel/di';
 
 @singleton
 export class MlclCore {
@@ -9,7 +9,7 @@ export class MlclCore {
   protected subjects: Map<string, Subject<any>> = new Map();
 
   /**
-   * Creates a new subject which enables EventEmitter like functionality
+   * @description Creates a new subject which enables EventEmitter like functionality
    * 
    * @param {string} topic
    * @returns {Subject<any>}
@@ -26,9 +26,8 @@ export class MlclCore {
     }
   }
 
-
   /**
-   * Creates or returns a Stream
+   * @description Creates or returns a Stream
    * 
    * @param {string} name
    * @returns {MlclStream}
@@ -42,6 +41,13 @@ export class MlclCore {
       this.streams.set(name, currentStream);
     }
     return currentStream;
+  }
+
+  public init(): Promise<any> {
+    let initObs = Observable.from([{}]);
+    let initStream: MlclStream = this.createStream('init');
+    initObs = initStream.renderStream(initObs);
+    return initObs.toPromise();
   }
 }
 
@@ -57,7 +63,7 @@ export class MlclStream {
   public observerFactories: Array<ObserverFactoryElement> = new Array();
 
   /**
-   * Creates an instance of MlclStream.
+   * @description Creates an instance of MlclStream.
    * 
    * @param {string} name
    * 
@@ -68,7 +74,7 @@ export class MlclStream {
   }
 
   /**
-   * Renders the stream and add flatMaps to the input observable
+   * @description Renders the stream and add flatMaps to the input observable
    * 
    * @param {Observable} inputObservable
    * @returns
@@ -80,13 +86,17 @@ export class MlclStream {
       return a.priority - b.priority;
     });
     for(let observ of observables) {
+      if(!observ.factoryMethod && observ.targetName && observ.targetProperty) {
+        let obsInstance = di.getInstance(observ.targetName);
+        observ.factoryMethod = obsInstance[observ.targetProperty];
+      }
       inputObservable = inputObservable.flatMap(observ.factoryMethod);
     }
     return inputObservable;
   }
 
   /**
-   * Add observable to the stream
+   * @description Add observable to the stream
    * 
    * @param {string} stream
    * @param {Observable} observable
@@ -98,11 +108,17 @@ export class MlclStream {
     let factoryElement = new ObserverFactoryElement(priority, observerFactory);
     this.observerFactories.push(factoryElement);
   }
+
+  public addObserverFactoryByName(targetName: string, propertyKey: string, priority: number = 50) {
+    let factoryElement = new ObserverFactoryElement(priority);
+    factoryElement.targetName = targetName;
+    factoryElement.targetProperty = propertyKey;
+    this.observerFactories.push(factoryElement);
+  }
 }
 
 /**
- * A ObserverFactory element which is used for queuing observers for a specific queue / observable
- * 
+ * @description A ObserverFactory element which is used for queuing observers for a specific queue / observable
  * @export
  * @class ObserverFactoryElement
  */
@@ -110,20 +126,36 @@ export class MlclStream {
 export class ObserverFactoryElement {
   public priority: number;
   public factoryMethod: (data: any) => Observable<any>;
+  public targetName: string;
+  public targetProperty: string;
   /**
-   * Creates an instance of ObserverFactoryElement.
+   * @description Creates an instance of ObserverFactoryElement.
    * 
    * @param {number} [priority=50]
    * @param null [factoryMethod]
    * 
    * @memberOf ObserverFactoryElement
    */
-  public constructor(priority: number = 50, factoryMethod: (data: any) => Observable<any>) {
+  public constructor(priority: number = 50, factoryMethod?: (data: any) => Observable<any>) {
     this.priority = priority;
-    this.factoryMethod = factoryMethod;
+    if(factoryMethod) {
+      this.factoryMethod = factoryMethod;
+    }
   }
 }
 
+
+/**
+ * @description Exports a molecuel connection class which stores different kind of connections
+ * like database or mail ....
+ * @export
+ * @class MlclConnection
+ */
+@injectable
+export class MlclConnection {
+  public name: string;
+  public connection: any;
+}
 
 /**
  * Message class for system internal messaging
@@ -137,3 +169,36 @@ export class MlclMessage {
   public message: any;
   public source: string;
 }
+
+
+/**
+ * @description Init decorator adds function as needed during init phase
+ * @decorator
+ * @export
+ * @param {Number} [priority=50]
+ * @returns
+ */
+export function init(priority: number = 50) {
+  return function (target, propertyKey: string, descriptor: PropertyDescriptor) {
+    let core: MlclCore;
+    core = di.getInstance('MlclCore');
+    let stream: MlclStream = core.createStream('init');
+    stream.addObserverFactoryByName(target.constructor.name, propertyKey, priority);
+  };
+};
+
+/**
+ * @description Health decorator adds function to check a components health
+ * @decorator
+ * @export
+ * @param {Number} [priority=50]
+ * @returns
+ */
+export function healthCheck(priority: Number = 50) {
+  console.log(priority);
+  return function (target, propertyKey: string, descriptor: PropertyDescriptor) {
+    console.log(target);
+    console.log(propertyKey);
+    console.log('g(): called');
+  };
+};
