@@ -74,12 +74,13 @@
 				<p>The init system is based on the stream feature of molecuel core described below but can be combined with a method decorator on a injectable class to set different init methods.</p>
 				<p>For example database initialization can have a higher priority ( lower init value ) or port listen directives can have higher priorities.</p>
 				<p>The code example show how it works internally ( this can be used by every molecuel module and this is just example code). For example a http module can have two or more init functions. The first to initialize the routes and the second one to add the port listener after some other init priorities have been initialized.</p>
-				<pre><code class="lang-js"><span class="hljs-keyword">import</span> {di} <span class="hljs-keyword">from</span> <span class="hljs-string">'mlcl_di'</span>;
-<span class="hljs-keyword">import</span> {Subject, Observable} <span class="hljs-keyword">from</span> <span class="hljs-string">'@reactivex/rxjs'</span>;
-<span class="hljs-keyword">import</span> {MlclCore, MlclMessage} <span class="hljs-keyword">from</span> <span class="hljs-string">'../dist'</span>;
+				<pre><code class="lang-js"><span class="hljs-keyword">import</span> {di, injectable} <span class="hljs-keyword">from</span> <span class="hljs-string">'@molecuel/di'</span>;
+<span class="hljs-keyword">import</span> {Observable} <span class="hljs-keyword">from</span> <span class="hljs-string">'@reactivex/rxjs'</span>;
+<span class="hljs-keyword">import</span> {MlclCore, init} <span class="hljs-keyword">from</span> <span class="hljs-string">'../dist'</span>;
 di.bootstrap(MlclCore);
-<span class="hljs-keyword">let</span> core = di.getInstance(<span class="hljs-string">'MlclCore'</span>)
-
+<span class="hljs-keyword">let</span> core = di.getInstance(<span class="hljs-string">'MlclCore'</span>);
+<span class="hljs-keyword">let</span> obs1Success;
+<span class="hljs-keyword">let</span> obs2Success;
 <span class="hljs-comment">// this is normally part of a module and can be added via imports</span>
 @injectable
 <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyInitTestClass</span> </span>{
@@ -90,6 +91,7 @@ di.bootstrap(MlclCore);
       setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
         <span class="hljs-keyword">if</span>(obs2Success) {
           obs1Success = <span class="hljs-literal">true</span>;
+          <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'huhu'</span>);
           y.next(x);
         } <span class="hljs-keyword">else</span> {
           y.error(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Wrong priority'</span>));
@@ -103,12 +105,13 @@ di.bootstrap(MlclCore);
 @injectable
 <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyInitTestClass2</span> </span>{
   <span class="hljs-comment">// sets the init priority to 10</span>
-  @init(<span class="hljs-number">10</span>)
+  @init(<span class="hljs-number">50</span>)
   public myini2t(x) {
     <span class="hljs-keyword">return</span> Observable.create(<span class="hljs-function"><span class="hljs-params">y</span> =&gt;</span> {
       setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
         <span class="hljs-keyword">if</span>(!obs1Success) {
           obs2Success = <span class="hljs-literal">true</span>;
+          <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'here'</span>);
           y.next(x);
         } <span class="hljs-keyword">else</span> {
           y.error(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Wrong priority'</span>));
@@ -118,8 +121,13 @@ di.bootstrap(MlclCore);
     });
   }
 }
+<span class="hljs-keyword">let</span> mlclInit = <span class="hljs-keyword">async</span> () =&gt; core.init();
+mlclInit();
+<span class="hljs-comment">// alternative init with promise</span>
 <span class="hljs-comment">// this is the important part to run the complete init stream of the molecuel framework</span>
-<span class="hljs-keyword">await</span> core.init();
+<span class="hljs-comment">/*core.init().then(function() {
+  console.log('cherr');
+});*/</span>
 </code></pre>
 				<h3 id="subject-example">Subject example</h3>
 				<pre><code class="lang-js"><span class="hljs-keyword">import</span> {di} <span class="hljs-keyword">from</span> <span class="hljs-string">'mlcl_di'</span>;
