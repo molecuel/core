@@ -17,12 +17,13 @@ For example database initialization can have a higher priority ( lower init valu
 The code example show how it works internally ( this can be used by every molecuel module and this is just example code). For example a http module can have two or more init functions. The first to initialize the routes and the second one to add the port listener after some other init priorities have been initialized.
 
 ```js
-import {di} from 'mlcl_di';
-import {Subject, Observable} from '@reactivex/rxjs';
-import {MlclCore, MlclMessage} from '../dist';
+import {di, injectable} from '@molecuel/di';
+import {Observable} from '@reactivex/rxjs';
+import {MlclCore, init} from '../dist';
 di.bootstrap(MlclCore);
-let core = di.getInstance('MlclCore')
-
+let core = di.getInstance('MlclCore');
+let obs1Success;
+let obs2Success;
 // this is normally part of a module and can be added via imports
 @injectable
 class MyInitTestClass {
@@ -33,6 +34,7 @@ class MyInitTestClass {
       setTimeout(function() {
         if(obs2Success) {
           obs1Success = true;
+          console.log('huhu');
           y.next(x);
         } else {
           y.error(new Error('Wrong priority'));
@@ -46,12 +48,13 @@ class MyInitTestClass {
 @injectable
 class MyInitTestClass2 {
   // sets the init priority to 10
-  @init(10)
+  @init(50)
   public myini2t(x) {
     return Observable.create(y => {
       setTimeout(function() {
         if(!obs1Success) {
           obs2Success = true;
+          console.log('here');
           y.next(x);
         } else {
           y.error(new Error('Wrong priority'));
@@ -61,8 +64,13 @@ class MyInitTestClass2 {
     });
   }
 }
+let mlclInit = async () => core.init();
+mlclInit();
+// alternative init with promise
 // this is the important part to run the complete init stream of the molecuel framework
-await core.init();
+/*core.init().then(function() {
+  console.log('cherr');
+});*/
 ```
 
 
