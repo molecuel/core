@@ -106,6 +106,7 @@
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="mlclstream.html#addobserverfactory" class="tsd-kind-icon">add<wbr>Observer<wbr>Factory</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="mlclstream.html#addobserverfactorybyname" class="tsd-kind-icon">add<wbr>Observer<wbr>Factory<wbr>ByName</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="mlclstream.html#renderstream" class="tsd-kind-icon">render<wbr>Stream</a></li>
 							</ul>
 						</section>
@@ -124,14 +125,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/molecuel/mlcl_core/blob/bfe0dd1/src/index.ts#L57">index.ts:57</a></li>
+									<li>Defined in <a href="https://github.com/molecuel/mlcl_core/blob/7fed6f0/src/index.ts#L63">index.ts:63</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Creates an instance of MlclStream.</p>
-								</div>
 								<dl class="tsd-comment-tags">
+									<dt>description</dt>
+									<dd><p>Creates an instance of MlclStream.</p>
+									</dd>
 									<dt>memberof</dt>
 									<dd><p>MlclStream</p>
 									</dd>
@@ -160,7 +161,7 @@
 					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/molecuel/mlcl_core/blob/bfe0dd1/src/index.ts#L55">index.ts:55</a></li>
+							<li>Defined in <a href="https://github.com/molecuel/mlcl_core/blob/7fed6f0/src/index.ts#L61">index.ts:61</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -170,7 +171,7 @@
 					<div class="tsd-signature tsd-kind-icon">observer<wbr>Factories<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="observerfactoryelement.html" class="tsd-signature-type">ObserverFactoryElement</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;new Array()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/molecuel/mlcl_core/blob/bfe0dd1/src/index.ts#L57">index.ts:57</a></li>
+							<li>Defined in <a href="https://github.com/molecuel/mlcl_core/blob/7fed6f0/src/index.ts#L63">index.ts:63</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -187,14 +188,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/molecuel/mlcl_core/blob/bfe0dd1/src/index.ts#L97">index.ts:97</a></li>
+									<li>Defined in <a href="https://github.com/molecuel/mlcl_core/blob/7fed6f0/src/index.ts#L107">index.ts:107</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Add observable to the stream</p>
-								</div>
 								<dl class="tsd-comment-tags">
+									<dt>description</dt>
+									<dd><p>Add observable to the stream</p>
+									</dd>
 									<dt>memberof</dt>
 									<dd><p>MlclStream</p>
 									</dd>
@@ -232,6 +233,45 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="addobserverfactorybyname" class="tsd-anchor"></a>
+					<h3>add<wbr>Observer<wbr>Factory<wbr>ByName</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Observer<wbr>Factory<wbr>ByName<span class="tsd-signature-symbol">(</span>targetName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, propertyKey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, priority<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/molecuel/mlcl_core/blob/7fed6f0/src/index.ts#L121">index.ts:121</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<dl class="tsd-comment-tags">
+									<dt>description</dt>
+									<dd><p>Adds a ObserverFactory by name - e.g. needed for @init decorator</p>
+									</dd>
+									<dt>memberof</dt>
+									<dd><p>MlclStream</p>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>targetName: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>propertyKey: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> priority: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;50</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="renderstream" class="tsd-anchor"></a>
 					<h3>render<wbr>Stream</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -241,14 +281,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/molecuel/mlcl_core/blob/bfe0dd1/src/index.ts#L78">index.ts:78</a></li>
+									<li>Defined in <a href="https://github.com/molecuel/mlcl_core/blob/7fed6f0/src/index.ts#L84">index.ts:84</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Renders the stream and add flatMaps to the input observable</p>
-								</div>
 								<dl class="tsd-comment-tags">
+									<dt>description</dt>
+									<dd><p>Renders the stream and add flatMaps to the input observable</p>
+									</dd>
 									<dt>memberof</dt>
 									<dd><p>MlclStream</p>
 									</dd>
@@ -277,6 +317,9 @@
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-class">
+						<a href="mlclconnection.html" class="tsd-kind-icon">Mlcl<wbr>Connection</a>
+					</li>
+					<li class=" tsd-kind-class">
 						<a href="mlclcore.html" class="tsd-kind-icon">Mlcl<wbr>Core</a>
 					</li>
 					<li class=" tsd-kind-class">
@@ -300,6 +343,9 @@
 								<a href="mlclstream.html#addobserverfactory" class="tsd-kind-icon">add<wbr>Observer<wbr>Factory</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="mlclstream.html#addobserverfactorybyname" class="tsd-kind-icon">add<wbr>Observer<wbr>Factory<wbr>ByName</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="mlclstream.html#renderstream" class="tsd-kind-icon">render<wbr>Stream</a>
 							</li>
 						</ul>
@@ -308,6 +354,12 @@
 				<ul class="after-current">
 					<li class=" tsd-kind-class">
 						<a href="observerfactoryelement.html" class="tsd-kind-icon">Observer<wbr>Factory<wbr>Element</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#healthcheck" class="tsd-kind-icon">health<wbr>Check</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#init" class="tsd-kind-icon">init</a>
 					</li>
 				</ul>
 			</nav>
