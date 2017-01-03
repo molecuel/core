@@ -109,6 +109,15 @@ export class MlclStream {
     this.observerFactories.push(factoryElement);
   }
 
+  /**
+   * @description Adds a ObserverFactory by name - e.g. needed for @init decorator
+   * 
+   * @param {string} targetName
+   * @param {string} propertyKey
+   * @param {number} [priority=50]
+   * 
+   * @memberOf MlclStream
+   */
   public addObserverFactoryByName(targetName: string, propertyKey: string, priority: number = 50) {
     let factoryElement = new ObserverFactoryElement(priority);
     factoryElement.targetName = targetName;

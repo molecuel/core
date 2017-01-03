@@ -134,7 +134,6 @@ export class Gulpfile {
             disableOutputCheck: false,
  
             // TypeDoc options (see typedoc docs) 
-            name: "tsvalidate",
             ignoreCompilerErrors: true
         })); 
   }
