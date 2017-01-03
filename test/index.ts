@@ -2,7 +2,6 @@
 import 'reflect-metadata';
 import should = require('should');
 import assert = require('assert');
-import * as _ from 'lodash';
 import {di, injectable} from '@molecuel/di';
 import {Subject, Observable} from '@reactivex/rxjs';
 import {MlclCore, MlclMessage, MlclStream, init} from '../dist';
