@@ -83,7 +83,7 @@ export class Gulpfile {
    */
   @Task('ts::compile')
   tscompile(): any {
-    let sourcepaths = ['typings/index.d.ts', 'typings/main.d.ts', 'typings_override/index.d.ts'];
+    let sourcepaths = [];
     sourcepaths.push(this.config.paths.source);
     let tsResult = gulp.src(sourcepaths)
       .pipe(sourcemaps.init())
@@ -92,7 +92,7 @@ export class Gulpfile {
     return merge([
       tsResult.dts.pipe(gulp.dest(this.config.paths.dist)),
       tsResult.js
-        .pipe(sourcemaps.write())
+        .pipe(sourcemaps.write('.', {includeContent: false, sourceRoot: '../src'}))
         .pipe(gulp.dest(this.config.paths.dist))
     ]);
   }
