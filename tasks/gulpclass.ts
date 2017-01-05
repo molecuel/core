@@ -122,20 +122,19 @@ export class Gulpfile {
   @Task('docs')
   docs() {
     return gulp
-            .src(["./src/*.ts"])
+            .src(['./src/*.ts'])
             .pipe(typedoc({
             // TypeScript options (see typescript docs) 
-            target: "es6",
+            target: 'es6',
             // includeDeclarations: true,
- 
             // Output options (see typedoc docs) 
-            out: "./docs",
-            mode: "file",
+            out: './docs',
+            mode: 'file',
             disableOutputCheck: false,
- 
+            gaID: 'UA-89800241-1',
             // TypeDoc options (see typedoc docs) 
             ignoreCompilerErrors: true
-        })); 
+        }));
   }
 
   @SequenceTask('deploy') // this special annotation using "run-sequence" module to run returned tasks in sequence
