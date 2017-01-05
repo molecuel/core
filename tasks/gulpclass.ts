@@ -92,7 +92,7 @@ export class Gulpfile {
     return merge([
       tsResult.dts.pipe(gulp.dest(this.config.paths.dist)),
       tsResult.js
-        .pipe(sourcemaps.write())
+        .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(this.config.paths.dist))
     ]);
   }
