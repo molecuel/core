@@ -203,11 +203,11 @@ export function init(priority: number = 50) {
  * @param {Number} [priority=50]
  * @returns
  */
-export function healthCheck(priority: Number = 50) {
+/*export function healthCheck(priority: Number = 50) {
   console.log(priority);
   return function (target, propertyKey: string, descriptor: PropertyDescriptor) {
     console.log(target);
     console.log(propertyKey);
     console.log('g(): called');
   };
-};
+};*/
