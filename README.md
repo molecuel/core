@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/molecuel/mlcl_core.svg?branch=mlcl_ng)](https://travis-ci.org/molecuel/mlcl_core)
+[![Coverage Status](https://coveralls.io/repos/github/molecuel/mlcl_core/badge.svg)](https://coveralls.io/github/molecuel/mlcl_core)
+
 # Core module for molecuel Framework
 
 mlcl_core is the core module for the molecuel application framework. It's initialization is based on the mlcl_di Typescript dependency injection module.
