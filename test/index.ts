@@ -26,6 +26,10 @@ describe('mlcl_core', function() {
       msg.message = 'hello world';
       testSubject.next(msg);
     });
+    it('should get a existing subject', function() {
+      let exSubject = core.createSubject('test');
+      assert(exSubject !== undefined);
+    });
   });
   describe('Stream', function() {
     let core: MlclCore;
