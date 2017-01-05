@@ -9,7 +9,7 @@
     "remap": "./node_modules/.bin/remap-istanbul -i coverage/coverage.json -o coverage/coverage-remap.json",
     "remaphtml": "./node_modules/.bin/remap-istanbul -i coverage/coverage.json -o coverage/html -t html",
     "remaplcov": "./node_modules/.bin/remap-istanbul -i coverage/coverage.json -o coverage/lcov-remap.info -t lcovonly",
-    "coveralls": "npm cover && cat ./coverage/lcov-remap.info | coveralls"
+    "coveralls": "npm run cover && cat ./coverage/lcov-remap.info | coveralls"
   },
   "repository": {
     "type": "git",
