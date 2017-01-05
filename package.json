@@ -5,8 +5,11 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "mocha",
-    "cover": "istanbul cover ./node_modules/mocha/bin/_mocha",
-    "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
+    "cover": "istanbul cover ./node_modules/mocha/bin/_mocha && npm run remap && npm run remaphtml && npm run remaplcov",
+    "remap": "./node_modules/.bin/remap-istanbul -i coverage/coverage.json -o coverage/coverage-remap.json",
+    "remaphtml": "./node_modules/.bin/remap-istanbul -i coverage/coverage.json -o coverage/html -t html",
+    "remaplcov": "./node_modules/.bin/remap-istanbul -i coverage/coverage.json -o coverage/lcov-remap.info -t lcovonly",
+    "coveralls": "npm cover && cat ./coverage/lcov-remap.info | coveralls"
   },
   "repository": {
     "type": "git",
@@ -56,7 +59,8 @@
   "dependencies": {
     "@molecuel/di": "^0.0.2",
     "@reactivex/rxjs": "^5.0.0-rc.5",
-    "reflect-metadata": "^0.1.3"
+    "reflect-metadata": "^0.1.3",
+    "remap-istanbul": "^0.8.4"
   },
   "devconfig": {
     "paths": {
