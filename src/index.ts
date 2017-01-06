@@ -43,6 +43,13 @@ export class MlclCore {
     return currentStream;
   }
 
+  /**
+   * @description Init function which creates a init stream
+   * 
+   * @returns {Promise<any>}
+   * 
+   * @memberOf MlclCore
+   */
   public init(): Promise<any> {
     let initObs = Observable.from([{}]);
     let initStream: MlclStream = this.createStream('init');
@@ -164,6 +171,19 @@ export class ObserverFactoryElement {
 export class MlclConnection {
   public name: string;
   public connection: any;
+}
+
+
+/**
+ * @description Exports a molecuel server class which is able to store server instances like http
+ * 
+ * @export
+ * @class MlclServer
+ */
+@injectable
+export class MlclServer {
+  public name: string;
+  public server: any;
 }
 
 /**
