@@ -1,5 +1,3 @@
-/// <reference path='../node_modules/gulpclass/index.d.ts'/>
-/// <reference path="../typings/main.d.ts"/>
 import {Gulpclass, Task, SequenceTask} from 'gulpclass/Decorators';
 
 import * as gulp from 'gulp';
@@ -49,15 +47,14 @@ export class Gulpfile {
    */
   @Task('ts::lint')
   tslint() {
-    let lintoptions: any = {
-      emitError: false,
-      sort: true,
-      bell: true
-    }
     return gulp.src(this.config.paths.source)
       .pipe(plumber())
-      .pipe(tslint())
-      .pipe(tslint.report(require('tslint-stylish'), lintoptions));
+      .pipe(tslint({
+            formatter: 'verbose'
+      }))
+      .pipe(tslint.report({
+            summarizeFailureOutput: true
+        }));
   }
 
   /**
@@ -65,16 +62,16 @@ export class Gulpfile {
    */
   @Task('ts::compile')
   tscompile(): any {
-    let sourcepaths = ['typings/index.d.ts', 'typings/main.d.ts', 'typings_override/index.d.ts'];
+    let sourcepaths = [];
     sourcepaths.push(this.config.paths.source);
     let tsResult = gulp.src(sourcepaths)
       .pipe(sourcemaps.init())
-      .pipe(ts(this.tsProject));
+      .pipe(this.tsProject()));
 
     return merge([
       tsResult.dts.pipe(gulp.dest(this.config.paths.dist)),
       tsResult.js
-        .pipe(sourcemaps.write('.'))
+        .pipe(sourcemaps.write('.', {includeContent: false, sourceRoot: '../src'}))
         .pipe(gulp.dest(this.config.paths.dist))
     ]);
   }
@@ -88,7 +85,7 @@ export class Gulpfile {
     sourcepaths.push(this.config.paths.testsource);
     let tsResult = gulp.src(sourcepaths)
       .pipe(plumber())
-      .pipe(ts(this.tsProject));
+      .pipe(this.tsProject());
 
     return merge([
       tsResult.js.pipe(gulp.dest('test/'))

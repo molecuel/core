@@ -1,14 +1,14 @@
 'use strict';
-const path = require('path');
-const _ = require('lodash');
-const url = require('url');
-const async = require('async');
-const events = require('events');
-const mlcl_utils = require('./lib/utils');
-const mlcl_log = require('mlcl_log');
-const cookieParser = require('cookie-parser');
-const bodyparser = require('body-parser');
-const serveStatic = require('serve-static');
+const path = require("path");
+const _ = require("lodash");
+const url = require("url");
+const async = require("async");
+const events = require("events");
+const mlcl_utils = require("./lib/utils");
+const mlcl_log = require("mlcl_log");
+const cookieParser = require("cookie-parser");
+const bodyparser = require("body-parser");
+const serveStatic = require("serve-static");
 let methods = require('methods');
 class mlcl_core extends events.EventEmitter {
     constructor(mconfig) {
@@ -49,10 +49,10 @@ class mlcl_core extends events.EventEmitter {
             });
             mlcl_core.instance.count = 0;
             async.series([
-                    (callback) => {
+                (callback) => {
                     this.initModules(callback);
                 },
-                    (callback) => {
+                (callback) => {
                     this.emit('mlcl::core::init:post', mlcl_core.instance);
                     this.emit('mlcl::core::module:init:complete', this, 'mlcl');
                 }

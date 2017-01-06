@@ -1,3 +1,4 @@
+/// <reference types="node" />
 import url = require('url');
 import events = require('events');
 import express = require('express');
