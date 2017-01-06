@@ -67,15 +67,14 @@ export class Gulpfile {
    */
   @Task('ts::lint')
   tslint() {
-    let lintoptions: any = {
-      emitError: false,
-      sort: true,
-      bell: true
-    }
     return gulp.src(this.config.paths.source)
       .pipe(plumber())
-      .pipe(tslint())
-      .pipe(tslint.report(require('tslint-stylish'), lintoptions));
+      .pipe(tslint({
+            formatter: 'prose'
+      }))
+      .pipe(tslint.report({
+            summarizeFailureOutput: true
+        }));
   }
 
   /**
