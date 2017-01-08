@@ -153,6 +153,11 @@ describe('mlcl_core', function() {
         }
       }
     });
+    it('should return all data functions', function() {
+      let dataFactories = core.getDataFactories();
+      assert(dataFactories !== undefined);
+      assert(dataFactories.length === 2);
+    });
   });
   describe('health', function() {
     let core: MlclCore;
