@@ -5,8 +5,12 @@ import {di, singleton, injectable} from '@molecuel/di';
 
 @singleton
 export class MlclCore {
+  // stream are stored here
   protected streams: Map<string, MlclStream> = new Map();
+  // subjects are stored here
   protected subjects: Map<string, Subject<any>> = new Map();
+  // this is for data input and output functions
+  protected dataFactories: Array<MlclDataFactory> = new Array();
 
   /**
    * @description Creates a new subject which enables EventEmitter like functionality
@@ -55,6 +59,14 @@ export class MlclCore {
     let initStream: MlclStream = this.createStream('init');
     initObs = initStream.renderStream(initObs);
     return initObs.toPromise();
+  }
+
+  public addDataFactory(factory: MlclDataFactory): void {
+    this.dataFactories.push(factory);
+  }
+
+  public getDataFactories(): Array<MlclDataFactory> {
+    return this.dataFactories;
   }
 }
 
@@ -199,7 +211,6 @@ export class MlclMessage {
   public source: string;
 }
 
-
 /**
  * @description Init decorator adds function as needed during init phase
  * @decorator
@@ -217,17 +228,73 @@ export function init(priority: number = 50) {
 };
 
 /**
+ * @description Data provider function for services like http
+ * 
+ * @export
+ * @class MlclDataFactory
+ */
+@injectable
+export class MlclDataFactory {
+  public priority: number;
+  public factoryMethod: Function;
+  public targetName: string;
+  public targetProperty: string;
+  public name: string;
+  public direction: string;
+}
+
+
+/**
+ * @description Adds a data input factory method. This should be a async function. This is stored in core and can be used by differnt modules like HTTP to receive data.
+ * 
+ * @export
+ * @param {number} [priority=50]
+ * @returns
+ */
+export function dataIn(priority: number = 50) {
+  return function(target, propertyKey: string) {
+    let targetFactory = new MlclDataFactory();
+    targetFactory.direction = 'in';
+    targetFactory.priority = priority;
+    targetFactory.targetName = target.constructor.name;
+    targetFactory.targetProperty = propertyKey;
+    let core = di.getInstance('MlclCore');
+    core.addDataFactory(targetFactory);
+  };
+}
+
+
+/**
+ * @description Adds a data input factory method. This should be a async function. This is stored in core and can be used by different modules like HTTP to return data.
+ * 
+ * @export
+ * @param {number} priority
+ * @returns
+ */
+export function dataOut(priority: number = 50) {
+  return function(target, propertyKey: string, descriptor: PropertyDescriptor) {
+    let targetFactory = new MlclDataFactory();
+    targetFactory.direction = 'in';
+    targetFactory.priority = priority;
+    targetFactory.targetName = target.constructor.name;
+    targetFactory.targetProperty = propertyKey;
+    let core = di.getInstance('MlclCore');
+    core.addDataFactory(targetFactory);
+  };
+}
+
+/**
  * @description Health decorator adds function to check a components health
  * @decorator
  * @export
  * @param {Number} [priority=50]
  * @returns
  */
-/*export function healthCheck(priority: Number = 50) {
-  console.log(priority);
+export function healthCheck(priority: number = 50) {
   return function (target, propertyKey: string, descriptor: PropertyDescriptor) {
-    console.log(target);
-    console.log(propertyKey);
-    console.log('g(): called');
+    let core: MlclCore;
+    core = di.getInstance('MlclCore');
+    let stream: MlclStream = core.createStream('health');
+    stream.addObserverFactoryByName(target.constructor.name, propertyKey, priority);
   };
-};*/
+};

@@ -4,7 +4,7 @@ import should = require('should');
 import assert = require('assert');
 import {di, injectable} from '@molecuel/di';
 import {Subject, Observable} from '@reactivex/rxjs';
-import {MlclCore, MlclMessage, MlclStream, init} from '../dist';
+import {MlclCore, MlclMessage, MlclStream, init, healthCheck, dataIn, dataOut} from '../dist';
 should();
 
 describe('mlcl_core', function() {
@@ -127,6 +127,50 @@ describe('mlcl_core', function() {
         }
       }
       await core.init();
+    });
+  });
+  describe('dataInAndOut', function() {
+    let core: MlclCore;
+    before(function() {
+      core = di.getInstance('MlclCore');
+    });
+    it('should add data functions', function() {
+      @injectable
+      class MyDataFunctionClass {
+        @dataIn()
+        public myDataInCheck() {
+          return async function() {
+            return true;
+          };
+        }
+        @dataOut()
+        public myDataOutCheck() {
+          return async function() {
+            return {
+              data: 'mydata'
+            };
+          };
+        }
+      }
+    });
+  });
+  describe('health', function() {
+    let core: MlclCore;
+    before(function() {
+      core = di.getInstance('MlclCore');
+    });
+    it('should add healthcheck', function() {
+      @injectable
+      class MyHealthTest {
+        @healthCheck()
+        public mycheck(x) {
+          return Observable.create(y => {
+            x.myhealthtest = true;
+            y.next(x);
+            y.complete();
+          });
+        }
+      }
     });
   });
 }); // test end
