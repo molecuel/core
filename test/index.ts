@@ -4,7 +4,7 @@ import should = require('should');
 import assert = require('assert');
 import {di, injectable} from '@molecuel/di';
 import {Subject, Observable} from '@reactivex/rxjs';
-import {MlclCore, MlclMessage, MlclStream, init, healthCheck, dataIn, dataOut} from '../dist';
+import {MlclCore, MlclMessage, MlclStream, init, healthCheck, dataRead, dataCreate, dataUpdate} from '../dist';
 should();
 
 describe('mlcl_core', function() {
@@ -137,14 +137,20 @@ describe('mlcl_core', function() {
     it('should add data functions', function() {
       @injectable
       class MyDataFunctionClass {
-        @dataIn()
-        public myDataInCheck() {
+        @dataCreate()
+        public myDataCreaCheck() {
           return async function() {
             return true;
           };
         }
-        @dataOut()
-        public myDataOutCheck() {
+        @dataUpdate()
+        public myDataUpdateCheck() {
+          return async function() {
+            return true;
+          };
+        }
+        @dataRead()
+        public myDataReadCheck() {
           return async function() {
             return {
               data: 'mydata'
@@ -156,7 +162,7 @@ describe('mlcl_core', function() {
     it('should return all data functions', function() {
       let dataFactories = core.getDataFactories();
       assert(dataFactories !== undefined);
-      assert(dataFactories.length === 2);
+      assert(dataFactories.length >= 3);
     });
   });
   describe('health', function() {
