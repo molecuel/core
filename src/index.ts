@@ -5,7 +5,7 @@ export {init, healthCheck} from './core/decorator';
 export {MlclStream} from './stream/MlclStream';
 export {ObserverFactoryElement} from './stream/ObserverFactoryElement';
 export {MlclDataFactory} from './data/MlclDataFactory';
-export {dataCreate, dataUpdate, dataRead} from './data/decorator';
+export {dataCreate, dataUpdate, dataRead, dataDelete} from './data/decorator';
 export {MlclConnection} from './core/MlclConnection';
 export {MlclMessage} from './core/MlclMessage';
 export {MlclServer} from './core/MlclServer';

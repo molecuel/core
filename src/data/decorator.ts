@@ -39,7 +39,6 @@ export function dataUpdate(priority: number = 50) {
   };
 }
 
-
 /**
  * @description Adds a data read factory method. This should be a async function. This is stored in core and can be used by different modules like HTTP to return data.
  * 
@@ -51,6 +50,25 @@ export function dataRead(priority: number = 50) {
   return function(target, propertyKey: string, descriptor: PropertyDescriptor) {
     let targetFactory = new MlclDataFactory();
     targetFactory.operation = 'read';
+    targetFactory.priority = priority;
+    targetFactory.targetName = target.constructor.name;
+    targetFactory.targetProperty = propertyKey;
+    let core = di.getInstance('MlclCore');
+    core.addDataFactory(targetFactory);
+  };
+}
+
+/**
+ * @description Adds a data read factory method. This should be a async function. This is stored in core and can be used by different modules like HTTP to return data.
+ * 
+ * @export
+ * @param {number} priority
+ * @returns
+ */
+export function dataDelete(priority: number = 50) {
+  return function(target, propertyKey: string, descriptor: PropertyDescriptor) {
+    let targetFactory = new MlclDataFactory();
+    targetFactory.operation = 'delete';
     targetFactory.priority = priority;
     targetFactory.targetName = target.constructor.name;
     targetFactory.targetProperty = propertyKey;
