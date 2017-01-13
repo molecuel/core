@@ -173,6 +173,12 @@ describe('mlcl_core', function() {
       assert(dataParams[0] instanceof MlclDataParam);
       assert(dataParams[0].type === 'integer');
     });
+    it('should return undefined datafunctions', function() {
+      let dataParams = core.getDataParams('MyDataFunctionC2lass', 'myDataReadCheck');
+      assert(dataParams === undefined);
+      let dataParams2 = core.getDataParams('MyDataFunctionClass', 'my2DataReadCheck');
+      assert(dataParams2 === undefined);
+    });
     it('should return all data functions', function() {
       let dataFactories = core.getDataFactories();
       assert(dataFactories !== undefined);
