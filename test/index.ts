@@ -4,7 +4,7 @@ import should = require('should');
 import assert = require('assert');
 import {di, injectable} from '@molecuel/di';
 import {Subject, Observable} from '@reactivex/rxjs';
-import {MlclCore, MlclMessage, MlclStream, init, healthCheck, dataRead, dataCreate, dataUpdate, dataDelete} from '../dist';
+import {MlclCore, MlclMessage, MlclStream, init, healthCheck, dataRead, dataCreate, dataUpdate, dataDelete, mapDataParams, MlclDataParam} from '../dist';
 should();
 
 describe('mlcl_core', function() {
@@ -155,15 +155,23 @@ describe('mlcl_core', function() {
             return true;
           };
         }
+        @mapDataParams([
+          new MlclDataParam('id', 'id', 'integer', 999),
+          new MlclDataParam('test', 'name', 'string', 10)
+        ])
         @dataRead()
-        public myDataReadCheck() {
-          return async function() {
-            return {
-              data: 'mydata'
-            };
+        public async myDataReadCheck(id: number, name: string) {
+          return {
+            data: 'mydata'
           };
         }
       }
+    });
+    it('should have data params for functions', function() {
+      let dataParams = core.getDataParams('MyDataFunctionClass', 'myDataReadCheck');
+      assert(dataParams instanceof Array);
+      assert(dataParams[0] instanceof MlclDataParam);
+      assert(dataParams[0].type === 'integer');
     });
     it('should return all data functions', function() {
       let dataFactories = core.getDataFactories();

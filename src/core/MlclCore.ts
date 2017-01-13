@@ -2,6 +2,7 @@ import {singleton} from '@molecuel/di';
 import {MlclStream} from '../stream/MlclStream';
 import {Observable, Subject} from '@reactivex/rxjs';
 import {MlclDataFactory} from '../data/MlclDataFactory';
+import {MlclDataParam} from '../data/MlclDataParam';
 
 @singleton
 export class MlclCore {
@@ -11,6 +12,8 @@ export class MlclCore {
   protected subjects: Map<string, Subject<any>> = new Map();
   // this is for data input and output functions
   protected dataFactories: Array<MlclDataFactory> = new Array();
+  // params for dataFactories
+  private dataParams: Map<string, Map<string, Array<MlclDataParam>>> = new Map();
 
   /**
    * @description Creates a new subject which enables EventEmitter like functionality
@@ -67,5 +70,23 @@ export class MlclCore {
 
   public getDataFactories(): Array<MlclDataFactory> {
     return this.dataFactories;
+  }
+
+  public addDataParams(className: string, propertyName: string, dataParams: Array<MlclDataParam>) {
+    if(!this.dataParams.has(className)) {
+      let newMap: Map<string, Array<MlclDataParam>> = new Map();
+      this.dataParams.set(className, newMap);
+    }
+    let classMap = this.dataParams.get(className);
+    classMap.set(propertyName, dataParams);
+  }
+
+  public getDataParams(className, propertyName): Array<MlclDataParam> {
+    let classMap = this.dataParams.get(className);
+    if(classMap) {
+      return classMap.get(propertyName);
+    } else {
+      return;
+    }
   }
 }

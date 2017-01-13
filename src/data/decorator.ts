@@ -1,5 +1,6 @@
 import {di} from '@molecuel/di';
 import {MlclDataFactory} from './MlclDataFactory';
+import {MlclDataParam} from './MlclDataParam';
 
 /**
  * @description Adds a data create factory method. This should be a async function. This is stored in core and can be used by differnt modules like HTTP to receive data.
@@ -74,5 +75,12 @@ export function dataDelete(priority: number = 50) {
     targetFactory.targetProperty = propertyKey;
     let core = di.getInstance('MlclCore');
     core.addDataFactory(targetFactory);
+  };
+}
+
+export function mapDataParams(dataParams: Array<MlclDataParam>) {
+  return function(target, propertyKey: string, descriptor: PropertyDescriptor) {
+    let core = di.getInstance('MlclCore');
+    core.addDataParams(target.constructor.name, propertyKey, dataParams);
   };
 }
