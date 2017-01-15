@@ -3,13 +3,61 @@
 
 # Core module for molecuel Framework
 
-mlcl_core is the core module for the molecuel application framework. It's initialization is based on the mlcl_di Typescript dependency injection module.
+@molecuel/core is the core module for the molecuel application framework. It's initialization is based on the @molecuel/di Typescript dependency injection module.
 
 The version 2.x branch supports Subjects and streams based on rxjs. 
 Streams can be used as DataStreams. For example for save handlers and much more. The streams in this case works like a queue of handlers for a dataset.
 Subjects can be used as EventEmitters (but should not be used too much).
 
 The core module is initialized as real Singleton based on the dependency injection module.
+
+
+## Registering data functions
+
+Data functions are very important for a typical molecuel application. They are async and can be registered to be executed by various modules. For example a http or socket module can use a registered data function to return data from a datbase.
+The routes can be registered in the configuration.
+If the http module (for example) has a configured route which points to a @dataRead function it creates a app.get route from it and the return value of the registered function will be returned via http.
+
+Data Decorator provided by the core module:
+@dataRead - Tags a data function for reading data
+@dataCreate - Tags a data function for creating data
+@dataUpdate - Tags a data function for updating data
+@dataDelete - Tags a data function for deleting data
+@mapDataParams - Maps request parameters to the data function and specifies limits and type for parameters to enhance security.
+
+Example for a tagged class: 
+
+```js
+import {di, injectable} from '@molecuel/di';
+import {MlclCore, dataRead, dataCreate, dataUpdate, dataDelete, mapDataParams} from '../dist';
+
+@injectable
+class MyDataFunctionClass {
+  @dataCreate()
+  public myDataCreaCheck() {
+    return true;
+  }
+  @dataUpdate()
+  public myDataUpdateCheck() {
+    return true;
+  }
+  @dataDelete()
+  public async myDataDeleteCheck() {
+    return true;
+  }
+  @mapDataParams([
+    new MlclDataParam('id', 'id', 'integer', 999),
+    new MlclDataParam('test', 'name', 'string', 10)
+  ])
+  @dataRead()
+  public async myDataReadCheck(id: number, name: string) {
+    return {
+      data: 'mydata'
+    };
+  }
+}
+di.bootstrap(MlclCore);
+```
 
 ### Init system
 
@@ -140,6 +188,7 @@ myobs.subscribe(function(res) {
   console.log('execution of all observables completed');
 });
 ```
+
 ## API Documentation
 
 The current API Documentation can be found on <https://molecuel.github.io/mlcl_core/>
