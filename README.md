@@ -189,6 +189,25 @@ myobs.subscribe(function(res) {
 });
 ```
 
+## Config handling
+
+The default config will be searched in the current working directory of the process in the config subfolder. If no NODE_ENV variable is set the development.json will be used.
+It's possible to override the configpath via environment variables.
+
+configpath is the path and will be combined with the NODE_ENV.
+configfilepath is the full path to a json configuration.
+
+```js
+import {di} from 'mlcl_di';
+import {MlclConfig} from '../dist';
+
+let config = di.getInstance('MlclConfig');
+// returns the whole configuration
+config.getConfig();
+// returns a dot notated path
+config.getConfig('database.url');
+```
+
 ## API Documentation
 
 The current API Documentation can be found on <https://molecuel.github.io/mlcl_core/>
