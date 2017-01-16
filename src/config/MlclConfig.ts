@@ -1,4 +1,5 @@
 import {singleton} from '@molecuel/di';
+import * as _ from 'lodash';
 import * as fs from 'fs';
 
 @singleton
@@ -29,7 +30,7 @@ export class MlclConfig {
   }
   getConfig(path?: string) {
     if(path) {
-      return this.config[path];
+      return _.get(this.config, path);
     } else {
       return this.config;
     }
