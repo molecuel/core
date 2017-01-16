@@ -56,7 +56,7 @@
   version "9.1.8"
   resolved "https://registry.yarnpkg.com/@types/highlight.js/-/highlight.js-9.1.8.tgz#d227f18bcb8f3f187e16965f2444859a04689758"
 
-"@types/lodash@^4.14.37", "@types/lodash@^4.14.42":
+"@types/lodash@^4.14.37":
   version "4.14.42"
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.42.tgz#e278a11eeb52251b65b4be95fd4c9c8aaa45909e"
 

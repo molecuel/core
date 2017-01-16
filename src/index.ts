@@ -1,6 +1,7 @@
 'use strict';
 import 'reflect-metadata';
 export {MlclCore} from './core/MlclCore';
+export {MlclConfig} from './config/MlclConfig';
 export {init, healthCheck} from './core/decorator';
 export {MlclStream} from './stream/MlclStream';
 export {ObserverFactoryElement} from './stream/ObserverFactoryElement';

@@ -1,18 +1,72 @@
 'use strict';
+process.env.configfilepath = './test/config/dev.json';
 import 'reflect-metadata';
 import should = require('should');
 import assert = require('assert');
 import {di, injectable} from '@molecuel/di';
 import {Subject, Observable} from '@reactivex/rxjs';
-import {MlclCore, MlclMessage, MlclStream, init, healthCheck, dataRead, dataCreate, dataUpdate, dataDelete, mapDataParams, MlclDataParam} from '../dist';
+import {MlclCore, MlclMessage, MlclStream, init, healthCheck,
+  dataRead, dataCreate, dataUpdate, dataDelete, mapDataParams,
+  MlclDataParam, MlclConfig} from '../dist';
+import * as fs from 'fs';
 should();
 
 describe('mlcl_core', function() {
+  before(function() {
+    di.bootstrap(MlclCore, MlclConfig);
+  });
+  describe('Config', function() {
+    let config: MlclConfig;
+    before(function() {
+     // create configs
+     fs.mkdirSync('./config');
+     fs.writeFileSync('./config/development.json', '{"test": "validPath"}', 'utf8' );
+     config = di.getInstance('MlclConfig');
+    });
+    it('should be able to get the complete config via configfilepath', function() {
+      assert(typeof config.getConfig() === 'object');
+    });
+    it('should be able to get a specific config key', function() {
+      assert(typeof config.getConfig('test') === 'string');
+      assert(config.getConfig('test') === 'valid');
+    });
+    it('should be able to get the complete config via default path', function() {
+      delete process.env.configfilepath;
+      config.readConfig();
+      assert(typeof config.getConfig() === 'object');
+    });
+    it('should be able to get a specific config key', function() {
+      assert(typeof config.getConfig('test') === 'string');
+      assert(config.getConfig('test') === 'validPath');
+    });
+    it('should be able to get the complete config via path with environment', function() {
+      process.env.NODE_ENV = 'testing';
+      process.env.configpath = './test/config/';
+      config.readConfig();
+      assert(typeof config.getConfig() === 'object');
+    });
+    it('should be able to get a specific config key', function() {
+      assert(typeof config.getConfig('test') === 'string');
+      assert(config.getConfig('test') === 'validTesting');
+    });
+    it('should catch the error and return a empty config', function() {
+      process.env.NODE_ENV = 'testing2';
+      process.env.configpath = './test/config/';
+      config.readConfig();
+      assert(typeof config.getConfig() === 'object');
+      assert(Object.keys(config.getConfig()).length === 0);
+    });
+    after(function() {
+      delete process.env.configpath;
+      delete process.env.configfilepath;
+      fs.unlinkSync('./config/development.json');
+      fs.rmdirSync('./config');
+    });
+  });
   describe('Subject', function() {
     let testSubject: Subject<MlclMessage>;
     let core: MlclCore;
     before(function() {
-      di.bootstrap(MlclCore);
       core = di.getInstance('MlclCore');
       testSubject = core.createSubject('test');
     });
