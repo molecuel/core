@@ -67,11 +67,52 @@
 				<p><a href="https://travis-ci.org/molecuel/mlcl_core"><img src="https://travis-ci.org/molecuel/mlcl_core.svg?branch=master" alt="Build Status"></a>
 				<a href="https://coveralls.io/github/molecuel/mlcl_core?branch=master"><img src="https://coveralls.io/repos/github/molecuel/mlcl_core/badge.svg?branch=master" alt="Coverage Status"></a></p>
 				<h1 id="core-module-for-molecuel-framework">Core module for molecuel Framework</h1>
-				<p>mlcl_core is the core module for the molecuel application framework. It&#39;s initialization is based on the mlcl_di Typescript dependency injection module.</p>
+				<p>@molecuel/core is the core module for the molecuel application framework. It&#39;s initialization is based on the @molecuel/di Typescript dependency injection module.</p>
 				<p>The version 2.x branch supports Subjects and streams based on rxjs.
 					Streams can be used as DataStreams. For example for save handlers and much more. The streams in this case works like a queue of handlers for a dataset.
 				Subjects can be used as EventEmitters (but should not be used too much).</p>
 				<p>The core module is initialized as real Singleton based on the dependency injection module.</p>
+				<h2 id="registering-data-functions">Registering data functions</h2>
+				<p>Data functions are very important for a typical molecuel application. They are async and can be registered to be executed by various modules. For example a http or socket module can use a registered data function to return data from a datbase.
+					The routes can be registered in the configuration.
+				If the http module (for example) has a configured route which points to a @dataRead function it creates a app.get route from it and the return value of the registered function will be returned via http.</p>
+				<p>Data Decorator provided by the core module:
+					@dataRead - Tags a data function for reading data
+					@dataCreate - Tags a data function for creating data
+					@dataUpdate - Tags a data function for updating data
+					@dataDelete - Tags a data function for deleting data
+				@mapDataParams - Maps request parameters to the data function and specifies limits and type for parameters to enhance security.</p>
+				<p>Example for a tagged class: </p>
+				<pre><code class="lang-js"><span class="hljs-keyword">import</span> {di, injectable} <span class="hljs-keyword">from</span> <span class="hljs-string">'@molecuel/di'</span>;
+<span class="hljs-keyword">import</span> {MlclCore, dataRead, dataCreate, dataUpdate, dataDelete, mapDataParams} <span class="hljs-keyword">from</span> <span class="hljs-string">'../dist'</span>;
+
+@injectable
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyDataFunctionClass</span> </span>{
+  @dataCreate()
+  public myDataCreaCheck() {
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+  }
+  @dataUpdate()
+  public myDataUpdateCheck() {
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+  }
+  @dataDelete()
+  public <span class="hljs-keyword">async</span> myDataDeleteCheck() {
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+  }
+  @mapDataParams([
+    <span class="hljs-keyword">new</span> MlclDataParam(<span class="hljs-string">'id'</span>, <span class="hljs-string">'id'</span>, <span class="hljs-string">'integer'</span>, <span class="hljs-number">999</span>),
+    <span class="hljs-keyword">new</span> MlclDataParam(<span class="hljs-string">'test'</span>, <span class="hljs-string">'name'</span>, <span class="hljs-string">'string'</span>, <span class="hljs-number">10</span>)
+  ])
+  @dataRead()
+  public <span class="hljs-keyword">async</span> myDataReadCheck(id: number, <span class="hljs-attr">name</span>: string) {
+    <span class="hljs-keyword">return</span> {
+      <span class="hljs-attr">data</span>: <span class="hljs-string">'mydata'</span>
+    };
+  }
+}
+di.bootstrap(MlclCore);
+</code></pre>
 				<h3 id="init-system">Init system</h3>
 				<p>The init system is based on the stream feature of molecuel core described below but can be combined with a method decorator on a injectable class to set different init methods.</p>
 				<p>For example database initialization can have a higher priority ( lower init value ) or port listen directives can have higher priorities.</p>
@@ -190,6 +231,20 @@ myobs.subscribe(<span class="hljs-function"><span class="hljs-keyword">function<
   <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'execution of all observables completed'</span>);
 });
 </code></pre>
+				<h2 id="config-handling">Config handling</h2>
+				<p>The default config will be searched in the current working directory of the process in the config subfolder. If no NODE_ENV variable is set the development.json will be used.
+				It&#39;s possible to override the configpath via environment variables.</p>
+				<p>configpath is the path and will be combined with the NODE_ENV.
+				configfilepath is the full path to a json configuration.</p>
+				<pre><code class="lang-js"><span class="hljs-keyword">import</span> {di} <span class="hljs-keyword">from</span> <span class="hljs-string">'mlcl_di'</span>;
+<span class="hljs-keyword">import</span> {MlclConfig} <span class="hljs-keyword">from</span> <span class="hljs-string">'../dist'</span>;
+
+<span class="hljs-keyword">let</span> config = di.getInstance(<span class="hljs-string">'MlclConfig'</span>);
+<span class="hljs-comment">// returns the whole configuration</span>
+config.getConfig();
+<span class="hljs-comment">// returns a dot notated path</span>
+config.getConfig(<span class="hljs-string">'database.url'</span>);
+</code></pre>
 				<h2 id="api-documentation">API Documentation</h2>
 				<p>The current API Documentation can be found on <a href="https://molecuel.github.io/mlcl_core/">https://molecuel.github.io/mlcl_core/</a></p>
 			</div>
@@ -205,6 +260,9 @@ myobs.subscribe(<span class="hljs-function"><span class="hljs-keyword">function<
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-class tsd-is-external">
+						<a href="classes/mlclconfig.html" class="tsd-kind-icon">Mlcl<wbr>Config</a>
+					</li>
+					<li class=" tsd-kind-class tsd-is-external">
 						<a href="classes/mlclconnection.html" class="tsd-kind-icon">Mlcl<wbr>Connection</a>
 					</li>
 					<li class=" tsd-kind-class tsd-is-external">
@@ -212,6 +270,9 @@ myobs.subscribe(<span class="hljs-function"><span class="hljs-keyword">function<
 					</li>
 					<li class=" tsd-kind-class tsd-is-external">
 						<a href="classes/mlcldatafactory.html" class="tsd-kind-icon">Mlcl<wbr>Data<wbr>Factory</a>
+					</li>
+					<li class=" tsd-kind-class tsd-is-external">
+						<a href="classes/mlcldataparam.html" class="tsd-kind-icon">Mlcl<wbr>Data<wbr>Param</a>
 					</li>
 					<li class=" tsd-kind-class tsd-is-external">
 						<a href="classes/mlclmessage.html" class="tsd-kind-icon">Mlcl<wbr>Message</a>
@@ -242,6 +303,9 @@ myobs.subscribe(<span class="hljs-function"><span class="hljs-keyword">function<
 					</li>
 					<li class=" tsd-kind-function tsd-is-external">
 						<a href="globals.html#init" class="tsd-kind-icon">init</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-external">
+						<a href="globals.html#mapdataparams" class="tsd-kind-icon">map<wbr>Data<wbr>Params</a>
 					</li>
 				</ul>
 			</nav>
