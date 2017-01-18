@@ -98,6 +98,9 @@ export class MlclCore {
       if (sourceParam && sourceParam.length <= targetParam.size) {
         result.push(this.parseParam(sourceParam, targetParam.type));
       }
+      else {
+        result.push(undefined);
+      }
     }
     return result;
   }
