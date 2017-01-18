@@ -227,6 +227,21 @@ describe('mlcl_core', function() {
       assert(dataParams[0] instanceof MlclDataParam);
       assert(dataParams[0].type === 'integer');
     });
+    it('should parse params to target type', () => {
+      let params: {value: any, type: string}[] = [];
+      params.push({value: '05.02.2017', type: 'Date'});
+      params.push({value: (new Date()).getTime(), type: 'Date'});
+      params.push({value: 1024, type: 'string'});
+      params.push({ value: '204.8', type: 'float' });
+
+      let results = [];
+      for (let item of params) {
+        results.push(core.parseParam(item.value, item.type));
+      }
+      for (let i = 0; i < params.length; i++) {
+        assert(results[i]);
+      }
+    });
     it('should return undefined datafunctions', function() {
       let dataParams = core.getDataParams('MyDataFunctionC2lass', 'myDataReadCheck');
       assert(dataParams === undefined);

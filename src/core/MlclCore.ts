@@ -89,4 +89,58 @@ export class MlclCore {
       return;
     }
   }
+
+  public parseParam(param: any, targetType: string): any {
+    let result: any;
+    if (Array.isArray(param)) {
+      result = [];
+      for (let item of param) {
+        result.push(this.parseParam(item, targetType));
+      }
+      return result;
+    }
+    else if (typeof param !== 'string') {
+      result = param.toString();
+    }
+    else {
+      result = param;
+    }
+    try {
+      switch (targetType.toLowerCase()) {
+        case 'string':
+          return result;
+        case 'number':
+        case 'float':
+        case 'double':
+        case 'decimal':
+          return parseFloat(result);
+        case 'integer':
+          return parseInt(result, 10);
+        case 'boolean':
+          if (result === 'true') {
+            return true;
+          }
+          else if( result === 'false') {
+            return false;
+          }
+          else {
+            throw new Error('Cannot parse "' + result + '" to "' + targetType +'".');
+          }
+        case 'date':
+          let sort = /^(\d{2})[^\d]?(\d{2})[^\d]?(\d{4})$/; // MMDDYYYY or DDMMYYYY
+          result = result.replace(/[\W]+/g, '-').replace(sort, '$3-$2-1');
+          if (!isNaN(parseFloat(result)) && isFinite(result)) {
+            return new Date(parseInt(result, 10));
+          }
+          else {
+            return new Date(result);
+          }
+        default:
+          throw new Error('"' + targetType + '" is no valid type.');
+      }
+    } catch (error) {
+      console.log(error);
+      return undefined;
+    }
+  }
 }
