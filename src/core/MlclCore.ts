@@ -115,7 +115,7 @@ export class MlclCore {
         case 'decimal':
           return parseFloat(result);
         case 'integer':
-          return parseInt(result, 10);
+          return parseInt(parseFloat(result).toString(), 10);
         case 'boolean':
           if (result === 'true') {
             return true;
@@ -138,8 +138,8 @@ export class MlclCore {
         default:
           throw new Error('"' + targetType + '" is no valid type.');
       }
-    } catch (error) {
-      console.log(error);
+    }
+    catch (error) {
       return undefined;
     }
   }

@@ -232,7 +232,8 @@ describe('mlcl_core', function() {
       params.push({value: '05.02.2017', type: 'Date'});
       params.push({value: (new Date()).getTime(), type: 'Date'});
       params.push({value: 1024, type: 'string'});
-      params.push({ value: '204.8', type: 'float' });
+      params.push({value: '204.8', type: 'float' });
+      params.push({value: '0.25e+2', type: 'integer'});
 
       let results = [];
       for (let item of params) {

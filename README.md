@@ -208,6 +208,22 @@ config.getConfig();
 config.getConfig('database.url');
 ```
 
+## Parameter handling
+
+To handle parsing of a value, use the parseParam(value: any, targetType: string) method of the core.
+Returns undefined if parsing is not possible or the target type is a complex object.
+
+```js
+import {di} from 'mlcl_di';
+
+let core = di.getInstance('MlclCore');
+core.parseParam(['13.4', '99.9', 3, '0.25E+2', {}], 'float');  // returns [13.4, 99.9, 3, 25, NaN]
+core.parseParam(['13.4', 99.9, '0.25E+2', {}], 'integer');     // returns [13, 99, 25, NaN]
+core.parseParam('22.11.2016', 'Date');                         // returns Nov 22nd 2016
+core.parseParam(['true', {}], 'boolean');                      // returns [true, undefined]
+core.parseParam({}, 'Date');                                   // returns undefined
+```
+
 ## API Documentation
 
-The current API Documentation can be found on <https://molecuel.github.io/mlcl_core/>
+The current API Documentation can be found on <https://molecuel.github.io/core/>
