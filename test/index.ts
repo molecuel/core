@@ -216,7 +216,7 @@ describe('mlcl_core', function() {
         @dataRead()
         public async myDataReadCheck(id: number, name: string) {
           return {
-            data: 'mydata'
+            data: (id + ' = "' + name+'"')
           };
         }
       }
@@ -227,11 +227,14 @@ describe('mlcl_core', function() {
       assert(dataParams[0] instanceof MlclDataParam);
       assert(dataParams[0].type === 'integer');
     });
-    it('should parse params for target function', () => {
-      let functionParams = core.renderDataParams({id: '500', test: 'huhu'}, 'MyDataFunctionClass', 'myDataReadCheck');
+    it('should parse params for target function and supply them', async () => {
+      let functionParams = core.renderDataParams({id: '500', test: 'Hello!'}, 'MyDataFunctionClass', 'myDataReadCheck');
       assert(functionParams);
       assert(functionParams.length);
       assert(functionParams[0] === 500);
+      let functionResult = await (di.getInstance('MyDataFunctionClass').myDataReadCheck(...functionParams));
+      assert(functionResult);
+      assert(functionResult.data === '500 = "Hello!"');
     });
     it('should return undefined datafunctions', function() {
       let dataParams = core.getDataParams('MyDataFunctionC2lass', 'myDataReadCheck');

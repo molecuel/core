@@ -52,7 +52,7 @@ class MyDataFunctionClass {
   @dataRead()
   public async myDataReadCheck(id: number, name: string) {
     return {
-      data: 'mydata'
+      data: (id + ' = "' + name+'"')
     };
   }
 }
@@ -216,7 +216,9 @@ To handle parsing of an object with parameters for use in any registered functio
 import {di} from 'mlcl_di';
 
 let core = di.getInstance('MlclCore');
-let functionParams = core.renderDataParams({id: '500', test: 'Hello world!'}, 'MyDataFunctionClass', 'myDataReadCheck');
+let functionParams = core.renderDataParams({id: '500', test: 'Hello!'}, 'MyDataFunctionClass', 'myDataReadCheck');
+let functionResult = await (di.getInstance('MyDataFunctionClass').myDataReadCheck(...functionParams));
+
 ```
 
 ## API Documentation
