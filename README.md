@@ -12,7 +12,7 @@ Subjects can be used as EventEmitters (but should not be used too much).
 The core module is initialized as real Singleton based on the dependency injection module.
 
 
-## Registering data functions
+## Registering data functions<a name="regdatafunc"></a>
 
 Data functions are very important for a typical molecuel application. They are async and can be registered to be executed by various modules. For example a http or socket module can use a registered data function to return data from a datbase.
 The routes can be registered in the configuration.
@@ -210,18 +210,13 @@ config.getConfig('database.url');
 
 ## Parameter handling
 
-To handle parsing of a value, use the parseParam(value: any, targetType: string) method of the core.
-Returns undefined if parsing is not possible or the target type is a complex object.
+To handle parsing of an object with parameters for use in any registered function (cf. [Registering data functions](#regdatafunc)), use the core's renderDataParams method which returns an array of values to supply said function with, according to previously defined mapping.
 
 ```js
 import {di} from 'mlcl_di';
 
 let core = di.getInstance('MlclCore');
-core.parseParam(['13.4', '99.9', 3, '0.25E+2', {}], 'float');  // returns [13.4, 99.9, 3, 25, NaN]
-core.parseParam(['13.4', 99.9, '0.25E+2', {}], 'integer');     // returns [13, 99, 25, NaN]
-core.parseParam('22.11.2016', 'Date');                         // returns Nov 22nd 2016
-core.parseParam(['true', {}], 'boolean');                      // returns [true, undefined]
-core.parseParam({}, 'Date');                                   // returns undefined
+let functionParams = core.renderDataParams({id: '500', test: 'Hello world!'}, 'MyDataFunctionClass', 'myDataReadCheck');
 ```
 
 ## API Documentation

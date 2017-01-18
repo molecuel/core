@@ -90,7 +90,19 @@ export class MlclCore {
     }
   }
 
-  public parseParam(param: any, targetType: string): any {
+  public renderDataParams(params: Object, target: string, propertyKey: string): any[] {
+    let result = [];
+    let targetParamsList = this.getDataParams(target, propertyKey);
+    for (let targetParam of targetParamsList) {
+      let sourceParam = params[targetParam.inputParam];
+      if (sourceParam && sourceParam.length <= targetParam.size) {
+        result.push(this.parseParam(sourceParam, targetParam.type));
+      }
+    }
+    return result;
+  }
+
+  protected parseParam(param: any, targetType: string): any {
     let result: any;
     if (Array.isArray(param)) {
       result = [];
