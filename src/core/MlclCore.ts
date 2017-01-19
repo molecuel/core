@@ -93,16 +93,18 @@ export class MlclCore {
   public renderDataParams(params: Object, target: string, propertyKey: string): any[] {
     let result = [];
     let targetParamsList = this.getDataParams(target, propertyKey);
-    for (let targetParam of targetParamsList) {
-      let sourceParam = params[targetParam.inputParam];
-      if (sourceParam && targetParam.size && sourceParam.length > targetParam.size) {
-        result.push(undefined);
-      }
-      else if (sourceParam) {
-        result.push(this.parseParam(sourceParam, targetParam.type));
-      }
-      else {
-        result.push(undefined);
+    if (targetParamsList) {
+      for (let targetParam of targetParamsList) {
+        let sourceParam = params[targetParam.inputParam];
+        if (sourceParam && targetParam.size && sourceParam.length > targetParam.size) {
+          result.push(undefined);
+        }
+        else if (sourceParam) {
+          result.push(this.parseParam(sourceParam, targetParam.type));
+        }
+        else {
+          result.push(undefined);
+        }
       }
     }
     return result;
