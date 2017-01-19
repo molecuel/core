@@ -95,7 +95,10 @@ export class MlclCore {
     let targetParamsList = this.getDataParams(target, propertyKey);
     for (let targetParam of targetParamsList) {
       let sourceParam = params[targetParam.inputParam];
-      if (sourceParam && sourceParam.length <= targetParam.size) {
+      if (sourceParam && targetParam.size && sourceParam.length > targetParam.size) {
+        result.push(undefined);
+      }
+      else if (sourceParam) {
         result.push(this.parseParam(sourceParam, targetParam.type));
       }
       else {
