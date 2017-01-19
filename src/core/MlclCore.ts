@@ -89,4 +89,73 @@ export class MlclCore {
       return;
     }
   }
+
+  public renderDataParams(params: Object, target: string, propertyKey: string): any[] {
+    let result = [];
+    let targetParamsList = this.getDataParams(target, propertyKey);
+    for (let targetParam of targetParamsList) {
+      let sourceParam = params[targetParam.inputParam];
+      if (sourceParam && sourceParam.length <= targetParam.size) {
+        result.push(this.parseParam(sourceParam, targetParam.type));
+      }
+      else {
+        result.push(undefined);
+      }
+    }
+    return result;
+  }
+
+  protected parseParam(param: any, targetType: string): any {
+    let result: any;
+    if (Array.isArray(param)) {
+      result = [];
+      for (let item of param) {
+        result.push(this.parseParam(item, targetType));
+      }
+      return result;
+    }
+    else if (typeof param !== 'string') {
+      result = param.toString();
+    }
+    else {
+      result = param;
+    }
+    try {
+      switch (targetType.toLowerCase()) {
+        case 'string':
+          return result;
+        case 'number':
+        case 'float':
+        case 'double':
+        case 'decimal':
+          return parseFloat(result);
+        case 'integer':
+          return parseInt(parseFloat(result).toString(), 10);
+        case 'boolean':
+          if (result === 'true') {
+            return true;
+          }
+          else if( result === 'false') {
+            return false;
+          }
+          else {
+            throw new Error('Cannot parse "' + result + '" to "' + targetType +'".');
+          }
+        case 'date':
+          let sort = /^(\d{2})[^\d]?(\d{2})[^\d]?(\d{4})$/; // MMDDYYYY or DDMMYYYY
+          result = result.replace(/[\W]+/g, '-').replace(sort, '$3-$2-1');
+          if (!isNaN(parseFloat(result)) && isFinite(result)) {
+            return new Date(parseInt(result, 10));
+          }
+          else {
+            return new Date(result);
+          }
+        default:
+          throw new Error('"' + targetType + '" is no valid type.');
+      }
+    }
+    catch (error) {
+      return undefined;
+    }
+  }
 }

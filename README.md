@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/molecuel/mlcl_core.svg?branch=master)](https://travis-ci.org/molecuel/mlcl_core)
+[![Build Status](https://travis-ci.org/molecuel/core.svg?branch=master)](https://travis-ci.org/molecuel/core)
 [![Coverage Status](https://coveralls.io/repos/github/molecuel/mlcl_core/badge.svg?branch=master)](https://coveralls.io/github/molecuel/mlcl_core?branch=master)
 
 # Core module for molecuel Framework
@@ -12,7 +12,7 @@ Subjects can be used as EventEmitters (but should not be used too much).
 The core module is initialized as real Singleton based on the dependency injection module.
 
 
-## Registering data functions
+## Registering data functions<a name="regdatafunc"></a>
 
 Data functions are very important for a typical molecuel application. They are async and can be registered to be executed by various modules. For example a http or socket module can use a registered data function to return data from a datbase.
 The routes can be registered in the configuration.
@@ -52,7 +52,7 @@ class MyDataFunctionClass {
   @dataRead()
   public async myDataReadCheck(id: number, name: string) {
     return {
-      data: 'mydata'
+      data: (id + ' = "' + name+'"')
     };
   }
 }
@@ -208,6 +208,19 @@ config.getConfig();
 config.getConfig('database.url');
 ```
 
+## Parameter handling
+
+To handle parsing of an object with parameters for use in any registered function (cf. [Registering data functions](#regdatafunc)), use the core's renderDataParams method which returns an array of values to supply said function with, according to previously defined mapping.
+
+```js
+import {di} from 'mlcl_di';
+
+let core = di.getInstance('MlclCore');
+let functionParams = core.renderDataParams({id: '500', test: 'Hello!'}, 'MyDataFunctionClass', 'myDataReadCheck');
+let functionResult = await (di.getInstance('MyDataFunctionClass').myDataReadCheck(...functionParams));
+
+```
+
 ## API Documentation
 
-The current API Documentation can be found on <https://molecuel.github.io/mlcl_core/>
+The current API Documentation can be found on <https://molecuel.github.io/core/>
