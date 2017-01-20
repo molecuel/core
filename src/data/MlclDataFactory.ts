@@ -14,4 +14,5 @@ export class MlclDataFactory {
   public targetProperty: string;
   public name: string;
   public operation: string;
+  public resultType: string;
 }
