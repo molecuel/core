@@ -1,6 +1,6 @@
 {
   "name": "@molecuel/core",
-  "version": "2.0.8",
+  "version": "2.0.9",
   "description": "Core module for molecuel Application framework",
   "main": "dist/index.js",
   "scripts": {
@@ -56,7 +56,7 @@
     "typescript": "^2.1.0"
   },
   "dependencies": {
-    "@molecuel/di": "^0.0.3",
+    "@molecuel/di": "^0.1.0",
     "@reactivex/rxjs": "^5.0.0-rc.5",
     "config": "^1.24.0",
     "lodash": "^4.17.4",
