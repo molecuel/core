@@ -6,7 +6,7 @@ import assert = require('assert');
 import {di, injectable} from '@molecuel/di';
 import {Subject, Observable} from '@reactivex/rxjs';
 import {MlclCore, MlclMessage, MlclStream, init, healthCheck,
-  dataRead, dataCreate, dataUpdate, dataDelete, mapDataParams,
+  dataRead, dataCreate, dataUpdate, dataReplace, dataDelete, mapDataParams,
   MlclDataParam, MlclConfig} from '../dist';
 import * as fs from 'fs';
 should();
@@ -202,6 +202,10 @@ describe('mlcl_core', function() {
           return async function() {
             return true;
           };
+        }
+        @dataReplace()
+        public async myDataReplaceCheck() {
+          return true;
         }
         @dataDelete()
         public myDataDeleteCheck() {

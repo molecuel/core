@@ -7,7 +7,7 @@ export {MlclStream} from './stream/MlclStream';
 export {ObserverFactoryElement} from './stream/ObserverFactoryElement';
 export {MlclDataFactory} from './data/MlclDataFactory';
 export {MlclDataParam} from './data/MlclDataParam';
-export {dataCreate, dataUpdate, dataRead, dataDelete, mapDataParams} from './data/decorator';
+export {dataCreate, dataUpdate, dataReplace, dataRead, dataDelete, mapDataParams} from './data/decorator';
 export {MlclConnection} from './core/MlclConnection';
 export {MlclMessage} from './core/MlclMessage';
 export {MlclServer} from './core/MlclServer';

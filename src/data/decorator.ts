@@ -45,6 +45,27 @@ export function dataUpdate(resultType: string = 'application/json', priority: nu
 }
 
 /**
+ * @description Adds a data replacte factory method. This should be a async function. This is stored in core and can be used by differnt modules like HTTP to receive data.
+ * 
+ * @export
+ * @param {any} [options = {}]
+ * @param {number} [priority=50]
+ * @returns
+ */
+export function dataReplace(resultType: string = 'application/json', priority: number = 50) {
+  return function(target, propertyKey: string) {
+    let targetFactory = new MlclDataFactory();
+    targetFactory.operation = 'replace';
+    targetFactory.priority = priority;
+    targetFactory.resultType = resultType;
+    targetFactory.targetName = target.constructor.name;
+    targetFactory.targetProperty = propertyKey;
+    let core = di.getInstance('MlclCore');
+    core.addDataFactory(targetFactory);
+  };
+}
+
+/**
  * @description Adds a data read factory method. This should be a async function. This is stored in core and can be used by different modules like HTTP to return data.
  * 
  * @export
