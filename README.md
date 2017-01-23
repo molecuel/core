@@ -22,6 +22,7 @@ Data Decorator provided by the core module:
 @dataRead - Tags a data function for reading data
 @dataCreate - Tags a data function for creating data
 @dataUpdate - Tags a data function for updating data
+@dataReplace - Tags a data function for replacing data. This is for example used by HTTP Put request which know the exact URI.
 @dataDelete - Tags a data function for deleting data
 @mapDataParams - Maps request parameters to the data function and specifies limits and type for parameters to enhance security.
 
