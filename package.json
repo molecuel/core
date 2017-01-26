@@ -50,7 +50,7 @@
     "mocha": "*",
     "mocha-lcov-reporter": "^1.2.0",
     "should": ">= 0.0.1",
-    "tslint": "^3.5.0",
+    "tslint": "^4.4.2",
     "tslint-stylish": "^2.1.0-beta",
     "typedoc": "^0.5.1",
     "typescript": "^2.1.0"
