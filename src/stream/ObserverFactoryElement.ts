@@ -13,10 +13,10 @@ export class ObserverFactoryElement {
   public targetProperty: string;
   /**
    * @description Creates an instance of ObserverFactoryElement.
-   * 
+   *
    * @param {number} [priority=50]
    * @param null [factoryMethod]
-   * 
+   *
    * @memberOf ObserverFactoryElement
    */
   public constructor(priority: number = 50, factoryMethod?: (data: any) => Observable<any>) {

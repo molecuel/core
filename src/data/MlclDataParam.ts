@@ -1,7 +1,7 @@
 import {injectable} from '@molecuel/di';
 /**
  * Parameter class for input output functions
- * 
+ *
  * @export
  * @class DataParam
  */

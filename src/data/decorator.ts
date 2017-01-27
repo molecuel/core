@@ -4,7 +4,7 @@ import {MlclDataParam} from './MlclDataParam';
 
 /**
  * @description Adds a data create factory method. This should be a async function. This is stored in core and can be used by differnt modules like HTTP to receive data.
- * 
+ *
  * @export
  * @param {any} [options = {}]
  * @param {number} [priority=50]
@@ -25,7 +25,7 @@ export function dataCreate(resultType: string = 'application/json', priority: nu
 
 /**
  * @description Adds a data update factory method. This should be a async function. This is stored in core and can be used by differnt modules like HTTP to receive data.
- * 
+ *
  * @export
  * @param {any} [options = {}]
  * @param {number} [priority=50]
@@ -46,7 +46,7 @@ export function dataUpdate(resultType: string = 'application/json', priority: nu
 
 /**
  * @description Adds a data replacte factory method. This should be a async function. This is stored in core and can be used by differnt modules like HTTP to receive data.
- * 
+ *
  * @export
  * @param {any} [options = {}]
  * @param {number} [priority=50]
@@ -67,7 +67,7 @@ export function dataReplace(resultType: string = 'application/json', priority: n
 
 /**
  * @description Adds a data read factory method. This should be a async function. This is stored in core and can be used by different modules like HTTP to return data.
- * 
+ *
  * @export
  * @param {any} [options = {}]
  * @param {number} priority
@@ -88,7 +88,7 @@ export function dataRead(resultType: string = 'application/json', priority: numb
 
 /**
  * @description Adds a data read factory method. This should be a async function. This is stored in core and can be used by different modules like HTTP to return data.
- * 
+ *
  * @export
  * @param {any} [options = {}]
  * @param {number} priority

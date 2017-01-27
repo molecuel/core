@@ -15,9 +15,9 @@ export class MlclStream {
 
   /**
    * @description Creates an instance of MlclStream.
-   * 
+   *
    * @param {string} name
-   * 
+   *
    * @memberOf MlclStream
    */
   constructor(name: string) {
@@ -26,10 +26,10 @@ export class MlclStream {
 
   /**
    * @description Renders the stream and add flatMaps to the input observable
-   * 
+   *
    * @param {Observable} inputObservable
    * @returns
-   * 
+   *
    * @memberOf MlclStream
    */
   public renderStream(inputObservable: Observable<any>) {
@@ -48,11 +48,11 @@ export class MlclStream {
 
   /**
    * @description Add observable to the stream
-   * 
+   *
    * @param {string} stream
    * @param {Observable} observable
    * @param {int} [priority=50]
-   * 
+   *
    * @memberOf MlclStream
    */
   public addObserverFactory(observerFactory: (data: any) => Observable<any>, priority: number = 50) {
@@ -62,11 +62,11 @@ export class MlclStream {
 
   /**
    * @description Adds a ObserverFactory by name - e.g. needed for @init decorator
-   * 
+   *
    * @param {string} targetName
    * @param {string} propertyKey
    * @param {number} [priority=50]
-   * 
+   *
    * @memberOf MlclStream
    */
   public addObserverFactoryByName(targetName: string, propertyKey: string, priority: number = 50) {
