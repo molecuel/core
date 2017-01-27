@@ -40,7 +40,7 @@
     "gulp-plumber": "^1.1.0",
     "gulp-sourcemaps": "^2.2.2",
     "gulp-tsconfig-files": "^0.2.5",
-    "gulp-tslint": "^4.3.2",
+    "gulp-tslint": "^7.0.1",
     "gulp-typedoc": "^2.0.1",
     "gulp-typescript": "^3.1.3",
     "gulp-util": "^3.0.7",
@@ -50,7 +50,7 @@
     "mocha": "*",
     "mocha-lcov-reporter": "^1.2.0",
     "should": ">= 0.0.1",
-    "tslint": "^3.5.0",
+    "tslint": "^4.4.2",
     "tslint-stylish": "^2.1.0-beta",
     "typedoc": "^0.5.1",
     "typescript": "^2.1.0"

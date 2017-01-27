@@ -2,7 +2,7 @@ import {injectable} from '@molecuel/di';
 
 /**
  * Message class for system internal messaging
- * 
+ *
  * @export
  * @class MlclMessage
  */

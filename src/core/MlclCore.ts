@@ -17,10 +17,10 @@ export class MlclCore {
 
   /**
    * @description Creates a new subject which enables EventEmitter like functionality
-   * 
+   *
    * @param {string} topic
    * @returns {Subject<any>}
-   * 
+   *
    * @memberOf MlclCore
    */
   public createSubject(topic: string): Subject<any> {
@@ -35,10 +35,10 @@ export class MlclCore {
 
   /**
    * @description Creates or returns a Stream
-   * 
+   *
    * @param {string} name
    * @returns {MlclStream}
-   * 
+   *
    * @memberOf MlclCore
    */
   public createStream(name: string): MlclStream {
@@ -52,9 +52,9 @@ export class MlclCore {
 
   /**
    * @description Init function which creates a init stream
-   * 
+   *
    * @returns {Promise<any>}
-   * 
+   *
    * @memberOf MlclCore
    */
   public init(): Promise<any> {

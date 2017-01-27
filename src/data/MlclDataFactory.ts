@@ -2,7 +2,7 @@ import {injectable} from '@molecuel/di';
 
 /**
  * @description Data provider function for services like http
- * 
+ *
  * @export
  * @class MlclDataFactory
  */
