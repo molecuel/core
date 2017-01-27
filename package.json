@@ -49,7 +49,7 @@
     "merge2": "^1.0.1",
     "mocha": "*",
     "mocha-lcov-reporter": "^1.2.0",
-    "should": ">= 0.0.1",
+    "should": ">=11.2.0",
     "tslint": "^4.4.2",
     "tslint-stylish": "^2.1.0-beta",
     "typedoc": "^0.5.1",
