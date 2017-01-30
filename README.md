@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/molecuel/core.svg?branch=master)](https://travis-ci.org/molecuel/core)
-[![Coverage Status](https://coveralls.io/repos/github/molecuel/mlcl_core/badge.svg?branch=master)](https://coveralls.io/github/molecuel/mlcl_core?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/molecuel/core/badge.svg?branch=master)](https://coveralls.io/github/molecuel/core?branch=master)
 
 # Core module for molecuel Framework
 
