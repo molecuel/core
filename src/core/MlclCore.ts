@@ -147,13 +147,19 @@ export class MlclCore {
             throw new Error('Cannot parse "' + result + '" to "' + targetType +'".');
           }
         case 'date':
-          let sort = /^(\d{2})[^\d]?(\d{2})[^\d]?(\d{4})$/; // MMDDYYYY or DDMMYYYY
-          result = result.replace(/[\W]+/g, '-').replace(sort, '$3-$2-1');
-          if (!isNaN(parseFloat(result)) && isFinite(result)) {
-            return new Date(parseInt(result, 10));
+          let sort = /^(\d{1,2})[^\d\w]?(\d{1,2})[^\d\w]?(\d{4})$/; // MMDDYYYY or DDMMYYYY
+          let restruct = result.replace(/[\W]+/g, '-').replace(sort, '$3-$2-$1');
+          if (!isNaN(parseFloat(restruct)) && isFinite(restruct)) {
+            return new Date(parseInt(restruct, 10));
           }
           else {
-            return new Date(result);
+            let restructDate = new Date(restruct);
+            if (restructDate.getTime() !== restructDate.getTime()) { // since (NaN !== NaN) -> true
+              return new Date(result);
+            }
+            else {
+              return restructDate;
+            }
           }
         default:
           throw new Error('"' + targetType + '" is no valid type.');

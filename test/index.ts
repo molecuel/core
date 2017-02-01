@@ -215,12 +215,53 @@ describe('mlcl_core', function() {
         }
         @mapDataParams([
           new MlclDataParam('id', 'id', 'integer', 999),
-          new MlclDataParam('test', 'name', 'string', 10)
+          new MlclDataParam('test', 'name', 'string', 10),
+          new MlclDataParam('extra', 'optional', 'string', 999)
         ])
         @dataRead()
-        public async myDataReadCheck(id: number, name: string) {
+        public async myDataReadCheck(id: number, name: string, optional?: any) {
           return {
-            data: (id + ' = "' + name+'"')
+            data: (id + ' = "' + name+'"'),
+            optional: optional
+          };
+        }
+        @mapDataParams([
+          new MlclDataParam('inputNumber', 'dateOne', 'Date', 999),
+          new MlclDataParam('inputDateString', 'dateTwo', 'Date', 999),
+          new MlclDataParam('inputGermanDate', 'dateThree', 'Date', 10),
+          new MlclDataParam('inputString', 'str', 'string', 999),
+          new MlclDataParam('inputTooLong', 'long', 'string', 1),
+          new MlclDataParam('inputAnyArray', 'strArr', 'string', 999),
+          new MlclDataParam('inputDecimalString', 'dec', 'decimal', 999),
+          new MlclDataParam('inputTrueString', 'boolTrue', 'boolean', 5),
+          new MlclDataParam('inputFalseString', 'boolFalse', 'boolean', 5),
+          new MlclDataParam('inputNotBoolString', 'boolNot', 'boolean', 5),
+          new MlclDataParam('inputAny', 'invalidType', 'Foo', 5)
+        ])
+        @dataRead()
+        public async myParsedParams(dateOne: Date,
+                                    dateTwo: Date,
+                                    dateThree: Date,
+                                    str: string,
+                                    long: string,
+                                    strArr: string[],
+                                    dec: number,
+                                    boolTrue: boolean,
+                                    boolFalse: boolean,
+                                    boolNot: boolean,
+                                    invalidType: any) {
+          return {
+            dateOne: dateOne,
+            dateTwo: dateTwo,
+            dateThree: dateThree,
+            str: str,
+            long: long,
+            strArr: strArr,
+            dec: dec,
+            boolTrue: boolTrue,
+            boolFalse: boolFalse,
+            boolNot: boolNot,
+            invalidType: invalidType
           };
         }
       }
@@ -231,6 +272,40 @@ describe('mlcl_core', function() {
       assert(dataParams[0] instanceof MlclDataParam);
       assert(dataParams[0].type === 'integer');
     });
+    it('should parse params for most basic types', async () => {
+      let testData = {
+        inputNumber: new Date().getTime(),
+        inputDateString: new Date().toString(),
+        inputGermanDate: '01.02.2017',
+        inputString: 'test',
+        inputTooLong: 'test',
+        inputAnyArray: [1234, 'test', 567, true, new Date()],
+        inputDecimalString: '1234.567',
+        inputTrueString: 'true',
+        inputFalseString: 'false',
+        inputNotBoolString: 'test',
+        inputAny: {}
+      };
+      let functionParams = core.renderDataParams(testData, 'MyDataFunctionClass', 'myParsedParams');
+      assert(functionParams);
+      assert(functionParams.length);
+      let functionResult = await (di.getInstance('MyDataFunctionClass').myParsedParams(...functionParams));
+      assert(functionResult);
+      assert(functionResult.dateOne instanceof Date && functionResult.dateOne.toString() === (new Date(testData.inputNumber)).toString());
+      assert(functionResult.dateTwo instanceof Date && functionResult.dateTwo.toString() === testData.inputDateString);
+      assert(functionResult.dateThree instanceof Date && functionResult.dateThree.toString() === (new Date('2017-02-01')).toString());
+      assert(functionResult.str === testData.inputString);
+      assert(functionResult.long === undefined);
+      let stringyfiedArr = testData.inputAnyArray.map(item => { return item.toString(); });
+      assert(!functionResult.strArr.filter(item => {
+        return stringyfiedArr.indexOf(item) < 0;
+      }).length);
+      assert(functionResult.dec === parseFloat(testData.inputDecimalString));
+      assert(functionResult.boolTrue === true);
+      assert(functionResult.boolFalse === false);
+      assert(functionResult.boolNot === undefined);
+      assert(functionResult.invalidType === undefined);
+    });
     it('should parse params for target function and supply them', async () => {
       let functionParams = core.renderDataParams({id: '500', test: 'Hello!'}, 'MyDataFunctionClass', 'myDataReadCheck');
       assert(functionParams);
@@ -239,6 +314,7 @@ describe('mlcl_core', function() {
       let functionResult = await (di.getInstance('MyDataFunctionClass').myDataReadCheck(...functionParams));
       assert(functionResult);
       assert(functionResult.data === '500 = "Hello!"');
+      assert(functionResult.optional === undefined);
     });
     it('should return undefined datafunctions', function() {
       let dataParams = core.getDataParams('MyDataFunctionC2lass', 'myDataReadCheck');
