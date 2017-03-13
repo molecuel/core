@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@molecuel/di@^0.1.0":
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/@molecuel/di/-/di-0.1.2.tgz#9b844f452f224ae56042749128fd2a76b3bcdbd2"
+"@molecuel/di@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@molecuel/di/-/di-0.2.0.tgz#c88c373c2dbdf445f2ce2d2ae6261f4e1b4ad201"
   dependencies:
     "@reactivex/rxjs" "^5.0.0-rc.5"
     config "^1.24.0"
@@ -42,9 +42,9 @@
   dependencies:
     "@types/node" "*"
 
-"@types/gulp@^3.8.32":
-  version "3.8.32"
-  resolved "https://registry.yarnpkg.com/@types/gulp/-/gulp-3.8.32.tgz#83c59c681cc233d1ec7f82d269555566fa133156"
+"@types/gulp@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@types/gulp/-/gulp-4.0.0.tgz#b7eac5414397028cc0efc084c3af74af4b471c79"
   dependencies:
     "@types/node" "*"
     "@types/orchestrator" "*"
@@ -76,9 +76,9 @@
   version "2.0.29"
   resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-2.0.29.tgz#5002e14f75e2d71e564281df0431c8c1b4a2a36a"
 
-"@types/mocha@^2.2.33":
-  version "2.2.38"
-  resolved "https://registry.yarnpkg.com/@types/mocha/-/mocha-2.2.38.tgz#8c188f6e34c2e7c3f1d0127d908d5a36e5a60dc9"
+"@types/mocha@^2.2.36":
+  version "2.2.40"
+  resolved "https://registry.yarnpkg.com/@types/mocha/-/mocha-2.2.40.tgz#9811dd800ece544cd84b5b859917bf584a150c4c"
 
 "@types/node@*":
   version "7.0.0"
@@ -1054,9 +1054,9 @@ gulp-sourcemaps@1.6.0:
     through2 "^2.0.0"
     vinyl "^1.0.0"
 
-gulp-sourcemaps@^2.2.2:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/gulp-sourcemaps/-/gulp-sourcemaps-2.4.0.tgz#9ce8fcf9ab29769819dff04ca781976072838979"
+gulp-sourcemaps@^2.2.3:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/gulp-sourcemaps/-/gulp-sourcemaps-2.4.1.tgz#8f65dc5c0d07b2fd5c88bc60ec7f13e56716bf74"
   dependencies:
     acorn "4.X"
     convert-source-map "1.X"
@@ -1163,9 +1163,9 @@ gulp@^3.9.0, gulp@^3.9.1:
     v8flags "^2.0.2"
     vinyl-fs "^0.3.0"
 
-gulpclass@0.0.8:
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/gulpclass/-/gulpclass-0.0.8.tgz#fd50b1f348a014ebbd9881e2ea3b412ee813a32d"
+gulpclass@0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/gulpclass/-/gulpclass-0.1.2.tgz#d26f5c39dc399e11c45a908787c86490bc31e850"
   dependencies:
     gulp "^3.9.0"
     merge2 "^0.3.6"
@@ -2293,6 +2293,16 @@ remap-istanbul@^0.8.4:
     source-map ">=0.5.6"
     through2 "2.0.1"
 
+remap-istanbul@^0.9.0:
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/remap-istanbul/-/remap-istanbul-0.9.1.tgz#db68ca092667dab31b3ce5b8297f3ebd3359e849"
+  dependencies:
+    amdefine "^1.0.0"
+    gulp-util "3.0.7"
+    istanbul "0.4.5"
+    source-map ">=0.5.6"
+    through2 "2.0.1"
+
 repeat-element@^1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/repeat-element/-/repeat-element-1.1.2.tgz#ef089a178d1483baae4d93eb98b4f9e4e11d990a"
@@ -2425,9 +2435,9 @@ should-util@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/should-util/-/should-util-1.0.0.tgz#c98cda374aa6b190df8ba87c9889c2b4db620063"
 
-"should@>= 0.0.1":
-  version "11.1.2"
-  resolved "https://registry.yarnpkg.com/should/-/should-11.1.2.tgz#3cad9c6fc600ffe2e1547d948be3284e984da946"
+should@>=11.2.0:
+  version "11.2.1"
+  resolved "https://registry.yarnpkg.com/should/-/should-11.2.1.tgz#90f55145552d01cfc200666e4e818a1c9670eda2"
   dependencies:
     should-equal "^1.0.0"
     should-format "^3.0.2"
@@ -2742,7 +2752,7 @@ typedoc@^0.5.1:
     typedoc-default-themes "^0.4.0"
     typescript "2.1.5"
 
-typescript@2.1.5, typescript@^2.1.0:
+typescript@2.1.5, typescript@^2.1.5:
   version "2.1.5"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.1.5.tgz#6fe9479e00e01855247cea216e7561bafcdbcd4a"
 
