@@ -11,3 +11,4 @@ export {dataCreate, dataUpdate, dataReplace, dataRead, dataDelete, mapDataParams
 export {MlclConnection} from './core/MlclConnection';
 export {MlclMessage} from './core/MlclMessage';
 export {MlclServer} from './core/MlclServer';
+export {IMlclDatabase} from './interfaces/IMlclDatabase';
