@@ -1,22 +1,21 @@
 'use strict';
 process.env.configfilepath = './test/config/dev.json';
 import 'reflect-metadata';
-import should = require('should');
+import * as should from 'should';
 import assert = require('assert');
 import {di, injectable} from '@molecuel/di';
 import {Subject, Observable} from '@reactivex/rxjs';
 import {MlclCore, MlclMessage, MlclStream, init, healthCheck,
   dataRead, dataCreate, dataUpdate, dataReplace, dataDelete, mapDataParams,
-  MlclDataParam, MlclConfig} from '../dist';
+  MlclDataParam} from '../dist';
 import * as fs from 'fs';
-should();
 
 describe('mlcl_core', function() {
   before(function() {
-    di.bootstrap(MlclCore, MlclConfig);
+    di.bootstrap();
   });
   describe('Config', function() {
-    let config: MlclConfig;
+    let config: any;
     before(function() {
      // create configs
      fs.mkdirSync('./config');
@@ -27,7 +26,7 @@ describe('mlcl_core', function() {
       assert(typeof config.getConfig() === 'object');
     });
     it('should be able to get a specific config key', function() {
-      assert(typeof config.getConfig('test') === 'string');
+      should.strictEqual(typeof config.getConfig('test'), 'string');
       assert(config.getConfig('test') === 'valid');
     });
     it('should be able to get the complete config via default path', function() {
