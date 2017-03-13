@@ -8,11 +8,16 @@
     "preserveConstEnums": true,
     "sourceMap": true,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "outDir": "dist/"
   },
-  "files": [
+  "include": [
+      "src/**/*"
   ],
-  "exclude": [],
+  "exclude": [
+      "node_modules",
+      "**/*.spec.ts"
+  ],
   "atom": {
     "rewriteTsconfig": false,
     "formatOnSave": true

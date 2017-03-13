@@ -5,6 +5,10 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "mocha",
+    "build": "./node_modules/.bin/tsc -p .",
+    "build_watch": "./node_modules/.bin/tsc -p . -w",
+    "build_test": "./node_modules/.bin/tsc -p tsconfig.test.json",
+    "build_test_watch": "./node_modules/.bin/tsc -p tsconfig.test.json -w",
     "cover": "istanbul cover ./node_modules/mocha/bin/_mocha && npm run remap && npm run remaphtml && npm run remaplcov",
     "remap": "./node_modules/.bin/remap-istanbul -i coverage/coverage.json -o coverage/coverage-remap.json",
     "remaphtml": "./node_modules/.bin/remap-istanbul -i coverage/coverage.json -o coverage/html -t html",
@@ -53,7 +57,7 @@
     "tslint": "^4.4.2",
     "tslint-stylish": "^2.1.0-beta",
     "typedoc": "^0.5.1",
-    "typescript": "^2.1.5"
+    "typescript": "^2.2.1"
   },
   "dependencies": {
     "@molecuel/di": "^0.2.0",

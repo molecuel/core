@@ -31,5 +31,6 @@ node_modules
 .DS_Store
 typings
 dist
+dist_test
 coverage
 test/**/*.js
