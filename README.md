@@ -229,7 +229,7 @@ The current API Documentation can be found on <https://molecuel.github.io/core/>
 ## Build System
 
 We are using npm to build the entire module.
-During development we use the tsc compiler defined in the task.json for visual studio code cause the incremental compilation is very fast.
+During development we use the tsc compiler defined in the task.json for visual studio code cause the incremental compilation is very fast. To start the build and watch process in Visual Studio Code just press CTRL+SHIFT+B. The build console should come up and show you the results of the build process.
 Any other editor can be used or just use tsc -w -p . on the commandline.
 
 All available npm options:
