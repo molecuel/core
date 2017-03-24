@@ -9,7 +9,6 @@ import {MlclCore, MlclMessage, MlclStream, init, healthCheck,
   dataRead, dataCreate, dataUpdate, dataReplace, dataDelete, mapDataParams,
   MlclDataParam} from '../dist';
 import * as fs from 'fs';
-
 describe('mlcl_core', function() {
   before(function() {
     di.bootstrap();

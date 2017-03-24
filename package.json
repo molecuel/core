@@ -4,7 +4,6 @@
   "description": "Core module for molecuel Application framework",
   "main": "dist/index.js",
   "scripts": {
-    "test": "mocha",
     "tslint": "./node_modules/.bin/tslint --project tsconfig.json",
     "tslint_test": "./node_modules/.bin/tslint --project tsconfig.test.json",
     "ts": "./node_modules/.bin/tsc -p .",
@@ -12,6 +11,8 @@
     "build": "npm run tslint && npm run ts",
     "build_test": "npm run tslint_test && npm run ts_test",
     "build_all": "npm run build && npm run build_test",
+    "mocha": "./node_modules/.bin/mocha",
+    "test": "npm run ts_test && npm run mocha",
     "cover": "istanbul cover ./node_modules/mocha/bin/_mocha && npm run remap && npm run remaphtml && npm run remaplcov",
     "remap": "./node_modules/.bin/remap-istanbul -i coverage/coverage.json -o coverage/coverage-remap.json",
     "remaphtml": "./node_modules/.bin/remap-istanbul -i coverage/coverage.json -o coverage/html -t html",

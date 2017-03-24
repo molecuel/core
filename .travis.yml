@@ -3,6 +3,5 @@ node_js:
   - "7"
 before_script:
   - npm run build
-  - npm run build_test
 after_success:
   - npm run coveralls
