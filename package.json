@@ -27,7 +27,7 @@
     "@types/gulp": "^4.0.0",
     "@types/gulp-plumber": "^0.0.29",
     "@types/gulp-tslint": "^3.6.30",
-    "@types/gulp-typescript": "^0.0.32",
+    "@types/gulp-typescript": "^0.0.33",
     "@types/merge2": "^0.3.29",
     "@types/mocha": "^2.2.36",
     "@types/should": "^8.1.30",
