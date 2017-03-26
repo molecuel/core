@@ -64,15 +64,15 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<p><a href="https://travis-ci.org/molecuel/mlcl_core"><img src="https://travis-ci.org/molecuel/mlcl_core.svg?branch=master" alt="Build Status"></a>
-				<a href="https://coveralls.io/github/molecuel/mlcl_core?branch=master"><img src="https://coveralls.io/repos/github/molecuel/mlcl_core/badge.svg?branch=master" alt="Coverage Status"></a></p>
+				<p><a href="https://travis-ci.org/molecuel/core"><img src="https://travis-ci.org/molecuel/core.svg?branch=master" alt="Build Status"></a>
+				<a href="https://coveralls.io/github/molecuel/core?branch=master"><img src="https://coveralls.io/repos/github/molecuel/core/badge.svg?branch=master" alt="Coverage Status"></a></p>
 				<h1 id="core-module-for-molecuel-framework">Core module for molecuel Framework</h1>
 				<p>@molecuel/core is the core module for the molecuel application framework. It&#39;s initialization is based on the @molecuel/di Typescript dependency injection module.</p>
 				<p>The version 2.x branch supports Subjects and streams based on rxjs.
 					Streams can be used as DataStreams. For example for save handlers and much more. The streams in this case works like a queue of handlers for a dataset.
 				Subjects can be used as EventEmitters (but should not be used too much).</p>
 				<p>The core module is initialized as real Singleton based on the dependency injection module.</p>
-				<h2 id="registering-data-functions">Registering data functions</h2>
+				<h2 id="registering-data-functions-a-name-regdatafunc-a-">Registering data functions<a name="regdatafunc"></a></h2>
 				<p>Data functions are very important for a typical molecuel application. They are async and can be registered to be executed by various modules. For example a http or socket module can use a registered data function to return data from a datbase.
 					The routes can be registered in the configuration.
 				If the http module (for example) has a configured route which points to a @dataRead function it creates a app.get route from it and the return value of the registered function will be returned via http.</p>
@@ -80,6 +80,7 @@
 					@dataRead - Tags a data function for reading data
 					@dataCreate - Tags a data function for creating data
 					@dataUpdate - Tags a data function for updating data
+					@dataReplace - Tags a data function for replacing data. This is for example used by HTTP Put request which know the exact URI.
 					@dataDelete - Tags a data function for deleting data
 				@mapDataParams - Maps request parameters to the data function and specifies limits and type for parameters to enhance security.</p>
 				<p>Example for a tagged class: </p>
@@ -107,7 +108,7 @@
   @dataRead()
   public <span class="hljs-keyword">async</span> myDataReadCheck(id: number, <span class="hljs-attr">name</span>: string) {
     <span class="hljs-keyword">return</span> {
-      <span class="hljs-attr">data</span>: <span class="hljs-string">'mydata'</span>
+      <span class="hljs-attr">data</span>: (id + <span class="hljs-string">' = "'</span> + name+<span class="hljs-string">'"'</span>)
     };
   }
 }
@@ -245,8 +246,49 @@ config.getConfig();
 <span class="hljs-comment">// returns a dot notated path</span>
 config.getConfig(<span class="hljs-string">'database.url'</span>);
 </code></pre>
+				<h2 id="parameter-handling">Parameter handling</h2>
+				<p>To handle parsing of an object with parameters for use in any registered function (cf. <a href="#regdatafunc">Registering data functions</a>), use the core&#39;s renderDataParams method which returns an array of values to supply said function with, according to previously defined mapping.</p>
+				<pre><code class="lang-js"><span class="hljs-keyword">import</span> {di} <span class="hljs-keyword">from</span> <span class="hljs-string">'mlcl_di'</span>;
+
+<span class="hljs-keyword">let</span> core = di.getInstance(<span class="hljs-string">'MlclCore'</span>);
+<span class="hljs-keyword">let</span> functionParams = core.renderDataParams({<span class="hljs-attr">id</span>: <span class="hljs-string">'500'</span>, <span class="hljs-attr">test</span>: <span class="hljs-string">'Hello!'</span>}, <span class="hljs-string">'MyDataFunctionClass'</span>, <span class="hljs-string">'myDataReadCheck'</span>);
+<span class="hljs-keyword">let</span> functionResult = <span class="hljs-keyword">await</span> (di.getInstance(<span class="hljs-string">'MyDataFunctionClass'</span>).myDataReadCheck(...functionParams));
+</code></pre>
 				<h2 id="api-documentation">API Documentation</h2>
-				<p>The current API Documentation can be found on <a href="https://molecuel.github.io/mlcl_core/">https://molecuel.github.io/mlcl_core/</a></p>
+				<p>The current API Documentation can be found on <a href="https://molecuel.github.io/core/">https://molecuel.github.io/core/</a></p>
+				<h2 id="build-system">Build System</h2>
+				<p>We are using npm to build the entire module.
+					During development we use the tsc compiler defined in the task.json for visual studio code cause the incremental compilation is very fast. To start the build and watch process in Visual Studio Code just press CTRL+SHIFT+B. The build console should come up and show you the results of the build process.
+				Any other editor can be used or just use tsc -w -p . on the commandline.</p>
+				<p>All available npm options:</p>
+				<h3 id="npm-run-tslint">npm run tslint</h3>
+				<p>Executes the linter for the typescript files in the src folder</p>
+				<h3 id="npm-run-tslint_test">npm run tslint_test</h3>
+				<p>Executes the linter for the typescript files in the test folder</p>
+				<h3 id="npm-run-ts">npm run ts</h3>
+				<p>Runs the Typescript compiler for all files in the src directory</p>
+				<h3 id="npm-run-ts_test">npm run ts_test</h3>
+				<p>Runs the Typescript compiler for all files in the test directory</p>
+				<h3 id="npm-run-build">npm run build</h3>
+				<p>Executes thes linter for the files in the src folder and runs the typescript compiler for the files in the src folder.</p>
+				<h3 id="npm-run-build_test">npm run build_test</h3>
+				<p>Executes thes linter for the files in the test folder and runs the typescript compiler for the files in the test folder.</p>
+				<h3 id="npm-run-build_all">npm run build_all</h3>
+				<p>Executes thes linter for the files in the src and test folder and runs the typescript compiler for the files in the src and test folder.</p>
+				<h3 id="npm-run-mocha">npm run mocha</h3>
+				<p>Just executes the local mocha command which relies in the local node_modules directory.</p>
+				<h3 id="npm-run-test">npm run test</h3>
+				<p>Executes the compilation of the test files and runs the mocha test.</p>
+				<h3 id="npm-run-cover">npm run cover</h3>
+				<p>Runs the istanbuld code coverage test and remaps the results to the typescript sources</p>
+				<h3 id="npm-run-remap">npm run remap</h3>
+				<p>Remaps the code coverage report to typescript</p>
+				<h3 id="npm-run-remaphtml">npm run remaphtml</h3>
+				<p>Remaps the html output of istanbul to the typescript sources</p>
+				<h3 id="npm-run-remaplcov">npm run remaplcov</h3>
+				<p>Remaps the lcov reports to the typescript sources</p>
+				<h3 id="npm-run-coveralls">npm run coveralls</h3>
+				<p>Runs the code coverage reports, the remaps and send the results to the coveralls.io service</p>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -259,52 +301,58 @@ config.getConfig(<span class="hljs-string">'database.url'</span>);
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class tsd-is-external">
+					<li class=" tsd-kind-class">
 						<a href="classes/mlclconfig.html" class="tsd-kind-icon">Mlcl<wbr>Config</a>
 					</li>
-					<li class=" tsd-kind-class tsd-is-external">
+					<li class=" tsd-kind-class">
 						<a href="classes/mlclconnection.html" class="tsd-kind-icon">Mlcl<wbr>Connection</a>
 					</li>
-					<li class=" tsd-kind-class tsd-is-external">
+					<li class=" tsd-kind-class">
 						<a href="classes/mlclcore.html" class="tsd-kind-icon">Mlcl<wbr>Core</a>
 					</li>
-					<li class=" tsd-kind-class tsd-is-external">
+					<li class=" tsd-kind-class">
 						<a href="classes/mlcldatafactory.html" class="tsd-kind-icon">Mlcl<wbr>Data<wbr>Factory</a>
 					</li>
-					<li class=" tsd-kind-class tsd-is-external">
+					<li class=" tsd-kind-class">
 						<a href="classes/mlcldataparam.html" class="tsd-kind-icon">Mlcl<wbr>Data<wbr>Param</a>
 					</li>
-					<li class=" tsd-kind-class tsd-is-external">
+					<li class=" tsd-kind-class">
 						<a href="classes/mlclmessage.html" class="tsd-kind-icon">Mlcl<wbr>Message</a>
 					</li>
-					<li class=" tsd-kind-class tsd-is-external">
+					<li class=" tsd-kind-class">
 						<a href="classes/mlclserver.html" class="tsd-kind-icon">Mlcl<wbr>Server</a>
 					</li>
-					<li class=" tsd-kind-class tsd-is-external">
+					<li class=" tsd-kind-class">
 						<a href="classes/mlclstream.html" class="tsd-kind-icon">Mlcl<wbr>Stream</a>
 					</li>
-					<li class=" tsd-kind-class tsd-is-external">
+					<li class=" tsd-kind-class">
 						<a href="classes/observerfactoryelement.html" class="tsd-kind-icon">Observer<wbr>Factory<wbr>Element</a>
 					</li>
-					<li class=" tsd-kind-function tsd-is-external">
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/imlcldatabase.html" class="tsd-kind-icon">IMlcl<wbr>Database</a>
+					</li>
+					<li class=" tsd-kind-function">
 						<a href="globals.html#datacreate" class="tsd-kind-icon">data<wbr>Create</a>
 					</li>
-					<li class=" tsd-kind-function tsd-is-external">
+					<li class=" tsd-kind-function">
 						<a href="globals.html#datadelete" class="tsd-kind-icon">data<wbr>Delete</a>
 					</li>
-					<li class=" tsd-kind-function tsd-is-external">
+					<li class=" tsd-kind-function">
 						<a href="globals.html#dataread" class="tsd-kind-icon">data<wbr>Read</a>
 					</li>
-					<li class=" tsd-kind-function tsd-is-external">
+					<li class=" tsd-kind-function">
+						<a href="globals.html#datareplace" class="tsd-kind-icon">data<wbr>Replace</a>
+					</li>
+					<li class=" tsd-kind-function">
 						<a href="globals.html#dataupdate" class="tsd-kind-icon">data<wbr>Update</a>
 					</li>
-					<li class=" tsd-kind-function tsd-is-external">
+					<li class=" tsd-kind-function">
 						<a href="globals.html#healthcheck" class="tsd-kind-icon">health<wbr>Check</a>
 					</li>
-					<li class=" tsd-kind-function tsd-is-external">
+					<li class=" tsd-kind-function">
 						<a href="globals.html#init" class="tsd-kind-icon">init</a>
 					</li>
-					<li class=" tsd-kind-function tsd-is-external">
+					<li class=" tsd-kind-function">
 						<a href="globals.html#mapdataparams" class="tsd-kind-icon">map<wbr>Data<wbr>Params</a>
 					</li>
 				</ul>
