@@ -19,7 +19,8 @@
     "remaplcov": "./node_modules/.bin/remap-istanbul -i coverage/coverage.json -o coverage/lcov-remap.info -t lcovonly",
     "coveralls": "npm run cover && cat ./coverage/lcov-remap.info | coveralls",
     "createdoc": "./node_modules/.bin/typedoc --gaID UA-89800241-1 --out ./docs --target es6 --mode file --ignoreCompilerErrors",
-    "publishdocs": "./node_modules/.bin/gh-pages -d docs"
+    "publishdocs": "./node_modules/.bin/gh-pages -d docs",
+    "docs": "npm run createdoc && npm run publishdocs"
   },
   "repository": {
     "type": "git",
