@@ -20,7 +20,8 @@
     "coveralls": "npm run cover && cat ./coverage/lcov-remap.info | coveralls",
     "createdoc": "./node_modules/.bin/typedoc --gaID UA-89800241-1 --out ./docs --target es6 --mode file --ignoreCompilerErrors",
     "publishdocs": "./node_modules/.bin/gh-pages -d docs",
-    "docs": "npm run createdoc && npm run publishdocs"
+    "docs": "npm run createdoc && npm run publishdocs",
+    "2npm": "./node_modules/.bin/publish && npm run docs"
   },
   "repository": {
     "type": "git",
@@ -45,6 +46,7 @@
     "istanbul": "^0.4.5",
     "mocha": "*",
     "mocha-lcov-reporter": "^1.2.0",
+    "publish": "^0.6.0",
     "remap-istanbul": "^0.9.3",
     "should": ">=11.2.0",
     "tslint": "^4.4.2",
