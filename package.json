@@ -17,7 +17,9 @@
     "remap": "./node_modules/.bin/remap-istanbul -i coverage/coverage.json -o coverage/coverage-remap.json",
     "remaphtml": "./node_modules/.bin/remap-istanbul -i coverage/coverage.json -o coverage/html -t html",
     "remaplcov": "./node_modules/.bin/remap-istanbul -i coverage/coverage.json -o coverage/lcov-remap.info -t lcovonly",
-    "coveralls": "npm run cover && cat ./coverage/lcov-remap.info | coveralls"
+    "coveralls": "npm run cover && cat ./coverage/lcov-remap.info | coveralls",
+    "createdoc": "./node_modules/.bin/typedoc --gaID UA-89800241-1 --out ./docs --target es6 --mode file --ignoreCompilerErrors",
+    "publishdocs": "./node_modules/.bin/gh-pages -d docs"
   },
   "repository": {
     "type": "git",
@@ -38,14 +40,15 @@
     "assert": ">=0.0.1",
     "coveralls": "^2.11.15",
     "del": "^2.2.0",
+    "gh-pages": "^0.12.0",
     "istanbul": "^0.4.5",
     "mocha": "*",
     "mocha-lcov-reporter": "^1.2.0",
+    "remap-istanbul": "^0.9.3",
     "should": ">=11.2.0",
     "tslint": "^4.4.2",
     "typedoc": "^0.5.1",
-    "typescript": "^2.2.1",
-    "remap-istanbul": "^0.9.3"
+    "typescript": "^2.2.1"
   },
   "dependencies": {
     "@molecuel/di": "^0.2.0",
