@@ -1,5 +1,4 @@
-[![Build Status](https://travis-ci.org/molecuel/core.svg?branch=master)](https://travis-ci.org/molecuel/core)
-[![Coverage Status](https://coveralls.io/repos/github/molecuel/core/badge.svg?branch=master)](https://coveralls.io/github/molecuel/core?branch=master)
+# @molecuel/core [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Coverage percentage][coveralls-image]][coveralls-url]
 
 # Core module for molecuel Framework
 
@@ -287,3 +286,13 @@ Shortcut for createdocs and publishdocs
 
 ### npm run 2npm
 Checks it the package version in package.json is higher than the registered one in npm registry and published the package if the version is higher.
+
+
+[npm-image]: https://badge.fury.io/js/%40molecuel%2Fcore.svg
+[npm-url]: https://npmjs.org/package/@molecuel/core
+[travis-image]: https://travis-ci.org/molecuel/core.svg?branch=master
+[travis-url]: https://travis-ci.org/molecuel/core
+[daviddm-image]: https://david-dm.org/molecuel/core.svg?theme=shields.io
+[daviddm-url]: https://david-dm.org/molecuel/core
+[coveralls-image]: https://coveralls.io/repos/molecuel/core/badge.svg
+[coveralls-url]: https://coveralls.io/r/molecuel/core
