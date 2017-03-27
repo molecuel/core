@@ -10,6 +10,6 @@ deploy:
   provider: npm
   email: info@molecuel.org
   api_key:
-    secure: VPaymvXAcr8yOdz0nFqOBQfjV2FMm0uRAAIsc/kDYrFeAmlxK204pCp0ECe8stbmr7TrkUVQBtkOUl3omgKHQxVo5msapRpPIJzlAkwcBzcf+BE15RH5SCEF305Gm9ynzd/3l4nn2ZwkRcI08Nz5RHAAsSIevdGpczi5LaAOdds=
+    secure: EZp72D9Sdgf1cbLxLuL2jbjfbCwKvujYjfvP+vTVVsEbiplPyBa0ZqSKV5n7YNlnWQXKGY5EBLwqV0b9bqy6r4ZeydyOTLfXv4+s3tLnkVMeo1vEiIyljZlLm1SVlBGHwMFCRVpNI0yS4rtoja5+LYyBzbpL8th+rwwTV7sznTs=
   on:
     repo: molecuel/core
