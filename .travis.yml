@@ -1,8 +1,15 @@
 language: node_js
 node_js:
-  - "6"
-  - "7"
+- '6'
+- '7'
 before_script:
-  - npm run build
+- npm run build
 after_success:
-  - npm run coveralls
+- npm run coveralls
+deploy:
+  provider: npm
+  email: info@molecuel.org
+  api_key:
+    secure: VPaymvXAcr8yOdz0nFqOBQfjV2FMm0uRAAIsc/kDYrFeAmlxK204pCp0ECe8stbmr7TrkUVQBtkOUl3omgKHQxVo5msapRpPIJzlAkwcBzcf+BE15RH5SCEF305Gm9ynzd/3l4nn2ZwkRcI08Nz5RHAAsSIevdGpczi5LaAOdds=
+  on:
+    repo: molecuel/core
