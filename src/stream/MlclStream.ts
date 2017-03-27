@@ -1,6 +1,6 @@
-import {di, injectable} from '@molecuel/di';
-import {Observable} from '@reactivex/rxjs';
-import {ObserverFactoryElement} from './ObserverFactoryElement' ;
+import {di, injectable} from "@molecuel/di";
+import {Observable} from "@reactivex/rxjs";
+import {ObserverFactoryElement} from "./ObserverFactoryElement" ;
 
 /**
  * @export
@@ -11,7 +11,7 @@ export class MlclStream {
   // name of the current stream
   public name: string;
   // observer factory methods registered
-  public observerFactories: Array<ObserverFactoryElement> = new Array();
+  public observerFactories: ObserverFactoryElement[] = new Array();
 
   /**
    * @description Creates an instance of MlclStream.
@@ -33,11 +33,12 @@ export class MlclStream {
    * @memberOf MlclStream
    */
   public renderStream(inputObservable: Observable<any>) {
-    let observables: Array<ObserverFactoryElement> = this.observerFactories.sort(function(a: ObserverFactoryElement, b: ObserverFactoryElement) {
-      return a.priority - b.priority;
+    let observables: ObserverFactoryElement[] = this.observerFactories.sort(
+      (a: ObserverFactoryElement, b: ObserverFactoryElement) => {
+        return a.priority - b.priority;
     });
-    for(let observ of observables) {
-      if(!observ.factoryMethod && observ.targetName && observ.targetProperty) {
+    for (let observ of observables) {
+      if (!observ.factoryMethod && observ.targetName && observ.targetProperty) {
         let obsInstance = di.getInstance(observ.targetName);
         observ.factoryMethod = obsInstance[observ.targetProperty];
       }

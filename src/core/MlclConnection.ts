@@ -1,4 +1,4 @@
-import {injectable} from '@molecuel/di';
+import {injectable} from "@molecuel/di";
 
 /**
  * @description Exports a molecuel connection class which stores different kind of connections

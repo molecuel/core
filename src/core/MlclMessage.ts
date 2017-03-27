@@ -1,4 +1,4 @@
-import {injectable} from '@molecuel/di';
+import {injectable} from "@molecuel/di";
 
 /**
  * Message class for system internal messaging

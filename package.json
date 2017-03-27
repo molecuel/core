@@ -55,15 +55,8 @@
   },
   "dependencies": {
     "@molecuel/di": "^0.2.0",
-    "@reactivex/rxjs": "^5.0.0-rc.5",
+    "@reactivex/rxjs": "^5.2.0",
     "config": "^1.24.0",
     "reflect-metadata": "^0.1.3"
-  },
-  "devconfig": {
-    "paths": {
-      "testsource": "test/**/*.ts",
-      "source": "src/**/*.ts",
-      "dist": "dist/"
-    }
   }
 }

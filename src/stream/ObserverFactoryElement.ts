@@ -1,5 +1,5 @@
-import {injectable} from '@molecuel/di';
-import {Observable} from '@reactivex/rxjs';
+import {injectable} from "@molecuel/di";
+import {Observable} from "@reactivex/rxjs";
 /**
  * @description A ObserverFactory element which is used for queuing observers for a specific queue / observable
  * @export
@@ -21,7 +21,7 @@ export class ObserverFactoryElement {
    */
   public constructor(priority: number = 50, factoryMethod?: (data: any) => Observable<any>) {
     this.priority = priority;
-    if(factoryMethod) {
+    if (factoryMethod) {
       this.factoryMethod = factoryMethod;
     }
   }

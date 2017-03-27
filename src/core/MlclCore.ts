@@ -1,8 +1,8 @@
-import {singleton} from '@molecuel/di';
-import {MlclStream} from '../stream/MlclStream';
-import {Observable, Subject} from '@reactivex/rxjs';
-import {MlclDataFactory} from '../data/MlclDataFactory';
-import {MlclDataParam} from '../data/MlclDataParam';
+import {singleton} from "@molecuel/di";
+import {Observable, Subject} from "@reactivex/rxjs";
+import {MlclDataFactory} from "../data/MlclDataFactory";
+import {MlclDataParam} from "../data/MlclDataParam";
+import {MlclStream} from "../stream/MlclStream";
 
 @singleton
 export class MlclCore {
@@ -11,9 +11,9 @@ export class MlclCore {
   // subjects are stored here
   protected subjects: Map<string, Subject<any>> = new Map();
   // this is for data input and output functions
-  protected dataFactories: Array<MlclDataFactory> = new Array();
+  protected dataFactories: MlclDataFactory[] = new Array();
   // params for dataFactories
-  private dataParams: Map<string, Map<string, Array<MlclDataParam>>> = new Map();
+  private dataParams: Map<string, Map<string, MlclDataParam[]>> = new Map();
 
   /**
    * @description Creates a new subject which enables EventEmitter like functionality
@@ -24,7 +24,7 @@ export class MlclCore {
    * @memberOf MlclCore
    */
   public createSubject(topic: string): Subject<any> {
-    if(this.subjects.get(topic)) {
+    if (this.subjects.get(topic)) {
       return this.subjects.get(topic);
     } else {
       let subject = new Subject();
@@ -43,7 +43,7 @@ export class MlclCore {
    */
   public createStream(name: string): MlclStream {
     let currentStream = this.streams.get(name);
-    if(!currentStream) {
+    if (!currentStream) {
       currentStream = new MlclStream(name);
       this.streams.set(name, currentStream);
     }
@@ -59,7 +59,7 @@ export class MlclCore {
    */
   public init(): Promise<any> {
     let initObs = Observable.from([{}]);
-    let initStream: MlclStream = this.createStream('init');
+    let initStream: MlclStream = this.createStream("init");
     initObs = initStream.renderStream(initObs);
     return initObs.toPromise();
   }
@@ -68,22 +68,22 @@ export class MlclCore {
     this.dataFactories.push(factory);
   }
 
-  public getDataFactories(): Array<MlclDataFactory> {
+  public getDataFactories(): MlclDataFactory[] {
     return this.dataFactories;
   }
 
-  public addDataParams(className: string, propertyName: string, dataParams: Array<MlclDataParam>) {
-    if(!this.dataParams.has(className)) {
-      let newMap: Map<string, Array<MlclDataParam>> = new Map();
+  public addDataParams(className: string, propertyName: string, dataParams: MlclDataParam[]) {
+    if (!this.dataParams.has(className)) {
+      let newMap: Map<string, MlclDataParam[]> = new Map();
       this.dataParams.set(className, newMap);
     }
     let classMap = this.dataParams.get(className);
     classMap.set(propertyName, dataParams);
   }
 
-  public getDataParams(className, propertyName): Array<MlclDataParam> {
+  public getDataParams(className, propertyName): MlclDataParam[] {
     let classMap = this.dataParams.get(className);
-    if(classMap) {
+    if (classMap) {
       return classMap.get(propertyName);
     } else {
       return;
@@ -98,11 +98,9 @@ export class MlclCore {
         let sourceParam = params[targetParam.inputParam];
         if (sourceParam && targetParam.size && sourceParam.length > targetParam.size) {
           result.push(undefined);
-        }
-        else if (sourceParam) {
+        } else if (sourceParam) {
           result.push(this.parseParam(sourceParam, targetParam.type));
-        }
-        else {
+        } else {
           result.push(undefined);
         }
       }
@@ -118,54 +116,47 @@ export class MlclCore {
         result.push(this.parseParam(item, targetType));
       }
       return result;
-    }
-    else if (typeof param !== 'string') {
+    } else if (typeof param !== "string") {
       result = param.toString();
-    }
-    else {
+    } else {
       result = param;
     }
     try {
       switch (targetType.toLowerCase()) {
-        case 'string':
+        case "string":
           return result;
-        case 'number':
-        case 'float':
-        case 'double':
-        case 'decimal':
+        case "number":
+        case "float":
+        case "double":
+        case "decimal":
           return parseFloat(result);
-        case 'integer':
+        case "integer":
           return parseInt(parseFloat(result).toString(), 10);
-        case 'boolean':
-          if (result === 'true') {
+        case "boolean":
+          if (result === "true") {
             return true;
-          }
-          else if( result === 'false') {
+          } else if ( result === "false") {
             return false;
+          } else {
+            throw new Error("Cannot parse " + result + " to " + targetType + ".");
           }
-          else {
-            throw new Error('Cannot parse "' + result + '" to "' + targetType +'".');
-          }
-        case 'date':
+        case "date":
           let sort = /^(\d{1,2})[^\d\w]?(\d{1,2})[^\d\w]?(\d{4})$/; // MMDDYYYY or DDMMYYYY
-          let restruct = result.replace(/[\W]+/g, '-').replace(sort, '$3-$2-$1');
+          let restruct = result.replace(/[\W]+/g, "-").replace(sort, "$3-$2-$1");
           if (!isNaN(parseFloat(restruct)) && isFinite(restruct)) {
             return new Date(parseInt(restruct, 10));
-          }
-          else {
+          } else {
             let restructDate = new Date(restruct);
             if (restructDate.getTime() !== restructDate.getTime()) { // since (NaN !== NaN) -> true
               return new Date(result);
-            }
-            else {
+            } else {
               return restructDate;
             }
           }
         default:
-          throw new Error('"' + targetType + '" is no valid type.');
+          throw new Error(targetType + " is no valid type.");
       }
-    }
-    catch (error) {
+    } catch (error) {
       return undefined;
     }
   }

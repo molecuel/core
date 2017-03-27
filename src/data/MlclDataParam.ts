@@ -1,4 +1,4 @@
-import {injectable} from '@molecuel/di';
+import {injectable} from "@molecuel/di";
 /**
  * Parameter class for input output functions
  *
@@ -15,7 +15,7 @@ export class MlclDataParam {
     this.inputParam = inputParam;
     this.targetParam = targetParam;
     this.type = type;
-    if(size) {
+    if (size) {
       this.size = size;
     }
   }

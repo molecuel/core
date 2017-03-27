@@ -1,6 +1,6 @@
-import {di} from '@molecuel/di';
-import {MlclStream} from '../stream/MlclStream';
-import {MlclCore} from './MlclCore';
+import {di} from "@molecuel/di";
+import {MlclStream} from "../stream/MlclStream";
+import {MlclCore} from "./MlclCore";
 
 /**
  * @description Init decorator adds function as needed during init phase
@@ -10,10 +10,10 @@ import {MlclCore} from './MlclCore';
  * @returns
  */
 export function init(priority: number = 50) {
-  return function (target, propertyKey: string, descriptor: PropertyDescriptor) {
+  return (target, propertyKey: string, descriptor: PropertyDescriptor) => {
     let core: MlclCore;
-    core = di.getInstance('MlclCore');
-    let stream: MlclStream = core.createStream('init');
+    core = di.getInstance("MlclCore");
+    let stream: MlclStream = core.createStream("init");
     stream.addObserverFactoryByName(target.constructor.name, propertyKey, priority);
   };
 };
@@ -26,10 +26,10 @@ export function init(priority: number = 50) {
  * @returns
  */
 export function healthCheck(priority: number = 50) {
-  return function (target, propertyKey: string, descriptor: PropertyDescriptor) {
+  return (target, propertyKey: string, descriptor: PropertyDescriptor) => {
     let core: MlclCore;
-    core = di.getInstance('MlclCore');
-    let stream: MlclStream = core.createStream('health');
+    core = di.getInstance("MlclCore");
+    let stream: MlclStream = core.createStream("health");
     stream.addObserverFactoryByName(target.constructor.name, propertyKey, priority);
   };
-};
+}
