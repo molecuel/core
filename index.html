@@ -64,11 +64,10 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<p><a href="https://travis-ci.org/molecuel/core"><img src="https://travis-ci.org/molecuel/core.svg?branch=master" alt="Build Status"></a>
-				<a href="https://coveralls.io/github/molecuel/core?branch=master"><img src="https://coveralls.io/repos/github/molecuel/core/badge.svg?branch=master" alt="Coverage Status"></a></p>
+				<h1 id="-molecuel-core-npm-version-npm-image-npm-url-build-status-travis-image-travis-url-coverage-percentage-coveralls-image-coveralls-url-">@molecuel/core <a href="https://npmjs.org/package/@molecuel/core"><img src="https://badge.fury.io/js/%40molecuel%2Fcore.svg" alt="NPM version"></a> <a href="https://travis-ci.org/molecuel/core"><img src="https://travis-ci.org/molecuel/core.svg?branch=master" alt="Build Status"></a> <a href="https://coveralls.io/r/molecuel/core"><img src="https://coveralls.io/repos/molecuel/core/badge.svg" alt="Coverage percentage"></a></h1>
 				<h1 id="core-module-for-molecuel-framework">Core module for molecuel Framework</h1>
 				<p>@molecuel/core is the core module for the molecuel application framework. It&#39;s initialization is based on the @molecuel/di Typescript dependency injection module.</p>
-				<p>The version 2.x branch supports Subjects and streams based on rxjs.
+				<p>Version 2.x highly depends on Subjects and streams based on rxjs.
 					Streams can be used as DataStreams. For example for save handlers and much more. The streams in this case works like a queue of handlers for a dataset.
 				Subjects can be used as EventEmitters (but should not be used too much).</p>
 				<p>The core module is initialized as real Singleton based on the dependency injection module.</p>
@@ -289,6 +288,14 @@ config.getConfig(<span class="hljs-string">'database.url'</span>);
 				<p>Remaps the lcov reports to the typescript sources</p>
 				<h3 id="npm-run-coveralls">npm run coveralls</h3>
 				<p>Runs the code coverage reports, the remaps and send the results to the coveralls.io service</p>
+				<h3 id="npm-run-createdoc">npm run createdoc</h3>
+				<p>Creates the HTML for the API documentation in the docs folder. The docs folder is in .gitignore and not part of the master branch. </p>
+				<h3 id="npm-run-publishdocs">npm run publishdocs</h3>
+				<p>Publishes the API documentation to the gh-pages branch.</p>
+				<h3 id="npm-run-docs">npm run docs</h3>
+				<p>Shortcut for createdocs and publishdocs</p>
+				<h3 id="npm-run-2npm">npm run 2npm</h3>
+				<p>Checks it the package version in package.json is higher than the registered one in npm registry and published the package if the version is higher.</p>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
