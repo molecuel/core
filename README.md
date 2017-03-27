@@ -5,7 +5,7 @@
 
 @molecuel/core is the core module for the molecuel application framework. It's initialization is based on the @molecuel/di Typescript dependency injection module.
 
-The version 2.x branch supports Subjects and streams based on rxjs. 
+Version 2.x highly depends on Subjects and streams based on rxjs. 
 Streams can be used as DataStreams. For example for save handlers and much more. The streams in this case works like a queue of handlers for a dataset.
 Subjects can be used as EventEmitters (but should not be used too much).
 
