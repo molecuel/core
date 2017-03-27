@@ -7,6 +7,7 @@ before_script:
 after_success:
 - npm run coveralls
 deploy:
+  skip_cleanup: true
   provider: npm
   email: info@molecuel.org
   api_key:
