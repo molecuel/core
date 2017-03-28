@@ -1,9 +1,9 @@
 export interface IMlclDatabase {
-  type;
+  type?;
   idPattern?;
   layer?;
   connect();
-  save();
-  update();
-  find();
+  save(document: any, ...rest: any[]);
+  update(query: any, ...rest: any[]);
+  find(query: any, ...rest: any[]);
 }
