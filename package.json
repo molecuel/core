@@ -1,6 +1,6 @@
 {
   "name": "@molecuel/core",
-  "version": "2.0.17",
+  "version": "2.0.18",
   "description": "Core module for molecuel Application framework",
   "main": "dist/index.js",
   "scripts": {
