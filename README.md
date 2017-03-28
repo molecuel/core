@@ -29,7 +29,7 @@ Example for a tagged class:
 
 ```js
 import {di, injectable} from '@molecuel/di';
-import {MlclCore, dataRead, dataCreate, dataUpdate, dataDelete, mapDataParams} from '../dist';
+import {MlclCore, dataRead, dataCreate, dataUpdate, dataDelete, mapDataParams} from '@molecuel/core';
 
 @injectable
 class MyDataFunctionClass {
