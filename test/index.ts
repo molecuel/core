@@ -10,6 +10,8 @@ import {dataCreate, dataDelete, dataRead, dataReplace, dataUpdate,
   healthCheck, init, mapDataParams, MlclCore, MlclDataParam, MlclMessage,
   MlclStream} from "../dist";
 
+// tslint:disable:max-classes-per-file
+
 describe("mlcl_core", () => {
   before(() => {
     di.bootstrap();
@@ -163,11 +165,10 @@ describe("mlcl_core", () => {
         }
       }
       @injectable
-      // tslint:disable-next-line:max-classes-per-file
       class MyInitTestClass2 {
         @init(10)
         public myini2t(x) {
-          return Observable.create(y => {
+          return Observable.create((y) => {
             setTimeout(() => {
               if (!obs1Success) {
                 obs2Success = true;
@@ -216,14 +217,12 @@ describe("mlcl_core", () => {
         @mapDataParams([
           new MlclDataParam("id", "id", "integer", 999),
           new MlclDataParam("test", "name", "string", 10),
-          new MlclDataParam("extra", "optional", "string", 999)
-        ])
+          new MlclDataParam("extra", "optional", "string", 999) ])
         @dataRead()
         public async myDataReadCheck(id: number, name: string, optional?: any) {
           return {
-            data: (id + " = \"" + name+"\""),
-            optional: optional
-          };
+            data: (id + " = \"" + name + "\""),
+            optional };
         }
         @mapDataParams([
           new MlclDataParam("inputNumber", "dateOne", "Date", 999),
@@ -236,8 +235,7 @@ describe("mlcl_core", () => {
           new MlclDataParam("inputTrueString", "boolTrue", "boolean", 5),
           new MlclDataParam("inputFalseString", "boolFalse", "boolean", 5),
           new MlclDataParam("inputNotBoolString", "boolNot", "boolean", 5),
-          new MlclDataParam("inputAny", "invalidType", "Foo", 5)
-        ])
+          new MlclDataParam("inputAny", "invalidType", "Foo", 5) ])
         @dataRead()
         public async myParsedParams(dateOne: Date,
                                     dateTwo: Date,
@@ -251,18 +249,17 @@ describe("mlcl_core", () => {
                                     boolNot: boolean,
                                     invalidType: any) {
           return {
-            dateOne: dateOne,
-            dateTwo: dateTwo,
-            dateThree: dateThree,
-            str: str,
-            long: long,
-            strArr: strArr,
-            dec: dec,
-            boolTrue: boolTrue,
-            boolFalse: boolFalse,
-            boolNot: boolNot,
-            invalidType: invalidType
-          };
+            dateOne,
+            dateTwo,
+            dateThree,
+            str,
+            long,
+            strArr,
+            dec,
+            boolTrue,
+            boolFalse,
+            boolNot,
+            invalidType };
         }
       }
     });
@@ -274,27 +271,26 @@ describe("mlcl_core", () => {
     });
     it("should parse params for most basic types", async () => {
       let testData = {
-        inputNumber: new Date().getTime(),
+        inputAny: {},
+        inputAnyArray: [1234, "test", 567, true, new Date()],
         inputDateString: new Date().toString(),
+        inputDecimalString: "1234.567",
+        inputFalseString: "false",
         inputGermanDate: "01.02.2017",
+        inputNotBoolString: "test",
+        inputNumber: new Date().getTime(),
         inputString: "test",
         inputTooLong: "test",
-        inputAnyArray: [1234, "test", 567, true, new Date()],
-        inputDecimalString: "1234.567",
-        inputTrueString: "true",
-        inputFalseString: "false",
-        inputNotBoolString: "test",
-        inputAny: {}
-      };
+        inputTrueString: "true" };
       let functionParams = core.renderDataParams(testData, "MyDataFunctionClass", "myParsedParams");
       assert(functionParams);
       assert(functionParams.length);
       let functionResult = await (di.getInstance("MyDataFunctionClass").myParsedParams(...functionParams));
       assert(functionResult);
-      assert(functionResult.dateOne instanceof Date 
+      assert(functionResult.dateOne instanceof Date
         && functionResult.dateOne.toString() === (new Date(testData.inputNumber)).toString());
       assert(functionResult.dateTwo instanceof Date && functionResult.dateTwo.toString() === testData.inputDateString);
-      assert(functionResult.dateThree instanceof Date 
+      assert(functionResult.dateThree instanceof Date
         && functionResult.dateThree.toString() === (new Date("2017-02-01")).toString());
       assert(functionResult.str === testData.inputString);
       assert(functionResult.long === undefined);
@@ -340,7 +336,7 @@ describe("mlcl_core", () => {
       class MyHealthTest {
         @healthCheck()
         public mycheck(x) {
-          return Observable.create(y => {
+          return Observable.create((y) => {
             x.myhealthtest = true;
             y.next(x);
             y.complete();
