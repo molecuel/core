@@ -11,12 +11,11 @@ import {MlclCore} from "./MlclCore";
  */
 export function init(priority: number = 50) {
   return (target, propertyKey: string, descriptor: PropertyDescriptor) => {
-    let core: MlclCore;
-    core = di.getInstance("MlclCore");
-    let stream: MlclStream = core.createStream("init");
+    const core: MlclCore = di.getInstance("MlclCore");
+    const stream: MlclStream = core.createStream("init");
     stream.addObserverFactoryByName(target.constructor.name, propertyKey, priority);
   };
-};
+}
 
 /**
  * @description Health decorator adds function to check a components health
@@ -27,9 +26,8 @@ export function init(priority: number = 50) {
  */
 export function healthCheck(priority: number = 50) {
   return (target, propertyKey: string, descriptor: PropertyDescriptor) => {
-    let core: MlclCore;
-    core = di.getInstance("MlclCore");
-    let stream: MlclStream = core.createStream("health");
+    const core: MlclCore = di.getInstance("MlclCore");
+    const stream: MlclStream = core.createStream("health");
     stream.addObserverFactoryByName(target.constructor.name, propertyKey, priority);
   };
 }

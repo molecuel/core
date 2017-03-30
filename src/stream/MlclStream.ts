@@ -33,13 +33,13 @@ export class MlclStream {
    * @memberOf MlclStream
    */
   public renderStream(inputObservable: Observable<any>) {
-    let observables: ObserverFactoryElement[] = this.observerFactories.sort(
+    const observables: ObserverFactoryElement[] = this.observerFactories.sort(
       (a: ObserverFactoryElement, b: ObserverFactoryElement) => {
         return a.priority - b.priority;
     });
-    for (let observ of observables) {
+    for (const observ of observables) {
       if (!observ.factoryMethod && observ.targetName && observ.targetProperty) {
-        let obsInstance = di.getInstance(observ.targetName);
+        const obsInstance = di.getInstance(observ.targetName);
         observ.factoryMethod = obsInstance[observ.targetProperty];
       }
       inputObservable = inputObservable.flatMap(observ.factoryMethod);
@@ -57,7 +57,7 @@ export class MlclStream {
    * @memberOf MlclStream
    */
   public addObserverFactory(observerFactory: (data: any) => Observable<any>, priority: number = 50) {
-    let factoryElement = new ObserverFactoryElement(priority, observerFactory);
+    const factoryElement = new ObserverFactoryElement(priority, observerFactory);
     this.observerFactories.push(factoryElement);
   }
 
@@ -71,7 +71,7 @@ export class MlclStream {
    * @memberOf MlclStream
    */
   public addObserverFactoryByName(targetName: string, propertyKey: string, priority: number = 50) {
-    let factoryElement = new ObserverFactoryElement(priority);
+    const factoryElement = new ObserverFactoryElement(priority);
     factoryElement.targetName = targetName;
     factoryElement.targetProperty = propertyKey;
     this.observerFactories.push(factoryElement);
