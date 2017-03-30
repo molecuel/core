@@ -27,7 +27,7 @@ export class MlclCore {
     if (this.subjects.get(topic)) {
       return this.subjects.get(topic);
     } else {
-      let subject = new Subject();
+      const subject = new Subject();
       this.subjects.set(topic, subject);
       return subject;
     }
@@ -59,7 +59,7 @@ export class MlclCore {
    */
   public init(): Promise<any> {
     let initObs = Observable.from([{}]);
-    let initStream: MlclStream = this.createStream("init");
+    const initStream: MlclStream = this.createStream("init");
     initObs = initStream.renderStream(initObs);
     return initObs.toPromise();
   }
@@ -74,15 +74,15 @@ export class MlclCore {
 
   public addDataParams(className: string, propertyName: string, dataParams: MlclDataParam[]) {
     if (!this.dataParams.has(className)) {
-      let newMap: Map<string, MlclDataParam[]> = new Map();
+      const newMap: Map<string, MlclDataParam[]> = new Map();
       this.dataParams.set(className, newMap);
     }
-    let classMap = this.dataParams.get(className);
+    const classMap = this.dataParams.get(className);
     classMap.set(propertyName, dataParams);
   }
 
   public getDataParams(className, propertyName): MlclDataParam[] {
-    let classMap = this.dataParams.get(className);
+    const classMap = this.dataParams.get(className);
     if (classMap) {
       return classMap.get(propertyName);
     } else {
@@ -90,12 +90,12 @@ export class MlclCore {
     }
   }
 
-  public renderDataParams(params: Object, target: string, propertyKey: string): any[] {
-    let result = [];
-    let targetParamsList = this.getDataParams(target, propertyKey);
+  public renderDataParams(params: object, target: string, propertyKey: string): any[] {
+    const result = [];
+    const targetParamsList = this.getDataParams(target, propertyKey);
     if (targetParamsList) {
-      for (let targetParam of targetParamsList) {
-        let sourceParam = params[targetParam.inputParam];
+      for (const targetParam of targetParamsList) {
+        const sourceParam = params[targetParam.inputParam];
         if (sourceParam && targetParam.size && sourceParam.length > targetParam.size) {
           result.push(undefined);
         } else if (sourceParam) {
@@ -112,7 +112,7 @@ export class MlclCore {
     let result: any;
     if (Array.isArray(param)) {
       result = [];
-      for (let item of param) {
+      for (const item of param) {
         result.push(this.parseParam(item, targetType));
       }
       return result;
@@ -141,12 +141,12 @@ export class MlclCore {
             throw new Error("Cannot parse " + result + " to " + targetType + ".");
           }
         case "date":
-          let sort = /^(\d{1,2})[^\d\w]?(\d{1,2})[^\d\w]?(\d{4})$/; // MMDDYYYY or DDMMYYYY
-          let restruct = result.replace(/[\W]+/g, "-").replace(sort, "$3-$2-$1");
+          const sort = /^(\d{1,2})[^\d\w]?(\d{1,2})[^\d\w]?(\d{4})$/; // MMDDYYYY or DDMMYYYY
+          const restruct = result.replace(/[\W]+/g, "-").replace(sort, "$3-$2-$1");
           if (!isNaN(parseFloat(restruct)) && isFinite(restruct)) {
             return new Date(parseInt(restruct, 10));
           } else {
-            let restructDate = new Date(restruct);
+            const restructDate = new Date(restruct);
             if (restructDate.getTime() !== restructDate.getTime()) { // since (NaN !== NaN) -> true
               return new Date(result);
             } else {

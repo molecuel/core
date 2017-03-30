@@ -9,7 +9,7 @@ import {injectable} from "@molecuel/di";
 @injectable
 export class MlclDataFactory {
   public priority: number;
-  public factoryMethod: Function;
+  public factoryMethod: () => any;
   public targetName: string;
   public targetProperty: string;
   public name: string;

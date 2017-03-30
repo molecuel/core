@@ -13,13 +13,13 @@ import {MlclDataParam} from "./MlclDataParam";
  */
 export function dataCreate(resultType: string = "application/json", priority: number = 50) {
   return (target, propertyKey: string) => {
-    let targetFactory = new MlclDataFactory();
+    const targetFactory = new MlclDataFactory();
     targetFactory.operation = "create";
     targetFactory.priority = priority;
     targetFactory.resultType = resultType;
     targetFactory.targetName = target.constructor.name;
     targetFactory.targetProperty = propertyKey;
-    let core = di.getInstance("MlclCore");
+    const core = di.getInstance("MlclCore");
     core.addDataFactory(targetFactory);
   };
 }
@@ -35,13 +35,13 @@ export function dataCreate(resultType: string = "application/json", priority: nu
  */
 export function dataUpdate(resultType: string = "application/json", priority: number = 50) {
   return (target, propertyKey: string) => {
-    let targetFactory = new MlclDataFactory();
+    const targetFactory = new MlclDataFactory();
     targetFactory.operation = "update";
     targetFactory.priority = priority;
     targetFactory.resultType = resultType;
     targetFactory.targetName = target.constructor.name;
     targetFactory.targetProperty = propertyKey;
-    let core = di.getInstance("MlclCore");
+    const core = di.getInstance("MlclCore");
     core.addDataFactory(targetFactory);
   };
 }
@@ -57,13 +57,13 @@ export function dataUpdate(resultType: string = "application/json", priority: nu
  */
 export function dataReplace(resultType: string = "application/json", priority: number = 50) {
   return (target, propertyKey: string) => {
-    let targetFactory = new MlclDataFactory();
+    const targetFactory = new MlclDataFactory();
     targetFactory.operation = "replace";
     targetFactory.priority = priority;
     targetFactory.resultType = resultType;
     targetFactory.targetName = target.constructor.name;
     targetFactory.targetProperty = propertyKey;
-    let core = di.getInstance("MlclCore");
+    const core = di.getInstance("MlclCore");
     core.addDataFactory(targetFactory);
   };
 }
@@ -79,13 +79,13 @@ export function dataReplace(resultType: string = "application/json", priority: n
  */
 export function dataRead(resultType: string = "application/json", priority: number = 50) {
   return (target, propertyKey: string, descriptor: PropertyDescriptor) => {
-    let targetFactory = new MlclDataFactory();
+    const targetFactory = new MlclDataFactory();
     targetFactory.operation = "read";
     targetFactory.priority = priority;
     targetFactory.resultType = resultType;
     targetFactory.targetName = target.constructor.name;
     targetFactory.targetProperty = propertyKey;
-    let core = di.getInstance("MlclCore");
+    const core = di.getInstance("MlclCore");
     core.addDataFactory(targetFactory);
   };
 }
@@ -101,20 +101,20 @@ export function dataRead(resultType: string = "application/json", priority: numb
  */
 export function dataDelete(resultType: string = "application/json", priority: number = 50) {
   return (target, propertyKey: string, descriptor: PropertyDescriptor) => {
-    let targetFactory = new MlclDataFactory();
+    const targetFactory = new MlclDataFactory();
     targetFactory.operation = "delete";
     targetFactory.priority = priority;
     targetFactory.resultType = resultType;
     targetFactory.targetName = target.constructor.name;
     targetFactory.targetProperty = propertyKey;
-    let core = di.getInstance("MlclCore");
+    const core = di.getInstance("MlclCore");
     core.addDataFactory(targetFactory);
   };
 }
 
 export function mapDataParams(dataParams: MlclDataParam[]) {
   return (target, propertyKey: string, descriptor: PropertyDescriptor) => {
-    let core = di.getInstance("MlclCore");
+    const core = di.getInstance("MlclCore");
     core.addDataParams(target.constructor.name, propertyKey, dataParams);
   };
 }

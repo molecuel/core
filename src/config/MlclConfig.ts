@@ -22,7 +22,7 @@ export class MlclConfig {
       configPath = process.cwd() + "/config/" + environment + ".json";
     }
     try {
-      let readConfig = fs.readFileSync(configPath, "utf8");
+      const readConfig = fs.readFileSync(configPath, "utf8");
       this.config = JSON.parse(readConfig);
     } catch (error) {
       this.config = {};
