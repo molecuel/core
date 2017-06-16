@@ -93,9 +93,15 @@ export class MlclCore {
   public renderDataParams(params: object, target: string, propertyKey: string): any[] {
     const result = [];
     const targetParamsList = this.getDataParams(target, propertyKey);
+    // console.log({params, targetParamsList});
     if (targetParamsList) {
       for (const targetParam of targetParamsList) {
-        const sourceParam = params[targetParam.inputParam];
+        const sourceParam: any = targetParam.inputParam.split(".").reduce((obj, prop) => {
+          if (obj !== undefined && obj[prop] !== undefined) {
+            return obj[prop];
+          }
+        }, params);
+        // const sourceParam = params[targetParam.inputParam];
         if (sourceParam && targetParam.size && sourceParam.length > targetParam.size) {
           result.push(undefined);
         } else if (sourceParam) {
@@ -117,7 +123,15 @@ export class MlclCore {
       }
       return result;
     } else if (typeof param !== "string") {
-      result = param.toString();
+      if (typeof param === "object" && targetType === "json") {
+        try {
+          return JSON.parse(JSON.stringify(param));
+        } catch (error) {
+          return undefined;
+        }
+      } else {
+        result = param.toString();
+      }
     } else {
       result = param;
     }
@@ -140,6 +154,8 @@ export class MlclCore {
           } else {
             throw new Error("Cannot parse " + result + " to " + targetType + ".");
           }
+        case "json":
+          return JSON.parse(result);
         case "date":
           const sort = /^(\d{1,2})[^\d\w]?(\d{1,2})[^\d\w]?(\d{4})$/; // MMDDYYYY or DDMMYYYY
           const restruct = result.replace(/[\W]+/g, "-").replace(sort, "$3-$2-$1");
