@@ -1,6 +1,5 @@
-# @molecuel/core [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Coverage percentage][coveralls-image]][coveralls-url]
-
-# Core module for molecuel Framework
+# Core module for molecuel Framework - @molecuel/core
+[![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Coverage percentage][coveralls-image]][coveralls-url]
 
 @molecuel/core is the core module for the molecuel application framework. It's initialization is based on the @molecuel/di Typescript dependency injection module.
 
