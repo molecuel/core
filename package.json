@@ -51,7 +51,7 @@
     "should": ">=11.2.0",
     "tslint": "^5.0.0",
     "typedoc": "^0.8.0",
-    "typescript": "^2.2.1"
+    "typescript": "^2.5.2"
   },
   "dependencies": {
     "@molecuel/di": "^0.2.0",
