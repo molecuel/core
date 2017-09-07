@@ -37,7 +37,6 @@
   "homepage": "https://github.com/molecuel/mlcl_core#readme",
   "devDependencies": {
     "@types/mocha": "^2.2.36",
-    "@types/should": "^8.1.30",
     "@types/when": "^2.4.28",
     "assert": ">=0.0.1",
     "coveralls": "^2.11.15",
@@ -48,7 +47,7 @@
     "mocha-lcov-reporter": "^1.2.0",
     "publish": "^0.6.0",
     "remap-istanbul": "^0.9.3",
-    "should": ">=11.2.0",
+    "should": ">=13.0.1",
     "tslint": "^5.0.0",
     "typedoc": "^0.8.0",
     "typescript": "^2.2.1"
