@@ -36,7 +36,7 @@
   "typings": "dist/index.d.ts",
   "homepage": "https://github.com/molecuel/mlcl_core#readme",
   "devDependencies": {
-    "@types/mocha": "^2.2.36",
+    "@types/mocha": "^2.2.48",
     "@types/when": "^2.4.28",
     "assert": ">=0.0.1",
     "coveralls": "^2.11.15",
