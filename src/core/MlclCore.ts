@@ -129,6 +129,9 @@ export class MlclCore {
         } catch (error) {
           return undefined;
         }
+      } else if (typeof param === "object"
+        && (targetType === "any" || targetType === "origin")) {
+        return param;
       } else {
         result = param.toString();
       }
