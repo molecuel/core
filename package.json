@@ -43,7 +43,7 @@
     "del": "^3.0.0",
     "gh-pages": "^1.0.0",
     "istanbul": "^0.4.5",
-    "mocha": "*",
+    "mocha": ">=7.0.1",
     "mocha-lcov-reporter": "^1.2.0",
     "publish": "^0.6.0",
     "remap-istanbul": "^0.9.3",
