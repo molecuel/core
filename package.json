@@ -55,7 +55,7 @@
   "dependencies": {
     "@molecuel/di": "^0.2.0",
     "@reactivex/rxjs": "^5.4.3",
-    "config": "^1.24.0",
+    "config": "^3.3.0",
     "reflect-metadata": "^0.1.3"
   }
 }
